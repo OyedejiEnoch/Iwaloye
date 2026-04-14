@@ -1,0 +1,219 @@
+'use client'
+
+import { ChevronsRight, Globe, Mail, Phone, Loader2 } from 'lucide-react'
+import React, { useRef, useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
+import { useSubmitContactMutation } from '@/redux/api/detailsApi'
+import { toast } from 'sonner'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const Contact = () => {
+    const container = useRef<HTMLDivElement>(null)
+    const headerRef = useRef<HTMLDivElement>(null)
+    const contactInfoRef = useRef<HTMLDivElement>(null)
+    const formRef = useRef<HTMLDivElement>(null)
+
+    const [details, setDetails] = useState({
+        full_name: "",
+        email: "",
+        subject: "",
+        message: ""
+    })
+
+    const [submitContact, { isLoading }] = useSubmitContactMutation()
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setDetails({ ...details, [e.target.id]: e.target.value })
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+
+        if (!details.full_name || !details.email || !details.subject || !details.message) {
+            toast.error("Please fill in all fields")
+            return
+        }
+
+        try {
+            await submitContact(details).unwrap()
+            toast.success("Message sent successfully!")
+            setDetails({
+                full_name: "",
+                email: "",
+                subject: "",
+                message: ""
+            })
+        } catch (err: any) {
+            console.error("Contact Error:", err)
+            toast.error(err?.data?.message || "Failed to send message. Please try again.")
+        }
+    }
+
+    useGSAP(() => {
+        // Header reveal
+        gsap.from(headerRef.current, {
+            opacity: 0,
+            y: 50,
+            duration: 1.2,
+            ease: "power3.out"
+        })
+
+        // Contact info items reveal
+        const infoItems = contactInfoRef.current?.querySelectorAll('.contact-item');
+        if (infoItems) {
+            gsap.from(infoItems, {
+                scrollTrigger: {
+                    trigger: contactInfoRef.current,
+                    start: "top 85%",
+                },
+                opacity: 0,
+                x: -30,
+                stagger: 0.2,
+                duration: 1,
+                ease: "power2.out"
+            })
+        }
+
+        // Form reveal
+        gsap.from(formRef.current, {
+            scrollTrigger: {
+                trigger: formRef.current,
+                start: "top 85%",
+            },
+            opacity: 0,
+            x: 30,
+            duration: 1.2,
+            ease: "power2.out"
+        })
+    }, { scope: container })
+
+    return (
+        <main ref={container} className="min-h-screen bg-white pt-12 pb-20 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12">
+                <div ref={headerRef} className="text-center mb-20">
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-sans text-gray-900 mb-4 uppercase tracking-tight">Contact Us</h1>
+                    <p className="text-black/80 text-sm">“Have a question, suggestion, or need support? We&apos;re here to listen and respond.”</p>
+                </div>
+
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-16'>
+                    <div ref={contactInfoRef} className='flex flex-col gap-4'>
+                        <div className="contact-item">
+                            <h2 className='text-xl md:text-2xl font-semibold'>Contact Us</h2>
+                            <p className='text-xs text-gray-500 mt-2'>Reach out to us for any inquiries or feedback.</p>
+                        </div>
+
+                        <div className='mt-4 space-y-10'>
+                            <div className='contact-item flex items-center gap-6 group'>
+                                <div className="w-16 h-16 flex items-center justify-center bg-gray-50 rounded-full transition-colors group-hover:bg-orange-50">
+                                    <Phone size={28} className='text-[#F47321]' />
+                                </div>
+                                <div className='flex flex-col gap-1'>
+                                    <h2 className='text-lg text-black/70'>Call Us</h2>
+                                    <p className='text-sm font-semibold'>+123 706 678 1234</p>
+                                </div>
+                            </div>
+                            <div className='contact-item flex items-center gap-6 group'>
+                                <div className="w-16 h-16 flex items-center justify-center bg-gray-50 rounded-full transition-colors group-hover:bg-orange-50">
+                                    <Mail size={28} className='text-[#F47321]' />
+                                </div>
+                                <div className='flex flex-col gap-1'>
+                                    <h2 className='text-black/70 text-lg'>Quick Email</h2>
+                                    <p className='text-sm font-semibold'>contact@guru.org.ng</p>
+                                </div>
+                            </div>
+                            <div className='contact-item flex items-center gap-6 group'>
+                                <div className="w-16 h-16 flex items-center justify-center bg-gray-50 rounded-full transition-colors group-hover:bg-orange-50">
+                                    <Globe size={28} className='text-[#F47321]' />
+                                </div>
+                                <div className='flex flex-col gap-1'>
+                                    <h2 className='text-black/70 text-lg'>Office Address</h2>
+                                    <p className='text-sm font-semibold max-w-lg'>No. 18 Adeola Odeku Street, Victoria Island, Lagos State, Nigeria.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div ref={formRef} className='space-y-8 p-2 md:p-0'>
+                        <div>
+                            <h2 className='text-2xl font-semibold'>Get in Touch </h2>
+                            <p className='text-sm text-black/70'>Drop a message for us and we will get back to you as soon as possible.</p>
+                        </div>
+
+                        <form className="space-y-6" onSubmit={handleSubmit}>
+                            <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
+                                <div className='space-y-2'>
+                                    <input
+                                        type="text"
+                                        id="full_name"
+                                        placeholder="Full Name"
+                                        value={details.full_name}
+                                        onChange={handleChange}
+                                        className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all rounded-sm"
+                                        required
+                                    />
+                                </div>
+                                <div className='space-y-2'>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        placeholder="example@gmail.com"
+                                        value={details.email}
+                                        onChange={handleChange}
+                                        className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all rounded-sm"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='space-y-2'>
+                                <input
+                                    type="text"
+                                    id="subject"
+                                    placeholder="Subject"
+                                    value={details.subject}
+                                    onChange={handleChange}
+                                    className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all rounded-sm"
+                                    required
+                                />
+                            </div>
+                            <div className='space-y-2'>
+                                <textarea
+                                    id="message"
+                                    rows={4}
+                                    placeholder="Your message here..."
+                                    value={details.message}
+                                    onChange={handleChange}
+                                    className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all rounded-sm resize-none"
+                                    required
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                disabled={isLoading}
+                                className="w-full p-4 bg-[#F47321] flex items-center gap-2 justify-center text-white font-bold text-sm tracking-widest hover:bg-orange-700 transition-all rounded-sm shadow-lg disabled:opacity-50"
+                            >
+                                {isLoading ? (
+                                    <>
+                                        Sending... <Loader2 className="animate-spin w-4 h-4" />
+                                    </>
+                                ) : (
+                                    <>
+                                        Submit Message <ChevronsRight />
+                                    </>
+                                )}
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    )
+}
+
+export default Contact
