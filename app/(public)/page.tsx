@@ -8,11 +8,13 @@ import Support from '@/components/landing/Support'
 import Journey from '@/components/landing/Journey'
 import Faq from '@/components/landing/Faq'
 import Team from '@/components/landing/Team'
+// import ComingSoon from '@/components/Comingsoon'
 
 
 const Home = () => {
   return (
     <main className="min-h-screen bg-black">
+      {/* <ComingSoon /> */}
       <Hero />
       <About />
       <Mission />
