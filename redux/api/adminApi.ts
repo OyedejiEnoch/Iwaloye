@@ -4,7 +4,7 @@ export const adminApi = createApi({
     reducerPath: 'adminApi',
     tagTypes: ['News', 'Leaders', 'Faqs', 'Newsletter', 'Vision', 'Calendars', 'Movements', 'Admins', 'Albums'],
     baseQuery: fetchBaseQuery({
-        baseUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api`,
+        baseUrl: '/api',
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as any).auth.token
             if (token) {

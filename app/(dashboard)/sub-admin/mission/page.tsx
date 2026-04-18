@@ -217,7 +217,7 @@ export default function MissionManagementPage() {
                                     <Image
                                         src={previewItem.banner_image_url.startsWith('http')
                                             ? previewItem.banner_image_url
-                                            : `${process.env.NEXT_PUBLIC_BASE_URL}/${previewItem.banner_image_url.startsWith('/') ? previewItem.banner_image_url.slice(1) : previewItem.banner_image_url}`
+                                            : `/${previewItem.banner_image_url.startsWith('/') ? previewItem.banner_image_url.slice(1) : previewItem.banner_image_url}`
                                         }
                                         alt="Banner"
                                         fill

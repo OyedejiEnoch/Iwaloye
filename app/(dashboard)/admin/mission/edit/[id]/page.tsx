@@ -40,7 +40,7 @@ export default function EditMissionVisionPage({ params }: EditMissionPageProps) 
       if (data.banner_image) {
         const fullImageUrl = data.banner_image.startsWith('http') 
           ? data.banner_image 
-          : `${process.env.NEXT_PUBLIC_BASE_URL}/${data.banner_image.startsWith('/') ? data.banner_image.slice(1) : data.banner_image}`;
+          : `/${data.banner_image.startsWith('/') ? data.banner_image.slice(1) : data.banner_image}`;
         setImagePreview(fullImageUrl);
       }
     }

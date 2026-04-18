@@ -40,7 +40,7 @@ export default function EditLeaderPage() {
       if (leader.profile_picture) {
         const fullImageUrl = leader.profile_picture.startsWith('http') 
           ? leader.profile_picture 
-          : `${process.env.NEXT_PUBLIC_BASE_URL}/${leader.profile_picture.startsWith('/') ? leader.profile_picture.slice(1) : leader.profile_picture}`;
+          : `/${leader.profile_picture.startsWith('/') ? leader.profile_picture.slice(1) : leader.profile_picture}`;
         setPreviewUrl(fullImageUrl);
       }
     }

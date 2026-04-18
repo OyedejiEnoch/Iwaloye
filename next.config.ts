@@ -24,6 +24,18 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_BASE_URL}/api/:path*`,
+      },
+      {
+        source: "/storage/:path*",
+        destination: `${process.env.NEXT_PUBLIC_BASE_URL}/storage/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

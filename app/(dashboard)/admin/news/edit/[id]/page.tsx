@@ -45,7 +45,7 @@ export default function EditNewsArticlePage({ params }: EditNewsPageProps) {
       if (news.image_or_media) {
         const fullImageUrl = news.image_or_media.startsWith('http') 
           ? news.image_or_media 
-          : `${process.env.NEXT_PUBLIC_BASE_URL}/${news.image_or_media.startsWith('/') ? news.image_or_media.slice(1) : news.image_or_media}`;
+          : `/${news.image_or_media.startsWith('/') ? news.image_or_media.slice(1) : news.image_or_media}`;
         setImagePreview(fullImageUrl);
       }
     }

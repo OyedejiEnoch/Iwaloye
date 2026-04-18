@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const detailsApi = createApi({
     reducerPath: 'detailsApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api`,
+        baseUrl: '/api',
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as any).auth.token
             if (token) {
