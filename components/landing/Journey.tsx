@@ -31,7 +31,7 @@ const InstagramPosts: PostData[] = [
     saves: '0',
     caption: 'I strongly encourage all ADC women in Osun State to strengthen our unity and collaborate closely as we approach the elections.',
     platform: 'Instagram',
-    date: '11 April'
+    date: '22 April'
   },
   {
     image: '/instagram/second.png',
@@ -51,7 +51,7 @@ const InstagramPosts: PostData[] = [
     saves: '0',
     caption: 'MY VISIT TO THE OONI OF IFE: A SEEKING OF ROYAL BLESSINGS FOR OSUN',
     platform: 'Instagram',
-    date: '10 April'
+    date: '9 April'
   },
   {
     image: '/instagram/fourth.png',
@@ -61,7 +61,7 @@ const InstagramPosts: PostData[] = [
     saves: '0',
     caption: 'Is good to be here again .Earlier today at Hallowed Chamber of Osun State House Of Assembly as the State 7th Assembly celebrates a year anniversary in Office',
     platform: 'Instagram',
-    date: '10 April'
+    date: '9 April'
   },
 ]
 
@@ -74,7 +74,7 @@ const FacebookPosts: PostData[] = [
     saves: '0',
     caption: 'I strongly encourage all ADC women in Osun State to strengthen our unity and collaborate closely as we approach the elections.',
     platform: 'Facebook',
-    date: '10 April'
+    date: '22 April'
   },
   {
     image: '/facebook/second.png',
@@ -94,7 +94,7 @@ const FacebookPosts: PostData[] = [
     saves: '0',
     caption: 'Celebrating a Leader Whose Impact Defines Ejigboland, “When a man dedicates his life to uplifting his people, his name becomes more than an identity,it becomes a symbol of hope, leadership, and lasting legacy.”',
     platform: 'Facebook',
-    date: '8 April'
+    date: '13 March'
   },
   {
     image: '/facebook/fourth.png',
@@ -104,7 +104,7 @@ const FacebookPosts: PostData[] = [
     saves: '0',
     caption: 'I sincerely appreciate the Ansar-Ud-Deen Youths Association of Nigeria (ADYAN), Osun State Council, for organizing the Special Ramadan Lecture and prayers held today in my honour.',
     platform: 'Facebook',
-    date: '7 April'
+    date: '12 March'
   },
 ]
 
@@ -117,7 +117,7 @@ const XPosts: PostData[] = [
     saves: '3',
     caption: 'I joined fellow party leaders and stakeholders at the ADC National Convention in Abuja, reaffirming my dedication to purposeful leadership and people centered governance.',
     platform: 'Twitter',
-    date: '11 April'
+    date: '15 April'
   },
   {
     image: '/twitter/second.png',
@@ -127,7 +127,7 @@ const XPosts: PostData[] = [
     saves: '0',
     caption: 'Yesterday in Osogbo, I had the honour of attending the Osun State ADC Congress alongside my deputy, Yemisi Agiri. It was a moment of renewed strength and unity for our great party',
     platform: 'Twitter',
-    date: '11 April'
+    date: '12 April'
   },
   {
     image: '/twitter/third.png',
@@ -137,7 +137,7 @@ const XPosts: PostData[] = [
     saves: '1',
     caption: 'Today meeting is another step forward in our collective resolve to reposition Osun. We are not just consulting we are preparing to lead with vision, courage, and results. 🤝',
     platform: 'Twitter',
-    date: '10 April'
+    date: '26 March'
   },
   {
     image: '/twitter/fourth.png',
@@ -147,7 +147,7 @@ const XPosts: PostData[] = [
     saves: '0',
     caption: 'Dr @NajeemFSalaam, governorship candidate of the ADC in Osun State, paid a courtesy visit to Oba Abdulazeez Olatunbosun Adebamiji in Ikire-Ile to strengthen traditional ties and promote inclusive leadership ahead of the 2026 governorship election.',
     platform: 'Twitter',
-    date: '10 April'
+    date: '26 Febuary'
   },
 ]
 
