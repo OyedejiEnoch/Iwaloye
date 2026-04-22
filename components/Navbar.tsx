@@ -80,21 +80,33 @@ const Navbar = () => {
         };
     }, [mobileMenuOpen, lenis]);
 
-    // Transparent when: on home page AND not scrolled. Also transparent on about page always.
-    const isTransparent = isAboutPage || (isHomePage && !scrolled);
+    // Transparent when: on home or about page AND not scrolled.
+    const isTransparent = (isAboutPage || isHomePage) && !scrolled;
 
     return (
-        <nav className={`w-full px-4 fixed top-0 left-0 z-50 transition-all duration-300 ${isTransparent ? 'bg-transparent text-white' : 'bg-white shadow'}`}>
-            <div className={`max-w-7xl py-2 md:py-6 mx-auto flex items-center justify-between ${isTransparent ? 'border-b border-white/10' : 'border-b border-gray-300'}`}>
+        <nav className={`w-full px-4 fixed top-0 left-0 z-50 transition-all duration-500 ${isTransparent ? 'bg-transparent text-white' : 'bg-white'}`}>
+            <div className={`max-w-7xl mx-auto flex items-center justify-between transition-all duration-500 ${isTransparent ? 'py-1 md:py-4 border-b border-white/10' : 'py-1 border-b border-gray-200'}`}>
                 {isTransparent ?
-
-                    <Link href="/">
-                        <Image src='/assets/iwaloyeLogo1.png' alt="logo" width={100} height={100} />
+                    <Link href="/" className="transition-transform hover:scale-105 active:scale-95">
+                        <Image
+                            src='/assets/iwaloyeLogo1.png'
+                            alt="logo"
+                            width={100}
+                            height={100}
+                            priority
+                            className="w-[70px] h-[70px] md:w-[90px] md:h-[90px] object-contain"
+                        />
                     </Link>
                     :
-
-                    <Link href="/">
-                        <Image src='/assets/iwaloyeLogo.png' alt="logo" width={100} height={100} />
+                    <Link href="/" className="transition-transform hover:scale-105 active:scale-95">
+                        <Image
+                            src='/assets/iwaloyelogo.png'
+                            alt="logo"
+                            width={100}
+                            height={100}
+                            priority
+                            className="w-[70px] h-[70px] md:w-[90px] md:h-[90px] object-contain"
+                        />
                     </Link>
                 }
 
