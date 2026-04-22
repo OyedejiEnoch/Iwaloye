@@ -60,6 +60,7 @@ const Navbar = () => {
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 30);
+        handleScroll();
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -91,8 +92,8 @@ const Navbar = () => {
                         <Image
                             src='/assets/iwaloyeLogo1.png'
                             alt="logo"
-                            width={100}
-                            height={100}
+                            width={50}
+                            height={50}
                             priority
                             className="w-[70px] h-[70px] md:w-[90px] md:h-[90px] object-contain"
                         />
@@ -102,8 +103,8 @@ const Navbar = () => {
                         <Image
                             src='/assets/iwaloyelogo.png'
                             alt="logo"
-                            width={100}
-                            height={100}
+                            width={50}
+                            height={50}
                             priority
                             className="w-[70px] h-[70px] md:w-[90px] md:h-[90px] object-contain"
                         />

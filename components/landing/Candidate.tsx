@@ -64,7 +64,7 @@ const Candidate = ({ heading, subHeading, text, className, about = false }: { he
     }, { scope: container })
 
     return (
-        <section ref={container} className="w-full bg-white py-20 px-4 md:px-8 lg:px-16 overflow-hidden">
+        <section ref={container} className="w-full bg-white py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
             <div className="max-w-6xl mx-auto">
 
                 <div ref={headerRef} className='flex flex-col'>

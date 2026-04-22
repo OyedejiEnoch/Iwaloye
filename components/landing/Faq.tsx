@@ -36,7 +36,7 @@ const Faq = () => {
 
     useGSAP(() => {
         // FAQ reveal
-        gsap.fromTo(".faq-card", 
+        gsap.fromTo(".faq-card",
             { opacity: 0, y: 20 },
             {
                 scrollTrigger: {
@@ -56,15 +56,15 @@ const Faq = () => {
     }, { scope: container })
 
     return (
-        <section className="bg-white pt-20">
+        <section className="bg-white pt-16">
             <div ref={container} className="faq-section bg-white max-w-5xl mx-auto mb-32">
                 <div className="flex items-center justify-center gap-2 mb-16">
-                    <h2 className="text-2xl md:text-4xl font-bold text-gray-900 uppercase font-sans">FAQ</h2>
+                    <h2 className="text-4xl md:text-5xl lg:text-[70px] font-bold text-gray-900 uppercase font-sans">FAQ</h2>
                 </div>
 
                 <div className="space-y-4">
                     {Faqs.map((faq, idx) => (
-                        <div key={idx} className="faq-card border border-black/20 overflow-hidden bg-white group">
+                        <div key={idx} className="faq-card w-[90%] mx-auto md:w-full border border-black/10 overflow-hidden bg-white group">
                             <button
                                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                                 className="w-full p-6 flex items-center justify-between text-left transition-all"

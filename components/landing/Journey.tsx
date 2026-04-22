@@ -205,7 +205,7 @@ const Journey = () => {
   }, { scope: container })
 
   return (
-    <section ref={container} className="py-20 md:py-28 bg-white overflow-hidden">
+    <section ref={container} className="py-8 md:py-28 bg-white overflow-hidden border-none">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Heading */}
         <div ref={headingRef} className="mb-4">
@@ -236,7 +236,7 @@ const Journey = () => {
         </div>
 
         {/* Instagram cards row */}
-        <div ref={cardsRef} className="flex justify-center gap-4 md:gap-6 lg:gap-8 overflow-x-auto pb-4 scrollbar-hide">
+        <div ref={cardsRef} className="flex justify-start gap-4 md:gap-6 lg:gap-8 overflow-x-auto pb-4 scrollbar-hide -mx-6 px-6 md:-mx-12 md:px-12">
           {posts.map((post, i) => (
             <InstagramCard key={i} post={post} />
           ))}

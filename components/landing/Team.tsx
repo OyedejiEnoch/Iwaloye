@@ -34,11 +34,11 @@ const MemberCard = ({ name, role }: { name: string; role: string }) => (
 
 const Team = () => {
     return (
-        <section className='py-18 md:py-22 bg-white overflow-hidden'>
+        <section className='py-16 md:py-22 bg-white overflow-hidden'>
             <div className="max-w-7xl mx-auto px-4">
                 {/* Header */}
                 <div className="mb-16 md:mb-24 space-y-4">
-                    <h1 className="text-5xl md:text-6xl font-sans font-semibold text-gray-900 tracking-wide uppercase">
+                    <h1 className="text-4xl md:text-5xl lg:text-[70px] font-sans font-semibold text-gray-900 tracking-wide uppercase">
                         Meet the campaign team
                     </h1>
                     <p className="text-gray-600 text-sm md:text-base font-light">
@@ -54,7 +54,7 @@ const Team = () => {
                 </div>
             </div>
 
-            <div className='mt-20 flex justify-center'>
+            <div className='mt-8 md:mt-20 flex justify-center'>
                 <Link href="/">
                     <Button className='w-full md:w-fit px-12 border border-black py-6 rounded-none bg-black text-white hover:bg-black hover:text-white transition-all'>
                         View All

@@ -114,12 +114,12 @@ const Support = () => {
   }, { scope: container })
 
   return (
-    <section ref={container} id='support' className='py-20 md:py-28 bg-white overflow-hidden'>
+    <section ref={container} id='support' className='py-16 md:py-28 bg-white overflow-hidden'>
       <div className='max-w-7xl mx-auto px-6 md:px-12'>
 
         {/* Header */}
         <div ref={headerRef} className='text-center mb-6'>
-          <h2 className='text-3xl md:text-5xl font-bold font-sans lg:text-[70px] uppercase tracking-wide text-black'>
+          <h2 className='text-4xl md:text-5xl font-bold font-sans lg:text-[70px] uppercase tracking-wide text-black'>
             Support The Campaign
           </h2>
           <p className='text-xs md:text-sm italic text-black/80  mt-2'>

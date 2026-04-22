@@ -50,7 +50,7 @@ const News = () => {
     }, { scope: container })
 
     return (
-        <section ref={container} className="w-full bg-white py-20 px-4 md:px-8 lg:px-16 overflow-hidden">
+        <section ref={container} className="w-full bg-white py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
             <div className="max-w-6xl mx-auto">
                 <div ref={headerRef} className='flex flex-col text-center'>
                     <h2 className="text-4xl md:text-5xl lg:text-[70px] font-sans font-bold text-gray-900 tracking-tight mb-2 uppercase">
@@ -106,7 +106,7 @@ const News = () => {
                     )}
                 </div>
 
-                <div className='mt-20 flex justify-center'>
+                <div className='mt-8 md:mt-20 flex justify-center'>
                     {/* <Link href="/news">
                         <Button className='w-full md:w-fit px-12 border border-black py-6 rounded-none bg-black text-white hover:bg-black hover:text-white transition-all'>
                             View All News

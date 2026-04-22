@@ -82,7 +82,7 @@ export default function Mission() {
   }, { scope: container });
 
   return (
-    <section ref={container} className="w-full bg-white py-20 px-4 md:px-8 lg:px-16 overflow-hidden">
+    <section ref={container} className="w-full bg-white py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div ref={headerRef} className="flex flex-col items-center text-center mb-6">
@@ -110,7 +110,7 @@ export default function Mission() {
             :
             features?.map((feature: any, idx: number) => (
               <div key={idx} className="flex flex-col">
-                <div className="relative w-full aspect-[16/9] md:aspect-[7/3] mb-6 overflow-hidden bg-gray-100">
+                <div className="relative w-full md:aspect-[7/3] mb-6 overflow-hidden bg-gray-100">
                   <Image
                     src={feature?.image}
                     alt={feature?.title}
@@ -144,7 +144,7 @@ export default function Mission() {
           </div>
 
           {/* Center Image (Absolute on md and up, relative on small) */}
-          <div className="md:absolute md:left-1/2 md:-translate-x-1/4 md:bottom-0 z-0 h-48 md:h-[130%] lg:h-[140%] flex items-end">
+          <div className="hidden md:flex md:absolute md:left-1/2 md:-translate-x-1/4 md:bottom-0 z-0 h-48 md:h-[130%] lg:h-[140%] flex items-end">
             <div className="relative w-[190px] md:w-[260px] h-[130px]">
               <Image
                 src="/assets/iwaloye2.png"
