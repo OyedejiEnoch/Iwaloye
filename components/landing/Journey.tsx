@@ -8,7 +8,7 @@ import { useGSAP } from '@gsap/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const tabs = ['All', 'Facebook', 'Instagram', 'Twitter'] as const
+const tabs = ['Facebook', 'Instagram', 'Twitter'] as const
 type TabType = (typeof tabs)[number]
 
 interface PostData {
@@ -19,7 +19,9 @@ interface PostData {
   saves: string
   caption: string
   platform: 'Instagram' | 'Facebook' | 'Twitter'
-  date?: string
+  date?: string,
+  username?: string,
+  profilePic?: string
 }
 
 const InstagramPosts: PostData[] = [
@@ -31,7 +33,9 @@ const InstagramPosts: PostData[] = [
     saves: '0',
     caption: 'I strongly encourage all ADC women in Osun State to strengthen our unity and collaborate closely as we approach the elections.',
     platform: 'Instagram',
-    date: '22 April'
+    date: '22 April',
+    username: 'najeemsalaam',
+    profilePic: '/assets/profileInstagram.jpg'
   },
   {
     image: '/instagram/second.png',
@@ -41,7 +45,9 @@ const InstagramPosts: PostData[] = [
     saves: '0',
     caption: 'Today 11th of April , 2026 . I am pleased to announce the successful conduct of the African Democratic Congress (ADC) State Congress in Osun State',
     platform: 'Instagram',
-    date: '11 April'
+    date: '11 April',
+    username: 'najeemsalaam',
+    profilePic: '/assets/profileInstagram.jpg'
   },
   {
     image: '/instagram/third.png',
@@ -51,7 +57,9 @@ const InstagramPosts: PostData[] = [
     saves: '0',
     caption: 'MY VISIT TO THE OONI OF IFE: A SEEKING OF ROYAL BLESSINGS FOR OSUN',
     platform: 'Instagram',
-    date: '9 April'
+    date: '9 April',
+    username: 'najeemsalaam',
+    profilePic: '/assets/profileInstagram.jpg'
   },
   {
     image: '/instagram/fourth.png',
@@ -61,7 +69,9 @@ const InstagramPosts: PostData[] = [
     saves: '0',
     caption: 'Is good to be here again .Earlier today at Hallowed Chamber of Osun State House Of Assembly as the State 7th Assembly celebrates a year anniversary in Office',
     platform: 'Instagram',
-    date: '9 April'
+    date: '9 April',
+    username: 'najeemsalaam',
+    profilePic: '/assets/profileInstagram.jpg'
   },
 ]
 
@@ -74,7 +84,9 @@ const FacebookPosts: PostData[] = [
     saves: '0',
     caption: 'I strongly encourage all ADC women in Osun State to strengthen our unity and collaborate closely as we approach the elections.',
     platform: 'Facebook',
-    date: '22 April'
+    date: '22 April',
+    username: 'Dr. Najeem Folasayo Salaam',
+    profilePic: '/assets/profileFacebook.jpg'
   },
   {
     image: '/facebook/second.png',
@@ -84,7 +96,9 @@ const FacebookPosts: PostData[] = [
     saves: '0',
     caption: 'MY VISIT TO THE OONI OF IFE: A SEEKING OF ROYAL BLESSINGS FOR OSUN Today, I had the honour of being received by His Imperial Majesty, the Ooni of Ife, Adeyeye Enitan Ogunwusi, CFR, at the historic Ile Oodua Palace in Ile-Ife.',
     platform: 'Facebook',
-    date: '9 April'
+    date: '9 April',
+    username: 'Dr. Najeem Folasayo Salaam',
+    profilePic: '/assets/profileFacebook.jpg'
   },
   {
     image: '/facebook/third.png',
@@ -94,7 +108,9 @@ const FacebookPosts: PostData[] = [
     saves: '0',
     caption: 'Celebrating a Leader Whose Impact Defines Ejigboland, “When a man dedicates his life to uplifting his people, his name becomes more than an identity,it becomes a symbol of hope, leadership, and lasting legacy.”',
     platform: 'Facebook',
-    date: '13 March'
+    date: '13 March',
+    username: 'Dr. Najeem Folasayo Salaam',
+    profilePic: '/assets/profileFacebook.jpg'
   },
   {
     image: '/facebook/fourth.png',
@@ -104,7 +120,9 @@ const FacebookPosts: PostData[] = [
     saves: '0',
     caption: 'I sincerely appreciate the Ansar-Ud-Deen Youths Association of Nigeria (ADYAN), Osun State Council, for organizing the Special Ramadan Lecture and prayers held today in my honour.',
     platform: 'Facebook',
-    date: '12 March'
+    date: '12 March',
+    username: 'Dr. Najeem Folasayo Salaam',
+    profilePic: '/assets/profileFacebook.jpg'
   },
 ]
 
@@ -117,7 +135,9 @@ const XPosts: PostData[] = [
     saves: '3',
     caption: 'I joined fellow party leaders and stakeholders at the ADC National Convention in Abuja, reaffirming my dedication to purposeful leadership and people centered governance.',
     platform: 'Twitter',
-    date: '15 April'
+    date: '15 April',
+    username: '@NajeemFSalaam',
+    profilePic: '/assets/profileX.jpg'
   },
   {
     image: '/twitter/second.png',
@@ -127,7 +147,9 @@ const XPosts: PostData[] = [
     saves: '0',
     caption: 'Yesterday in Osogbo, I had the honour of attending the Osun State ADC Congress alongside my deputy, Yemisi Agiri. It was a moment of renewed strength and unity for our great party',
     platform: 'Twitter',
-    date: '12 April'
+    date: '12 April',
+    username: '@NajeemFSalaam',
+    profilePic: '/assets/profileX.jpg'
   },
   {
     image: '/twitter/third.png',
@@ -137,7 +159,9 @@ const XPosts: PostData[] = [
     saves: '1',
     caption: 'Today meeting is another step forward in our collective resolve to reposition Osun. We are not just consulting we are preparing to lead with vision, courage, and results. 🤝',
     platform: 'Twitter',
-    date: '26 March'
+    date: '26 March',
+    username: '@NajeemFSalaam',
+    profilePic: '/assets/profileX.jpg'
   },
   {
     image: '/twitter/fourth.png',
@@ -147,7 +171,9 @@ const XPosts: PostData[] = [
     saves: '0',
     caption: 'Dr @NajeemFSalaam, governorship candidate of the ADC in Osun State, paid a courtesy visit to Oba Abdulazeez Olatunbosun Adebamiji in Ikire-Ile to strengthen traditional ties and promote inclusive leadership ahead of the 2026 governorship election.',
     platform: 'Twitter',
-    date: '26 Febuary'
+    date: '26 Febuary',
+    username: '@NajeemFSalaam',
+    profilePic: '/assets/profileX.jpg'
   },
 ]
 
@@ -219,7 +245,7 @@ const SocialCard = ({ post }: { post: PostData }) => {
         <div className="flex items-center gap-2 px-3 py-1.5 h-[60px]">
           <div className="w-6 h-6 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
             <Image
-              src="/assets/imageHolder.png"
+              src={post.profilePic!}
               alt="Profile"
               width={24}
               height={24}
@@ -227,7 +253,7 @@ const SocialCard = ({ post }: { post: PostData }) => {
             />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[11px] font-semibold truncate">Iwaloye</p>
+            <p className="text-[11px] font-semibold truncate">{post.username}</p>
             <p className="text-[7px] text-gray-400">{post.date || '1 December'}</p>
           </div>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -276,7 +302,7 @@ const SocialCard = ({ post }: { post: PostData }) => {
 
 /* ── main section ── */
 const Journey = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('All')
+  const [activeTab, setActiveTab] = useState<TabType>('Facebook')
   const container = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
@@ -289,8 +315,8 @@ const Journey = () => {
         return InstagramPosts
       case 'Twitter':
         return XPosts
-      case 'All':
-        return [...InstagramPosts, ...FacebookPosts, ...XPosts]
+      // case 'All':
+      //   return [...InstagramPosts, ...FacebookPosts, ...XPosts]
       default:
         return [...InstagramPosts, ...FacebookPosts, ...XPosts]
     }
