@@ -39,7 +39,7 @@ const footerLink2 = [
     href: "/calender"
   },
   {
-    title: "Privacy Policy",
+    title: "Privacy Notice",
     href: "/privacy"
   }
 ]

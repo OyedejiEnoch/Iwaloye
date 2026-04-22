@@ -42,7 +42,7 @@ const About = () => {
           <h2 className='text-[30px] md:text-[26px] font-bold mt-2 font-sans mt-6 max-sm:text-center'>African Democratic Congress</h2>
           <p className='mt-4 text-sm font-medium leading-relaxed max-sm:text-center'>Creating a transparent, accountable political system free from elite control.</p>
           <div className='max-w-2xl md:w-full'>
-            <NewButton text='Join the Party' link='https://adc.org.ng/' />
+            <NewButton text='Join the Party' link='https://adc.org.ng/' target="_blank" rel="noopener noreferrer" />
           </div>
         </div>
         <div className='flex flex-col max-sm:items-center'>

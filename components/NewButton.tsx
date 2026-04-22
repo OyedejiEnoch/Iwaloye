@@ -9,6 +9,8 @@ const NewButton = React.forwardRef<HTMLButtonElement, any>(({
     icon,
     text,
     link,
+    target,
+    rel,
     className,
     hoverBgClass = "bg-[#F47321]",
     hoverTextClass = "group-hover:text-white",
@@ -44,7 +46,7 @@ const NewButton = React.forwardRef<HTMLButtonElement, any>(({
                 className={`w-full relative overflow-hidden group mt-6 px-8 py-5 border border-black hover:border-none text-black bg-transparent font-semibold rounded-none ${className || 'md:w-fit'}`}
                 {...props}
             >
-                <Link href={link}>
+                <Link href={link} target={target} rel={rel}>
                     {backgroundLayer}
                     {innerContent}
                 </Link>

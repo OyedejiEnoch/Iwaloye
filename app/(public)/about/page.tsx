@@ -123,15 +123,15 @@ export default function AboutPage() {
                         <p className="text-lg md:text-xl font-medium text-[#8BC34A] mb-2 font-poppins">
                             The Resilient Trailblazer
                         </p>
-                        <h1 className="text-5xl md:text-7xl font-bold font-sans text-white mb-1 tracking-wide drop-shadow-lg">
-                            MEET ÌWÀLÓYÈ
+                        <h1 className="text-5xl md:text-7xl font-bold font-sans text-white mb-1 uppercase tracking-wide drop-shadow-lg">
+                            MEET Ìwàloyè
                         </h1>
                         <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-10 bg-white text-black py-2 px-6 w-[230px] min-h-[60px]' hoverBgClass='bg-black border border-black text-white' hoverTextClass='group-hover:text-white' />
                     </div>
                 </div>
             </section>
 
-            <Candidate heading="ÌWÀLÓYÈ" subHeading="“A Legacy of Leadership, Scholarship, and Service.”" text={text} className="text-center" about={true} />
+            <Candidate heading="ÌWÀLOYÈ" subHeading="“A Legacy of Leadership, Scholarship, and Service.”" text={text} className="text-center" about={true} />
 
             {/* Body Content */}
             <section className="max-w-7xl mx-auto px-4 py-16 md:py-24 space-y-12 md:space-y-24">
@@ -212,7 +212,7 @@ export default function AboutPage() {
                             {/* Stat 3 */}
                             <div className="flex flex-col items-start stat-item">
                                 <div className="flex items-baseline gap-3 mb-2">
-                                    <span className="text-5xl md:text-[60px] font-bold font-sans text-gray-900 leading-none stat-number" data-target="2">0</span>
+                                    <span className="text-5xl md:text-[60px] font-bold font-sans text-gray-900 leading-none stat-number" data-target="3">0</span>
                                     <span className="text-xl md:text-3xl font-bold font-sans text-gray-900 pb-1">Elections Won</span>
                                 </div>
                                 <p className="text-xs text-gray-500 mt-1 font-medium max-w-[300px]">3 Elections Won &ndash; 2007, 2011 &amp; 2015 (comeback story adds weight)</p>
@@ -221,7 +221,7 @@ export default function AboutPage() {
                             {/* Stat 4 */}
                             <div className="flex flex-col items-start stat-item">
                                 <div className="flex items-baseline gap-3 mb-2">
-                                    <span className="text-5xl md:text-[60px] font-bold font-sans text-gray-900 leading-none stat-number" data-target="3">0</span>
+                                    <span className="text-5xl md:text-[60px] font-bold font-sans text-gray-900 leading-none stat-number" data-target="5">0</span>
                                     <span className="text-xl md:text-3xl font-bold font-sans text-gray-900 pb-1">Key Reform Areas</span>
                                 </div>
                                 <p className="text-xs text-gray-500 mt-1 font-medium">Health, Urban Development, Security, Education, Social welfare</p>

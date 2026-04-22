@@ -19,7 +19,7 @@ const navLinks = [
         url: "/"
     },
     {
-        title: "Meet Ìwàlọ́yé",
+        title: "Meet Ìwàloyè",
         url: "/about"
     },
     {
