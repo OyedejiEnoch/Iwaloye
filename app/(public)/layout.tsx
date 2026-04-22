@@ -9,12 +9,10 @@ const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {/* <ComingSoon /> */}
-      <PageTransition>
-        <Navbar />
-        {children}
-        <Newsletter />
-        <Footer />
-      </PageTransition>
+      <Navbar />
+      {children}
+      <Newsletter />
+      <Footer />
     </>
   )
 }

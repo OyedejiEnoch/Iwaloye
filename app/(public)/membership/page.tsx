@@ -190,7 +190,7 @@ const MembershipPage = () => {
 
 
   return (
-    <main ref={container} className="min-h-screen bg-white pt-20 pb-20 overflow-hidden">
+    <main ref={container} className="min-h-screen bg-white pt-28 pb-20 overflow-hidden">
       <div className=" mx-auto px-6 lg:px-12">
 
         {/* Header */}

@@ -84,7 +84,7 @@ const News = () => {
   }, { scope: container })
 
   return (
-    <section ref={container} className="w-full bg-white py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
+    <section ref={container} className="w-full bg-white py-28 px-4 md:px-8 lg:px-16 overflow-hidden">
       <div className='max-w-7xl mx-auto'>
         <div ref={headerRef} className="flex flex-col items-center text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-[100px] font-sans text-gray-900 tracking-tight mb-4 uppercase">

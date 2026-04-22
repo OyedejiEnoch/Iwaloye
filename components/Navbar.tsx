@@ -2,6 +2,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useLenis } from "lenis/react"
 import { ChevronDown, Menu, X } from "lucide-react"
 import {
     DropdownMenu,
@@ -13,6 +14,10 @@ import { motion, AnimatePresence } from "motion/react"
 import Donate from "./Donate"
 
 const navLinks = [
+    {
+        title: "Home",
+        url: "/"
+    },
     {
         title: "Meet Ìwàlọ́yé",
         url: "/about"
@@ -59,12 +64,28 @@ const Navbar = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const lenis = useLenis();
+
+    useEffect(() => {
+        if (mobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+            lenis?.stop();
+        } else {
+            document.body.style.overflow = '';
+            lenis?.start();
+        }
+        return () => {
+            document.body.style.overflow = '';
+            lenis?.start();
+        };
+    }, [mobileMenuOpen, lenis]);
+
     // Transparent when: on home page AND not scrolled. Also transparent on about page always.
     const isTransparent = isAboutPage || (isHomePage && !scrolled);
 
     return (
-        <nav className={`w-full px-4 fixed top-0 left-0 z-50 transition-all duration-300 ${isTransparent ? 'bg-transparent text-white' : 'bg-white shadow-sm'}`}>
-            <div className={`max-w-7xl py-6 mx-auto flex items-center justify-between ${isTransparent ? 'border-b border-white/10' : 'border-b border-gray-300'}`}>
+        <nav className={`w-full px-4 fixed top-0 left-0 z-50 transition-all duration-300 ${isTransparent ? 'bg-transparent text-white' : 'bg-white shadow'}`}>
+            <div className={`max-w-7xl py-2 md:py-6 mx-auto flex items-center justify-between ${isTransparent ? 'border-b border-white/10' : 'border-b border-gray-300'}`}>
                 {isTransparent ?
 
                     <Link href="/">
@@ -147,88 +168,90 @@ const Navbar = () => {
                 {/* Mobile Menu */}
                 <AnimatePresence>
                     {mobileMenuOpen && (
-                        <motion.div
-                            initial={{ opacity: 0, x: '100%' }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: '100%' }}
-                            transition={{ type: 'spring', damping: 30, stiffness: 250 }}
-                            className="fixed inset-0 bg-white z-50 lg:hidden flex flex-col"
-                        >
-                            <div className="px-6 py-4 flex items-center justify-between border-b border-black/10">
-                                <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-                                    <Image src='/assets/iwaloyeLogo.png' alt="logo" width={100} height={100} />
-                                </Link>
-                                <button
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="text-black p-2"
-                                >
-                                    <X size={28} />
-                                </button>
-                            </div>
+                        <>
+                            {/* Backdrop */}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+                            />
+                            <motion.div
+                                initial={{ opacity: 0, x: '100%' }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: '100%' }}
+                                transition={{ type: 'spring', damping: 30, stiffness: 250 }}
+                                className="fixed right-0 top-0 w-[300px] h-full bg-white z-50 lg:hidden flex flex-col shadow-2xl"
+                            >
+                                <div className="px-6 py-2 flex items-center justify-end border-b border-black/10">
+                                    <button
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="text-black p-2"
+                                    >
+                                        <X size={28} />
+                                    </button>
+                                </div>
 
-                            <div className="flex flex-col mt-10 flex-1 px-10 space-y-9">
-                                {navLinks.map((link, index) => {
-                                    const hasSubLinks = !!link.subLinks;
+                                <div className="flex flex-col mt-6 flex-1 px-6 space-y-4">
+                                    {navLinks.map((link, index) => {
+                                        const hasSubLinks = !!link.subLinks;
 
-                                    return (
-                                        <motion.div
-                                            key={link.title}
-                                            initial={{ opacity: 0, x: 30 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                                            className="flex flex-col"
-                                        >
-                                            <div className="flex items-center justify-between">
+                                        return (
+                                            <motion.div
+                                                key={link.title}
+                                                initial={{ opacity: 0, x: 30 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                                                className="flex flex-col"
+                                            >
                                                 {hasSubLinks ? (
-                                                    <span
-                                                        className="block text-[1rem] font-gentium leading-tight text-black"
-
-                                                    >
-                                                        {link.title}
-                                                    </span>
+                                                    <div className="flex items-center justify-between bg-green-50/20 p-2">
+                                                        <span className="block text-[.9rem] leading-tight text-black">
+                                                            {link.title}
+                                                        </span>
+                                                    </div>
                                                 ) : link.title === "Donate" ? (
                                                     <Donate trigger={
-                                                        <button
-                                                            className={`block text-[1rem] font-gentium leading-tight transition-colors ${pathname === link.url ? 'text-black' : 'text-black/80 hover:text-black'
-                                                                }`}
-                                                            style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: '-0.02em' }}
-                                                        >
-                                                            {link.title}
+                                                        <button className="w-full flex items-center justify-between bg-green-50/20 p-2 text-left transition-colors text-black hover:bg-green-100/30">
+                                                            <span className="text-[1rem] leading-tight">
+                                                                {link.title}
+                                                            </span>
                                                         </button>
                                                     } />
                                                 ) : (
                                                     <Link
                                                         href={link.url}
                                                         onClick={() => setMobileMenuOpen(false)}
-                                                        className={`block text-[1rem] font-gentium leading-tight transition-colors ${pathname === link.url ? 'text-black' : 'text-black/80 hover:text-black'
+                                                        className={`flex items-center justify-between bg-green-50/20 p-2 transition-colors hover:bg-green-100/30 ${pathname === link.url ? 'bg-green-100/40 text-black font-semibold' : 'text-black'
                                                             }`}
-                                                        style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: '-0.02em' }}
                                                     >
-                                                        {link.title}
+                                                        <span className="text-[.9rem] leading-tight">
+                                                            {link.title}
+                                                        </span>
                                                     </Link>
                                                 )}
-                                            </div>
 
-                                            {hasSubLinks && (
-                                                <div className="flex flex-col gap-4 pl-4 pt-4 pb-2 border-l border-black/10 mt-2">
-                                                    {link.subLinks?.map((subLink) => (
-                                                        <Link
-                                                            key={subLink.title}
-                                                            href={subLink.url}
-                                                            target={subLink.external ? "_blank" : undefined}
-                                                            rel={subLink.external ? "noopener noreferrer" : undefined}
-                                                            onClick={() => setMobileMenuOpen(false)}
-                                                            className="text-[.8rem] text-black/60 hover:text-black transition-colors"
-                                                        >
-                                                            {subLink.title}
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </motion.div>
-                                    );
-                                })}
-                                {/* <motion.div
+                                                {hasSubLinks && (
+                                                    <div className="flex flex-col gap-4 pl-4 pt-4 pb-2 border-l border-black/10 mt-2">
+                                                        {link.subLinks?.map((subLink) => (
+                                                            <Link
+                                                                key={subLink.title}
+                                                                href={subLink.url}
+                                                                target={subLink.external ? "_blank" : undefined}
+                                                                rel={subLink.external ? "noopener noreferrer" : undefined}
+                                                                onClick={() => setMobileMenuOpen(false)}
+                                                                className="text-[.8rem] text-black/40 hover:text-black transition-colors"
+                                                            >
+                                                                {subLink.title}
+                                                            </Link>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </motion.div>
+                                        );
+                                    })}
+                                    {/* <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ delay: navLinks.length * 0.07 + 0.1 }}
@@ -244,8 +267,9 @@ const Navbar = () => {
                                         Join Our Community
                                     </a>
                                 </motion.div> */}
-                            </div>
-                        </motion.div>
+                                </div>
+                            </motion.div>
+                        </>
                     )}
                 </AnimatePresence>
             </div>

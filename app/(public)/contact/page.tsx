@@ -92,7 +92,7 @@ const Contact = () => {
     }, { scope: container })
 
     return (
-        <main ref={container} className="min-h-screen bg-white pt-12 pb-20 overflow-hidden">
+        <main ref={container} className="min-h-screen bg-white pt-28 pb-20 overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 lg:px-12">
                 <div ref={headerRef} className="text-center mb-20">
                     <h1 className="text-5xl md:text-6xl lg:text-[100px] font-sans text-gray-900 mb-4 uppercase tracking-tight">Contact Us</h1>

@@ -100,11 +100,11 @@ const Calendar = () => {
   }, { scope: container, dependencies: [isLoading] })
 
   return (
-    <main ref={container} className="min-h-screen bg-white pt-12 pb-20 overflow-hidden">
+    <main ref={container} className="min-h-screen bg-white pt-28 pb-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16">
-          <h1 className="text-6xl md:text-7xl font-sans text-gray-900 mb-6 uppercase tracking-tighter">CAMPAIGN CALENDAR</h1>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans text-gray-900 mb-6 uppercase tracking-tighter">CAMPAIGN CALENDAR</h1>
           <p className="text-black/80 text-sm tracking-wide">&ldquo;Keep up with campaign events near you&rdquo;</p>
         </div>
 

@@ -47,17 +47,17 @@ export default function Hero() {
             });
         }
 
-        const mobileChildren = mobileContainer.current?.children;
-        if (mobileChildren) {
-            gsap.from(mobileChildren, {
-                opacity: 0,
-                y: 30,
-                duration: 1,
-                stagger: 0.15,
-                ease: "power3.out",
-                delay: 0.4,
-            });
-        }
+        // const mobileChildren = mobileContainer.current?.children;
+        // if (mobileChildren) {
+        //     gsap.from(mobileChildren, {
+        //         opacity: 0,
+        //         y: 30,
+        //         duration: 1,
+        //         stagger: 0.15,
+        //         ease: "power3.out",
+        //         delay: 0.4,
+        //     });
+        // }
 
         // Scroll prompt infinite bounce
         if (scrollPrompt.current) {
@@ -134,7 +134,7 @@ export default function Hero() {
                     </div>
 
                     {/* Content — bottom-anchored like the reference image */}
-                    <div ref={mobileContainer} className="absolute bottom-24 left-0 right-0 z-10 px-6">
+                    <div className="absolute bottom-24 left-0 right-0 z-10 px-6">
                         <span className="text-[10px] uppercase tracking-[0.3em] text-white/90 font-bold mb-4 block drop-shadow-md">
                             Together Today
                         </span>
@@ -144,13 +144,15 @@ export default function Hero() {
                             <br />
                             <span className="text-white">Direction</span>
                         </h1>
-                        <p className="text-[15px] font-gentium text-white/90 leading-snug max-w-[280px] text-sm mb-10 drop-shadow-lg">
+                        <p className="text-[18px] font-gentium text-white/90 leading-snug max-w-[280px] text-sm mb-10 drop-shadow-lg">
                             &ldquo;The Credible Alternative, driven by vision, strong values, and a commitment to real change.&rdquo;
                         </p>
-                        <button className="inline-flex items-center justify-center gap-2 bg-[#00d65b] hover:bg-[#00b24c] text-white font-bold uppercase tracking-wider text-sm px-10 py-3 transition-all active:scale-95 shadow-xl">
-                            <span>Join The Movement</span>
-                            <span className="ml-1 text-lg">&raquo;</span>
-                        </button>
+                        <NewButton
+                            text="Join The Movement"
+                            link="/membership"
+                            className="bg-[#00d65b] text-white font-bold uppercase tracking-wider text-sm px-10 py-3 w-fit h-auto shadow-xl"
+                            hoverBgClass="bg-[#00b24c]"
+                        />
                     </div>
 
                     {/* Scroll prompt */}
@@ -178,7 +180,8 @@ export default function Hero() {
                     </div>
 
                     {/* Content */}
-                    <div className="relative z-10 px-6 w-full py-20 flex items-center">
+                    <div className="relative z-10 px-6 w-full py-20 flex items-center flex-col gap-10">
+                        <h2 className="text-white text-[48px] font-bold font-sans leading-12">The Real Change</h2>
                         <div className="w-full">
                             <blockquote className="border-l-4 border-[#00d65b] pl-6 mb-8">
                                 <p className="font-gentium italic text-xl text-white leading-tight font-medium drop-shadow-md">
