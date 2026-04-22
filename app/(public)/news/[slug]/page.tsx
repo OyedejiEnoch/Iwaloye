@@ -52,7 +52,8 @@ const NewsArticlePage = ({ params }: { params: { slug: string } }) => {
             opacity: 0,
             y: 30,
             duration: 1.2,
-            ease: "power2.out"
+            ease: "power2.out",
+            clearProps: "all"
         })
 
         // Sidebar reveal
@@ -61,13 +62,14 @@ const NewsArticlePage = ({ params }: { params: { slug: string } }) => {
             x: 30,
             duration: 1.2,
             delay: 0.3,
-            ease: "power2.out"
+            ease: "power2.out",
+            clearProps: "all"
         })
     }, { scope: container })
 
     return (
-        <div ref={container} className="max-w-7xl mx-auto px-4 md:px-8 lg:px-8 py-12 md:py-8 lg:py-10 mt-16 md:mt-24 bg-white overflow-hidden">
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+        <div ref={container} className="max-w-7xl mx-auto px-4 md:px-8 lg:px-8 py-12 md:py-8 lg:py-10 mt-16 md:mt-16 bg-white">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
 
                 {/* Main Article Content */}
                 <div ref={articleRef} className="flex-1">
@@ -75,14 +77,14 @@ const NewsArticlePage = ({ params }: { params: { slug: string } }) => {
                         title={data?.data?.title}
                         image={data?.data?.image_or_media_url}
                         author={data?.data?.author_name}
-                        date={data?.data?.created_at?.split('T')[0]}
-                        year={data?.data?.created_at?.split('T')[1]}
+                        date={data?.data?.created_at ? new Date(data.data.created_at).toLocaleString('en-US', { month: 'short', day: 'numeric' }) : ''}
+                        year={data?.data?.created_at ? new Date(data.data.created_at).getFullYear().toString() : ''}
                         content={data?.data?.body}
                     />
                 </div>
 
                 {/* Sidebar */}
-                <aside ref={sidebarRef} className="lg:w-[400px]">
+                <aside ref={sidebarRef} className="lg:w-[400px] sticky top-10">
                     <RecentPostsSidebar />
                 </aside>
 

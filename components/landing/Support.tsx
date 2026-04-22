@@ -8,6 +8,7 @@ import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import NewButton from '../NewButton'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,9 +17,28 @@ const Support = () => {
   const headerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const statsRef = useRef<HTMLDivElement>(null)
+  const countRef = useRef<HTMLSpanElement>(null)
   const imagesRef = useRef<(HTMLDivElement | null)[]>([])
 
   useGSAP(() => {
+    // Number count animation
+    if (countRef.current) {
+      const countObj = { val: 0 };
+      gsap.to(countObj, {
+        val: 100000,
+        duration: 3,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: countRef.current,
+          start: "top 85%",
+        },
+        onUpdate: () => {
+          if (countRef.current) {
+            countRef.current.innerText = Math.floor(countObj.val).toLocaleString() + "+";
+          }
+        }
+      });
+    }
     // Header reveal
     gsap.from(headerRef.current, {
       scrollTrigger: {
@@ -60,9 +80,10 @@ const Support = () => {
       ease: "back.out(1.7)"
     })
 
-    // Floating images reveal
+    // Floating images reveal + Parallax
     imagesRef.current.forEach((img, idx) => {
       if (img) {
+        // Entrance animation
         gsap.from(img, {
           scrollTrigger: {
             trigger: img,
@@ -73,6 +94,19 @@ const Support = () => {
           duration: 1.5,
           delay: idx * 0.1,
           ease: "power2.out"
+        })
+
+        // Parallax effect (increased intensity)
+        const yOffsets = [-160, 120, -180, 100]; // Dramatically increased displacement
+        gsap.to(img, {
+          y: yOffsets[idx],
+          ease: "none",
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          }
         })
       }
     })
@@ -96,20 +130,20 @@ const Support = () => {
         {/* Two-column text area */}
         <div ref={contentRef} className='flex flex-col md:flex-row justify-between items-start gap-6 mt-8 mb-14'>
           {/* Left paragraph */}
-          <p className='text-[11px] md:text-[13px] leading-relaxed text-gray-700 max-w-sm italic'>
+          <p className='text-[11px] md:text-[13px] leading-relaxed text-gray-700 max-w-lg italic'>
             Your contribution is more than a donation, it&apos;s a powerful statement of
             belief in fairness, progress, and a better future. Together, we can turn
             shared values into real action, strengthening a people-driven movement
-            that amplifies the voice of the community.
+            that amplifies the voice of the people.
           </p>
 
           {/* Right highlighted text */}
           <div className='flex flex-col items-end text-right font-gentium'>
             <span className='bg-black text-white text-lg md:text-2xl font-bold px-2 py-0.5 leading-snug inline-block'>
-              Join our community for donating,
+              Join our community, be part
             </span>
             <span className='bg-black text-white text-lg md:text-2xl font-bold px-2 py-0.5 leading-snug inline-block mt-0.5'>
-              be part of a positive change in the State.
+              of a positive change in Osun State.
             </span>
             <span className='bg-black text-white text-lg md:text-2xl font-bold px-2 py-0.5 leading-snug inline-block mt-0.5'>
               With over:
@@ -120,9 +154,9 @@ const Support = () => {
         {/* Stats Section with Photos */}
         <div className='relative flex flex-col items-center'>
           {/* Photo Top-Left */}
-          <div ref={el => { imagesRef.current[0] = el }} className='absolute -left-2 max-w-sm:-top-28 md:left-8 md:top-0 w-24 h-28 md:w-36 md:h-42 z-10'>
+          <div ref={el => { imagesRef.current[0] = el }} className='hidden md:block absolute -left-2 max-sm:-top-20 md:-left-4 lg:left-8 md:-top-30 lg:top-6 w-24 h-28 md:w-36 md:h-42 z-10'>
             <Image
-              src="/assets/supportImg.png"
+              src="/assets/supportImg1.png"
               alt="Community member"
               fill
               className='object-cover'
@@ -130,9 +164,9 @@ const Support = () => {
           </div>
 
           {/* Photo Top-Right */}
-          <div ref={el => { imagesRef.current[1] = el }} className='absolute right-0 md:right-8 top-0 w-24 h-28 md:w-36 md:h-40 z-10'>
+          <div ref={el => { imagesRef.current[1] = el }} className='hidden md:block absolute right-0 max-sm:hidden md:-right-8 lg:right-8 md:top-10 lg:top-0 w-24 h-28 md:w-36 md:h-40 z-10'>
             <Image
-              src="/assets/supportImg4.png"
+              src="/assets/supportImage2.png"
               alt="Community members"
               fill
               className='object-cover'
@@ -141,9 +175,9 @@ const Support = () => {
 
           {/* Big Number */}
           <div ref={statsRef} className='flex flex-col items-center z-20 gap-10'>
-            <div className='mt-6 mb-2'>
-              <span className='text-[80px] md:text-[140px] lg:text-[160px] font-sans font-bold text-black leading-none tracking-tight'>
-                36,000+
+            <div className='mt-6 mb-1 md:mb-2'>
+              <span ref={countRef} className='text-[70px] md:text-[125px] lg:text-[160px] font-sans font-bold text-black leading-none tracking-tight'>
+                100,000+
               </span>
             </div>
 
@@ -151,24 +185,23 @@ const Support = () => {
             <div>
 
 
-              <p className='text-sm md:text-base text-center text-black/80 tracking-wider font-semibold font-gentium mb-6'>
-                people&nbsp; in our community
+              <p className='text-sm md:text-base text-center text-black/80 tracking-wider font-semibold font-gentium mb-1'>
+                ...people&nbsp; in our community
               </p>
 
               {/* Buttons */}
-              <div className='flex flex-row items-center gap-4 mb-8'>
-                <Link href={"/membership"} className='bg-black hover:bg-[#F47321] hover:border-[#F47321] text-white text-xs md:text-sm font-medium px-6 py-4 border border-black transition-colors tracking-wide'>
-                  Join the Community
-                </Link>
+              <div className='flex flex-col md:flex-row items-center gap-0 md:gap-4 mb-8'>
+                {/* <NewButton text='' link='/' className='bg-black text-white w-[225px] h-[62px]' /> */}
+                <NewButton text='Join the Community' link='/membership' className="w-[225px] h-[62px] bg-black text-white" hoverBgClass="bg-white border border-black" hoverTextClass="group-hover:text-black" />
                 <Donate />
               </div>
             </div>
           </div>
 
           {/* Photo Bottom-Left */}
-          <div ref={el => { imagesRef.current[2] = el }} className='absolute left-4 md:left-22 -bottom-30 w-28 h-32 md:w-40 md:h-48 z-10'>
+          <div ref={el => { imagesRef.current[2] = el }} className='hidden md:block absolute left-4 md:-left-5 lg:left-22 -bottom-30 w-28 h-32 md:w-40 md:h-48 z-10'>
             <Image
-              src="/assets/supportImg3.png"
+              src="/assets/supportImage3.png"
               alt="Community members"
               fill
               className='object-cover'
@@ -176,9 +209,9 @@ const Support = () => {
           </div>
 
           {/* Photo Bottom-Right */}
-          <div ref={el => { imagesRef.current[3] = el }} className='absolute right-4 md:right-30 -bottom-8 w-24 h-28 md:w-36 md:h-40 z-10'>
+          <div ref={el => { imagesRef.current[3] = el }} className='hidden md:block absolute right-4 max-sm:-bottom-30 md:right-30 -bottom-8 md:hidden lg:block w-24 h-28 md:w-36 md:h-40 z-10'>
             <Image
-              src="/assets/supportImg2.png"
+              src="/assets/supportImage4.png"
               alt="Community members"
               fill
               className='object-cover'

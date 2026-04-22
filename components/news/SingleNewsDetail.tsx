@@ -12,17 +12,17 @@ interface SingleNewsDetailProps {
 }
 
 const SingleNewsDetail = ({ title, image, author, date, year, content }: SingleNewsDetailProps) => {
-    console.log(content)
+    // console.log(content)
     return (
         <article className="w-full">
-            <h1 className="text-3xl md:text-4xl lg:text-[1.8rem] leading-tight font-gentium font-bold text-gray-900 mb-8 uppercase">
+            <h1 className="text-3xl md:text-4xl lg:text-[1.8rem] leading-tight font-gentium font-bold text-gray-900 mb-8">
                 {title}
             </h1>
 
             <div className="relative w-full aspect-[16/9] mb-8 bg-gray-100 overflow-hidden">
                 <Image
-                    src={image}
-                    alt={title}
+                    src={image || "/assets/imageHolder.png"}
+                    alt={title || "News Article"}
                     fill
                     className="object-cover"
                     priority
@@ -30,8 +30,10 @@ const SingleNewsDetail = ({ title, image, author, date, year, content }: SingleN
             </div>
 
             <div className="flex flex-wrap items-center gap-6 mb-8 py-4 border-y border-gray-100">
-                <div className="flex items-center gap-1.5 bg-[#F47321] text-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider">
-                    <span>{date}</span> | <span>{year}</span>
+                <div className="flex items-center gap-3 bg-[#F47321] text-white w-[138px] h-[38px] justify-center text-sm tracking-wide">
+                    <span className='text-white/60 font-medium'>{date}</span>
+                    <div className="w-[1.5px] h-5 bg-white/50" />
+                    <span className="font-medium">{year}</span>
                 </div>
 
                 <div className="flex items-center gap-2 text-black/80 text-sm">

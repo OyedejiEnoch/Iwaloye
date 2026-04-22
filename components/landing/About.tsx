@@ -7,6 +7,7 @@ import { ChevronsRight } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import NewButton from '../NewButton'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -33,39 +34,36 @@ const About = () => {
 
   return (
     <section className='py-18 md:py-22 bg-white overflow-hidden'>
-      <div ref={container} className='max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-7 flex-wrap '>
-        <div className='flex flex-col'>
+      <div ref={container} className='max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-18 md:gap-9 flex-wrap '>
+        <div className='flex flex-col max-sm:items-center'>
           <Image src={"/icons/aboutIcon.png"} alt='image' width={60} height={60} />
 
-          <p className='mt-4 text-xs text-neutral-600 font-semibold'>About</p>
-          <h2 className='text-3xl font-bold mt-2 font-sans'>African Democratic Congress</h2>
-          <p className='mt-4 text-sm font-medium leading-relaxed'>Creating a transparent, accountable political system free from elite control.</p>
-          <Button className='mt-6 bg-transparent w-full md:w-fit px-8 text-black border border-black py-5 font-semibold  rounded-none hover:bg-[#F47321] hover:text-white hover:border-[#F47321] transition-all duration-300'>
-            <a href='https://adc.org.ng/'>Join the Party</a>
-            <ChevronsRight className="ml-2" />
-          </Button>
+          {/* <p className='mt-4 text-xs text-neutral-600 font-semibold'>About</p> */}
+          <h2 className='text-[30px] md:text-3xl font-bold mt-2 font-sans mt-6 max-sm:text-center'>African Democratic Congress</h2>
+          <p className='mt-4 text-sm font-medium leading-relaxed max-sm:text-center'>Creating a transparent, accountable political system free from elite control.</p>
+          <div className='max-w-2xl md:w-full'>
+            <NewButton text='Join the Party' link='https://adc.org.ng/' />
+          </div>
         </div>
-        <div className='flex flex-col'>
+        <div className='flex flex-col max-sm:items-center'>
           <Image src={"/icons/volunteerIcon.png"} alt='image' width={100} height={70} />
 
-          <p className='mt-4 text-xs text-neutral-600 font-semibold'>Become</p>
-          <h2 className='text-3xl font-bold mt-2 font-sans'>A Volunteer</h2>
-          <p className='mt-4 leading-relaxed text-sm font-medium'>Your support powers our mission. Help spread the message of progress.</p>
-          <Button className='mt-6 bg-transparent w-full md:w-fit px-8 text-black border border-black py-5 font-semibold rounded-none hover:bg-[#F47321] hover:border-[#F47321] hover:text-white transition-all duration-300'>
-            Join the Movement
-            <ChevronsRight className="ml-2" />
-          </Button>
+          {/* <p className='mt-4 text-xs text-neutral-600 font-semibold'>Become</p> */}
+          <h2 className='text-[30px] md:text-3xl  font-bold mt-2 font-sans mt-6 max-sm:text-center'>Become A Volunteer</h2>
+          <p className='mt-4 leading-relaxed text-sm font-medium max-sm:text-center'>Your support powers our mission. Help spread the message of progress.</p>
+          <div className='max-w-2xl md:w-full'>
+            <NewButton text='Join the Movement' link='/membership' />
+          </div>
         </div>
-        <div className='flex flex-col'>
+        <div className='flex flex-col max-sm:items-center'>
           <Image src={"/icons/recognitonIcon.png"} alt='image' width={60} height={60} />
 
-          <p className='mt-4 text-xs text-neutral-600 font-semibold'>Groups</p>
-          <h2 className='text-3xl font-bold mt-2 font-sans'>Recognition</h2>
-          <p className='mt-4 leading-relaxed text-sm font-medium'>Celebrating the dedicated individuals powering this movement.</p>
-          <Button className='mt-6 bg-transparent w-full md:w-fit px-8 text-black border border-black py-5 font-semibold  rounded-none hover:bg-[#F47321] hover:border-[#F47321] hover:text-white transition-all duration-300'>
-            Join the Movement
-            <ChevronsRight className="ml-2" />
-          </Button>
+          {/* <p className='mt-4 text-xs text-neutral-600 font-semibold'>Groups</p> */}
+          <h2 className='text-[30px] md:text-3xl  font-bold mt-2 font-sans mt-6 max-sm:text-center'>Support Groups</h2>
+          <p className='mt-4 leading-relaxed text-sm font-medium max-sm:text-center'>Celebrating the dedicated individuals powering this movement.</p>
+          <div className='max-w-2xl md:w-full'>
+            <NewButton text='View Groups' link='' />
+          </div>
         </div>
       </div>
     </section>

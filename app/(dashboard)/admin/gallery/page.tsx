@@ -37,13 +37,14 @@ const initialGalleryItems = [
 ];
 
 export default function GalleryManagementPage() {
-  const { data: albums, isLoading: isLoadingAlbums } = useGetAllAlbumsQuery();
+  const { data: albumsResponse, isLoading: isLoadingAlbums } = useGetAllAlbumsQuery();
+  const albums: any[] = albumsResponse?.data || [];
+
   const [deleteAlbum] = useDeleteAlbumMutation();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<{ id: string, title: string } | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  console.log(albums)
 
   const handleDeleteClick = (id: string, title: string) => {
     setSelectedItem({ id, title });
@@ -84,7 +85,7 @@ export default function GalleryManagementPage() {
                   Manage Gallery
                 </p>
               </div>
-              <Link href="/admin/gallery/add" className="flex items-center bg-[#6D28D9] hover:bg-[#5B21B6] text-white font-semibold gap-2 h-11 px-6 rounded-md transition-all shadow-sm">
+              <Link href="/admin/gallery/add" className="flex items-center bg-[#155DFC] text-white font-semibold gap-2 h-11 px-6 rounded-md transition-all shadow-sm">
                 <Plus className="h-5 w-5" />
                 Add Album
               </Link>
@@ -97,33 +98,38 @@ export default function GalleryManagementPage() {
                   <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
                 </div>
               ) : (
-                albums?.map((album: any) => (
-                  <Card key={album.id} className="border border-gray-100 bg-white shadow-sm hover:shadow-md transition-all rounded-lg overflow-hidden group">
-                    <CardContent className="p-5 flex items-center justify-between">
-                      <div className="flex flex-col gap-1">
-                        <h3 className="text-lg font-bold text-gray-900">{album.title}</h3>
-                        <p className="text-sm text-gray-500">{album.description || "The moments between the milestones."}</p>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="h-9 px-4 text-gray-700 border-gray-200 hover:bg-gray-50 font-medium"
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="h-9 px-4 text-red-600 border-gray-200 hover:bg-red-50 font-medium"
-                          onClick={() => handleDeleteClick(album.id, album.title)}
-                        >
-                          Delete
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
+                albums?.map((album: any) => {
+                  return (
+                    <Card key={album.id} className="border border-black/20 bg-white rounded-none shadow-none hover:shadow transition-all overflow-hidden group">
+                      <CardContent className="p-5 flex items-center justify-between">
+                        <div className="flex flex-col gap-1">
+                          <h3 className="text-lg font-bold text-gray-900">{album.title}</h3>
+                          <p className="text-sm text-gray-500">{album.description || "The moments between the milestones."}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-9 px-4 text-gray-700 border-gray-200 hover:bg-gray-50 font-medium"
+                          >
+                            <Link href={`/admin/gallery/edit/${album.slug ?? album.id}`}>
+                              Edit
+                            </Link>
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-9 px-4 text-red-600 border-gray-200 hover:bg-red-50 font-medium"
+                            onClick={() => handleDeleteClick(album.slug ?? album.id, album.title)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })
+
               )}
 
               {!isLoadingAlbums && albums?.length === 0 && (

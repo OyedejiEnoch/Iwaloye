@@ -84,7 +84,7 @@ const BookmarkIcon = () => (
 
 /* ── single Instagram card ── */
 const InstagramCard = ({ post }: { post: PostData }) => (
-  <div className="card-item relative w-[220px] md:w-[240px] flex-shrink-0">
+  <div className="card-item relative w-[220px] md:w-[270px] h-[500px] flex-shrink-0">
     {/* Phone frame overlay */}
     <Image
       src="/assets/Phone.png"
@@ -95,7 +95,7 @@ const InstagramCard = ({ post }: { post: PostData }) => (
     />
 
     {/* Inner card content (fits inside the phone frame) */}
-    <div className="relative z-10 mx-[10px] mt-[12px] mb-[12px] bg-white rounded-[22px] overflow-hidden"
+    <div className="relative z-10 mx-[10px] mt-[12px] mb-[12px] bg-white rounded-[22px] h-[500px] overflow-hidden"
       style={{ height: 'calc(100% - 24px)' }}>
       {/* IG top bar */}
       <div className="flex items-center justify-between px-3 py-2 border-b border-gray-100">
@@ -108,7 +108,7 @@ const InstagramCard = ({ post }: { post: PostData }) => (
       </div>
 
       {/* User row */}
-      <div className="flex items-center gap-2 px-3 py-1.5">
+      <div className="flex items-center gap-2 px-3 py-1.5 h-[60px]">
         <div className="w-6 h-6 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
           <Image
             src="/assets/imageHolder.png"
@@ -119,7 +119,7 @@ const InstagramCard = ({ post }: { post: PostData }) => (
           />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-[9px] font-semibold truncate">Iwaloye</p>
+          <p className="text-[11px] font-semibold truncate">Iwaloye</p>
           <p className="text-[7px] text-gray-400">1 December</p>
         </div>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -140,25 +140,25 @@ const InstagramCard = ({ post }: { post: PostData }) => (
       </div>
 
       {/* Engagement row */}
-      <div className="px-3 pt-2 pb-1">
+      <div className="px-3 pt-2 pb-1 h-[40px]">
         <div className="flex items-center gap-3 text-gray-700">
-          <span className="flex items-center gap-0.5 text-[8px]"><HeartIcon /> {post.likes}</span>
-          <span className="flex items-center gap-0.5 text-[8px]"><CommentIcon /> {post.comments}</span>
-          <span className="flex items-center gap-0.5 text-[8px]"><ShareIcon /> {post.shares}</span>
-          <span className="flex items-center gap-0.5 text-[8px] ml-auto"><BookmarkIcon /> {post.saves}</span>
+          <span className="flex items-center gap-0.5 text-[10px]"><HeartIcon /> {post.likes}</span>
+          <span className="flex items-center gap-0.5 text-[10px]"><CommentIcon /> {post.comments}</span>
+          <span className="flex items-center gap-0.5 text-[10px]"><ShareIcon /> {post.shares}</span>
+          <span className="flex items-center gap-0.5 text-[10px] ml-auto"><BookmarkIcon /> {post.saves}</span>
         </div>
       </div>
 
       {/* Liked by */}
       <div className="px-3 pb-0.5">
-        <p className="text-[7px] text-gray-500">
+        <p className="text-[9.5px] text-gray-500">
           liked by <span className="font-semibold text-black">gurusafe</span> and others
         </p>
       </div>
 
       {/* Caption */}
       <div className="px-3 pb-3">
-        <p className="text-[7px] leading-[1.4] text-gray-800">
+        <p className="text-[10px] leading-[1.4] text-gray-800">
           <span className="font-semibold">goodluckjonathan</span>{' '}
           {post.caption}
         </p>

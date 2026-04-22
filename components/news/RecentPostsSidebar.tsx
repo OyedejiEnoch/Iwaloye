@@ -45,20 +45,20 @@ const recentPosts: RecentPost[] = [
 const RecentPostsSidebar = () => {
     return (
         <div className="w-full lg:max-w-[400px]">
-            <h2 className="text-xl font-bold text-gray-900 mb-8">Recent Posts</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-8">Recent Posts</h2>
 
             <div className="space-y-8">
                 {recentPosts.map((post, index) => (
-                    <Link key={index} href={`/news/${post.slug}`} className="group flex gap-4">
+                    <Link key={index} href={`/news/${post.slug}`} className="group flex gap-4 ">
                         <div className="relative w-24 h-24 shrink-0 bg-gray-100 overflow-hidden">
                             <Image
-                                src={post.image}
-                                alt={post.title}
+                                src={post.image || "/assets/imageHolder.png"}
+                                alt={post.title || "Recent Post"}
                                 fill
                                 className="object-cover transition-transform group-hover:scale-105"
                             />
                         </div>
-                        <div className="flex flex-col justify-between">
+                        <div className="flex flex-col justify-between border-b border-black/20 pb-2">
                             <h3 className="text-[14px] leading-tight font-sans font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-3">
                                 {post.title}
                             </h3>

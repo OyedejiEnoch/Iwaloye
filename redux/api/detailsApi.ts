@@ -30,7 +30,7 @@ export const detailsApi = createApi({
             query: () => '/leaders',
         }),
         getAllCalenders: builder.query({
-            query: () => '/calenders',
+            query: () => '/campaign-calendar',
         }),
         // POST api/payment
         createPayment: builder.mutation({
@@ -48,6 +48,13 @@ export const detailsApi = createApi({
                 body: data,
             }),
         }),
+        // Albums
+        getAllAlbums: builder.query<any, void>({
+            query: () => '/albums',
+        }),
+        getSingleAlbum: builder.query<any, string>({
+            query: (slug) => `/albums/${slug}`,
+        }),
     }),
 })
 
@@ -56,6 +63,10 @@ export const {
     useGetAllNewsQuery, 
     useGetSingleNewsQuery, 
     useGetSingleVisionQuery, 
+    useGetAllLeadersQuery,
+    useGetAllCalendersQuery,
     useCreatePaymentMutation,
-    useSubmitContactMutation 
+    useSubmitContactMutation,
+    useGetAllAlbumsQuery,
+    useGetSingleAlbumQuery,
 } = detailsApi

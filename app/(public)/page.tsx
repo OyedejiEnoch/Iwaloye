@@ -18,7 +18,7 @@ const Home = () => {
       <Hero />
       <About />
       <Mission />
-      <Candidate />
+      <Candidate about={false} />
       <News />
       <Cta />
       <Support />

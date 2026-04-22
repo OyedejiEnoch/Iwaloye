@@ -15,6 +15,8 @@ import {
   BookOpen,
   ChevronRight,
   CircleArrowOutUpRight,
+  LogOut,
+  Loader2,
 } from "lucide-react";
 import {
   Sidebar,
@@ -29,6 +31,11 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useLogoutAdminMutation } from "@/redux/api/adminApi";
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/features/authSlice";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const overviewItems = [
   { title: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -52,6 +59,23 @@ const userManagementItems = [
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [logoutAdmin, { isLoading: isLoggingOut }] = useLogoutAdminMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logoutAdmin().unwrap();
+      dispatch(logout());
+      toast.success("Logged out successfully");
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Even if API fails, we should clear local state and redirect
+      dispatch(logout());
+      router.push("/login");
+    }
+  };
 
   return (
     <Sidebar className="border-r border-gray-200 bg-white">
@@ -154,7 +178,7 @@ export default function AdminSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-gray-100 px-4 py-3">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mb-3">
           <Avatar className="h-8 w-8 ring-2 ring-indigo-200">
             <AvatarFallback className="bg-indigo-600 text-white text-xs font-bold">
               AD
@@ -164,8 +188,19 @@ export default function AdminSidebar() {
             <p className="text-sm font-semibold text-gray-900 truncate">Admin User</p>
             <p className="text-xs text-gray-500 truncate">Super Admin</p>
           </div>
-          <ChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0" />
         </div>
+        <button
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+          className="flex w-full items-center gap-3 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 rounded-lg transition-colors disabled:opacity-50"
+        >
+          {isLoggingOut ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <LogOut className="h-4 w-4" />
+          )}
+          <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
+        </button>
       </SidebarFooter>
     </Sidebar>
   );

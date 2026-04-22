@@ -5,16 +5,23 @@ import React, { useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import NewButton from '../NewButton'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const Candidate = ({ heading, subHeading, className }: { heading?: string, subHeading?: string, className?: string }) => {
+const Candidate = ({ heading, subHeading, text, className, about = false }: { heading?: string, subHeading?: string, text?: string, className?: string, about?: boolean }) => {
+    const [mounted, setMounted] = React.useState(false)
     const container = useRef<HTMLDivElement>(null)
     const headerRef = useRef<HTMLDivElement>(null)
     const imageRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
 
+    React.useEffect(() => {
+        setMounted(true)
+    }, [])
+
     useGSAP(() => {
+        if (!mounted) return;
         // Header reveal
         gsap.from(headerRef.current, {
             scrollTrigger: {
@@ -61,11 +68,11 @@ const Candidate = ({ heading, subHeading, className }: { heading?: string, subHe
             <div className="max-w-6xl mx-auto">
 
                 <div ref={headerRef} className='flex flex-col'>
-                    <h2 className={`text-4xl md:text-5xl font-sans lg:text-[70px] font-bold text-gray-900 tracking-tight mb-4 uppercase ${className}`}>
+                    <h2 className={`text-4xl md:text-5xl font-sans lg:text-[70px] font-bold text-gray-900 tracking-tight mb-2 uppercase ${className}`}>
                         {heading || "Meet the Candidate"}
                     </h2>
-                    <p className={`text-black/80 max-w-2xl font-medium mb-6 ${className} mx-auto`}>
-                        {subHeading || "“Follow campaign updates, speeches, announcements, and press releases”"}
+                    <p className={`text-black/80 font-medium mb-6 text-sm ${className}`}>
+                        {subHeading || "“The Credible Alternative, driven by vision, strong values, and a commitment to real change.”"}
                     </p>
                 </div>
 
@@ -80,15 +87,20 @@ const Candidate = ({ heading, subHeading, className }: { heading?: string, subHe
                             FORWARD MOMENTUM. <br />
                             GETTING THINGS DONE.</h3>
 
-                        <p className='text-xs text-gray-500 tracking-wider leading-relaxed'>Dr. Najeem Folasayo Salaam, Ph.D., born on August 8, 1965, in the historic town of Ejigbo in Osun State, Nigeria, stands as a distinguished
-                            figure whose life story is as compelling as it is inspiring. Marked by a rare blend of resilience, intellect, and an unwavering commitment to service, his journey began under challenging circumstances, as he was orphaned at the tender age of 10, an experience that could have defined his limits but instead ignited within him a deep well of strength, determination, and purpose. Faced with adversity at such a formative stage of life, Dr. Salaam chose not to be constrained by hardship but to rise above it, channeling his struggles into a relentless pursuit of excellence. This early test of character became the bedrock upon which he built an extraordinary life, shaping his worldview and instilling in him the discipline and perseverance that would guide his future endeavors. Through sheer determination and an unyielding belief in the transformative power of education and service, he steadily carved a path that would lead him to remarkable achievements in both academia and public life. Today, his story is not merely one of personal success but a powerful testament to the triumph of the human spirit,
-                            an enduring narrative of how courage, resilience, and vision can propel an individual from the depths of early adversity to the pinnacle of political leadership and scholarly distinction.</p>
+                        <p className='text-xs text-gray-500 italic tracking-wider leading-relaxed'>{text ? text : "Dr. Najeem Folasayo Salaam, Ph.D., born on August 8, 1965, in the historic town of Ejigbo in Osun State, Nigeria, stands as a distinguished figure whose life story is as compelling as it is inspiring. Marked by a rare blend of resilience, intellect, and an unwavering commitment to service, his journey began under challenging circumstances, as he was orphaned at the tender age of 10, an experience that could have defined his limits but instead ignited within him a deep well of strength..."} </p>
 
                         <div className="space-y-3">
-                            <h3 className='md:text-lg lg:text-[24px] font-bold tracking-wider'>A.D.C. 2026</h3>
+                            <div className='flex items-end gap-2 h-fit'>
+                                <h3 className='md:text-lg lg:text-[24px] font-bold tracking-wider'>A.D.C. 2026</h3>
+                                <div className='w-[139px] h-[1.5px] bg-[#F47321] mb-3' />
+                            </div>
                             <h2 className="text-3xl md:text-4xl lg:text-[66px] font-freestyle">Salam F. Najeem</h2>
                             <p className='font-bold text-[#000000]/80 text-sm opacity-70'>For Osun State Governor</p>
                         </div>
+
+                        {mounted && !about && (
+                            <NewButton text='Read More' link='/about' className="w-[148px] h-[62px] bg-black text-white" hoverBgClass="bg-white border border-black" hoverTextClass="group-hover:text-black" />
+                        )}
                     </div>
                 </div>
             </div>

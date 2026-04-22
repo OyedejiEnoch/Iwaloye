@@ -2,46 +2,49 @@ import Image from 'next/image'
 import React from 'react'
 
 const Cta = () => {
-  return (
-    <section className='relative w-full bg-white py-20 px-4 md:px-8 lg:px-16 min-h-[60vh]'>
-      <Image src={"/assets/ctaImg.png"} alt='image'  fill className='inset-0 absolute object-cover' />
-        {/* overlay */}
-        <div className='absolute inset-0 bg-black opacity-50 ' />
-        {/* this should be in the middle and on top */}
+    return (
+        <section className='relative w-full bg-white py-20 px-4 md:px-8 lg:px-16 min-h-[60vh]'>
+            <Image src={"/assets/ctaImg.png"} alt='image' fill className='inset-0 absolute object-cover' />
+            {/* overlay */}
+            <div className='absolute inset-0 bg-black opacity-50 ' />
+            {/* this should be in the middle and on top */}
 
-        <div className='max-w-7xl mx-auto  z-20 relative flex justify-between md:flex-row flex-col '>
-            <div className=''>
-                <span className='text-3xl md:text-4xl lg:text-4xl max-w-xl mx-auto inline-flex font-semibold text-white bg-black'>Have Your Say
-                    <br />
-                    Build a future that reflects
-                    <br />
-                     your voice
-                </span>
+            <div className='max-w-7xl mx-auto  z-20 relative flex justify-between md:flex-row flex-col '>
+                <div className=''>
+                    <span className='text-2xl md:text-3xl lg:text-[30px] max-w-xl mx-auto flex flex-col font-semibold text-white font-sans'>
+                        <span className='block bg-black w-fit p-[0.5px]'>Have Your Say</span>
+                        <span className='block bg-black w-fit p-[0.5px]'>Build a future that reflects</span>
+                        <span className='block bg-black w-fit p-[0.5px]'>your voice</span>
+                    </span>
 
-                <p className='text-xs italic text-white mt-10 max-w-md tracking-wider'>No one understands a community better than the people who live in it. Your experiences, your struggles, and your hopes matter deeply.</p>
+                    <p className='text-xs italic text-white mt-10 max-w-sm tracking-wider'>No one understands a community better than the people who live in it. Your experiences, your struggles, and your hopes matter deeply.</p>
+                </div>
+
+                <form className='flex flex-col max-sm:mt-4'>
+                    <div className='flex gap-3 md:gap-10 md:flex-row flex-col justify-start'>
+                        <div className='space-y-2 flex flex-col'>
+                            <label htmlFor='name' className='text-white text-xs md:text-sm'>Name</label>
+                            <input type="text" id='name' className='bg-white px-2 w-[350px] h-[40px]' />
+                        </div>
+                        <div className='space-y-2 flex flex-col'>
+                            <label htmlFor='email' className='text-white text-xs md:text-sm'>Email Address</label>
+                            <input type="email" id='name' className='bg-white px-2 w-[350px] h-[40px]' />
+                        </div>
+                    </div>
+
+                    <div className='flex space-y-2 flex-col mt-2 md:mt-6'>
+                        <label htmlFor='message' className='text-white text-xs md:text-sm'>Your Message</label>
+                        <textarea name="message" id="message" cols={30} rows={5} className='bg-white' />
+                    </div>
+
+                    <button className='bg-[#12A650] py-3 px-2 w-full max-sm:text-sm mt-4 md:mt-6 text-white'>
+                        Submit Feedback
+                    </button>
+                </form>
             </div>
 
-            <form className='flex flex-col max-sm:mt-4'>
-                <div className='flex gap-10 md:flex-row flex-col justify-start'>
-                    <div className='space-y-2 flex flex-col'>
-                        <label htmlFor='name' className='text-white text-sm'>Name</label>
-                        <input type="text" id='name' className='bg-white py-4 px-2 w-60' />
-                    </div>
-                    <div className='space-y-2 flex flex-col'>
-                        <label htmlFor='email' className='text-white text-sm'>Email Address</label>
-                        <input type="email" id='name' className='bg-white py-4 px-2 w-60' />
-                    </div>
-                </div>
-
-                <div className='flex flex-col mt-6'>
-                    <label htmlFor='message' className='text-white text-sm'>Your Message</label>
-                    <textarea name="message" id="message" cols={30} rows={5} className='bg-white' />
-                </div>
-            </form>
-        </div>
-    
-    </section>
-  )
+        </section>
+    )
 }
 
 export default Cta

@@ -30,8 +30,8 @@ const Benefits = [
   },
   {
     icon: Calendar,
-    title: "Exclusive Events",
-    desc: "Access members-only events, conferences and network opportunities.",
+    title: "Exclusive Updates",
+    desc: "Be the first to know, get direct update from the campaign team.",
     iconImage: "/icons/membersIcon2.png"
   },
   {
@@ -129,7 +129,7 @@ const MembershipPage = () => {
 
       console.log("Submitting Member:", payload);
       await registerMember(payload).unwrap();
-      
+
       toast.success("Membership registration successful!");
       // Reset form or redirect
       setDetails({
@@ -186,35 +186,23 @@ const MembershipPage = () => {
       ease: "power2.out"
     })
 
-    // FAQ reveal
-    gsap.from(".faq-card", {
-      scrollTrigger: {
-        trigger: ".faq-section",
-        start: "top 85%",
-      },
-      opacity: 0,
-      y: 20,
-      stagger: 0.15,
-      duration: 0.8,
-      ease: "power2.out"
-    })
   }, { scope: container })
 
 
   return (
     <main ref={container} className="min-h-screen bg-white pt-20 pb-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className=" mx-auto px-6 lg:px-12">
 
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-24">
-          <h1 className="text-6xl md:text-7xl font-sans font-bold text-gray-900 mb-4 uppercase tracking-tight">MEMBERSHIP</h1>
-          <p className="text-black/70">“Be more than a supporter. Be part of the movement.”</p>
+        <div ref={headerRef} className="text-center mb-18">
+          <h1 className="text-4xl md:text-5xl lg:text-[100px] font-sans text-gray-900 mb-4 uppercase tracking-tight">MEMBERSHIP</h1>
+          <p className="text-black/70 text-[20px] font-gentium">“Be more than a supporter. Be part of the movement.”</p>
         </div>
 
         {/* Members Benefits */}
-        <section className="mb-32">
-          <div className="flex items-center justify-center gap-2 mb-16">
-            <span className="w-2 h-2 bg-[#F47321] rounded-full"></span>
+        <section className="mb-24">
+          <div className="flex items-center justify-center gap-2 mb-10">
+            <span className="w-[7px] h-[7px] bg-[#F47321]"></span>
             <h2 className="text-2xl font-bold text-gray-900 font-sans">Members Benefits</h2>
           </div>
 
@@ -232,10 +220,23 @@ const MembershipPage = () => {
           </div>
         </section>
 
+        {/* Banner Section */}
+        <div className="mb-32 w-full hidden md:block">
+          <div className="relative w-full aspect-[16/9] md:aspect-[40/13] overflow-hidden rounded-sm shadow-lg">
+            <Image
+              src="/assets/bannerImage.png"
+              alt="Membership Banner"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        </div>
+
         {/* Join Today Form */}
         <section className="form-section mb-32 max-w-5xl mx-auto px-4 py-12 rounded-sm">
           <div className="flex items-center justify-center gap-2 mb-16">
-            <span className="w-2 h-2 bg-[#F47321] rounded-full"></span>
+            <span className="w-[7px] h-[7px] bg-[#F47321]"></span>
             <h2 className="text-2xl font-bold text-gray-900 font-sans">Join Today</h2>
           </div>
 
@@ -250,7 +251,7 @@ const MembershipPage = () => {
                   value={details.first_name}
                   onChange={handleChange}
                   placeholder="First Name"
-                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all rounded-sm shadow-sm"
+                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all"
                 />
               </div>
               <div className="space-y-2">
@@ -261,7 +262,7 @@ const MembershipPage = () => {
                   value={details.last_name}
                   onChange={handleChange}
                   placeholder="Last Name"
-                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all rounded-sm shadow-sm"
+                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all"
                 />
               </div>
               {/* Email */}
@@ -273,7 +274,7 @@ const MembershipPage = () => {
                   value={details.email}
                   onChange={handleChange}
                   placeholder="example@gmail.com"
-                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all rounded-sm shadow-sm"
+                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all"
                 />
               </div>
 
@@ -308,7 +309,7 @@ const MembershipPage = () => {
                   name='dob'
                   value={details.dob}
                   onChange={handleChange}
-                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all rounded-sm shadow-sm"
+                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all"
                 />
               </div>
               {/* Phone Number */}
@@ -320,7 +321,7 @@ const MembershipPage = () => {
                   value={details.phone}
                   onChange={handleChange}
                   placeholder="+2348012345678"
-                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all rounded-sm shadow-sm"
+                  className="w-full p-4 border border-gray-200 bg-white text-sm outline-none focus:border-[#F47321] transition-all"
                 />
               </div>
 
@@ -354,7 +355,7 @@ const MembershipPage = () => {
                   value={details.country}
                   onValueChange={(val) => handleSelectChange('country', val)}
                 >
-                  <SelectTrigger className="w-full h-14 px-4 border border-gray-200 bg-white text-sm text-gray-400 outline-none focus:border-[#F47321] transition-all rounded-sm appearance-none cursor-pointer shadow-sm">
+                  <SelectTrigger className="w-full h-14 px-4 rounded-none border-gray-100 bg-white text-sm text-gray-700 outline-none focus:border-[#F47321] transition-all appearance-none cursor-pointer shadow-sm">
                     <SelectValue placeholder="Country" />
                   </SelectTrigger>
                   <SelectContent>
@@ -373,7 +374,7 @@ const MembershipPage = () => {
                   value={details.state}
                   onValueChange={(val) => handleSelectChange('state', val)}
                 >
-                  <SelectTrigger className="w-full h-14 px-4 border border-gray-200 bg-white text-sm text-gray-400 outline-none focus:border-[#F47321] transition-all rounded-sm appearance-none cursor-pointer shadow-sm">
+                  <SelectTrigger className="w-full h-14 px-4 rounded-none border-gray-100 bg-white text-sm text-gray-400 outline-none focus:border-[#F47321] transition-all appearance-none cursor-pointer shadow-sm">
                     <SelectValue placeholder="State" />
                   </SelectTrigger>
                   <SelectContent>
@@ -391,7 +392,7 @@ const MembershipPage = () => {
                   value={details.lga}
                   onValueChange={(val) => handleSelectChange('lga', val)}
                 >
-                  <SelectTrigger className="w-full h-14 px-4 border border-gray-200 bg-white text-sm text-gray-400 outline-none focus:border-[#F47321] transition-all rounded-sm appearance-none cursor-pointer shadow-sm">
+                  <SelectTrigger className="w-full h-14 px-4 rounded-none border-gray-100 bg-white text-sm text-gray-400 outline-none focus:border-[#F47321] transition-all appearance-none cursor-pointer shadow-sm">
                     <SelectValue placeholder="Select Local government" />
                   </SelectTrigger>
                   <SelectContent>
@@ -413,7 +414,7 @@ const MembershipPage = () => {
                   onValueChange={(val) => handleSelectChange('ward', val)}
                   disabled={!details.lga}
                 >
-                  <SelectTrigger className="w-full h-14 px-4 border border-gray-200 bg-white text-sm text-gray-400 outline-none focus:border-[#F47321] transition-all rounded-sm appearance-none cursor-pointer shadow-sm">
+                  <SelectTrigger className="w-full h-14 px-4 rounded-none border-gray-100 border bg-white text-sm text-gray-400 outline-none focus:border-[#F47321] transition-all appearance-none cursor-pointer shadow-sm">
                     <SelectValue placeholder="Select Ward" />
                   </SelectTrigger>
                   <SelectContent>
@@ -434,7 +435,7 @@ const MembershipPage = () => {
                   onValueChange={(val) => handleSelectChange('polling_unit', val)}
                   disabled={!details.ward}
                 >
-                  <SelectTrigger className="w-full h-14 px-4 border border-gray-200 bg-white text-sm text-gray-400 outline-none focus:border-[#F47321] transition-all rounded-sm appearance-none cursor-pointer shadow-sm">
+                  <SelectTrigger className="w-full h-14 px-4 border rounded-none border-gray-100 bg-white text-sm text-gray-400 outline-none focus:border-[#F47321] transition-all appearance-none cursor-pointer shadow-sm">
                     <SelectValue placeholder="Select Polling Unit" />
                   </SelectTrigger>
                   <SelectContent>
@@ -453,7 +454,7 @@ const MembershipPage = () => {
               <button
                 type="submit"
                 disabled={isRegistering}
-                className="w-full max-w-lg p-4 bg-[#F47321] text-white font-bold uppercase text-sm tracking-widest transition-all rounded-sm mt-8 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full max-w-lg p-4 bg-[#F47321] text-white font-bold uppercase text-sm tracking-widest transition-all mt-8 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isRegistering ? "REGISTERING..." : "REGISTER"}
               </button>

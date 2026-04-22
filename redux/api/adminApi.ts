@@ -10,6 +10,7 @@ export const adminApi = createApi({
             if (token) {
                 headers.set('authorization', `Bearer ${token}`)
             }
+            headers.set('Accept', 'application/json')
             return headers;
         },
     }),
@@ -324,11 +325,12 @@ export const adminApi = createApi({
             }),
             invalidatesTags: ['Albums'],
         }),
-        updateAlbum: builder.mutation<any, { id: string, data: any }>({
+        updateAlbum: builder.mutation<any, { id: string; data: any }>({
             query: ({ id, data }) => ({
                 url: `/admin/albums/${id}`,
-                method: 'PUT',
+                method: 'POST',
                 body: data,
+                params: { _method: 'PUT' }
             }),
             invalidatesTags: ['Albums'],
         }),
@@ -338,6 +340,19 @@ export const adminApi = createApi({
                 method: 'DELETE',
             }),
             invalidatesTags: ['Albums'],
+        }),
+        deleteAlbumMedia: builder.mutation<any, { slug: string; mediaId: string | number }>({
+            query: ({ slug, mediaId }) => ({
+                url: `/admin/albums/${slug}/${mediaId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Albums'],
+        }),
+        logoutAdmin: builder.mutation<any, void>({
+            query: () => ({
+                url: '/admin/logout',
+                method: 'POST',
+            }),
         }),
     }),
 })
@@ -416,4 +431,7 @@ export const {
     useCreateAlbumMutation,
     useUpdateAlbumMutation,
     useDeleteAlbumMutation,
+    useDeleteAlbumMediaMutation,
+
+    useLogoutAdminMutation,
 } = adminApi

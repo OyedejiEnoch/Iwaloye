@@ -4,34 +4,38 @@ import React from 'react'
 
 const footerLink1 = [
   {
-    title: "About Us",
+    title: "About",
     href: "/about"
   },
   {
     title: "Donate",
-    href: "#"
+    href: "#support"
   },
   {
-    title: "Get Involved",
-    href: "#"
+    title: "Gallery",
+    href: "/gallery"
+  },
+  {
+    title: "My Vision",
+    href: "/priorities"
+  },
+  {
+    title: "Membership",
+    href: "/membership"
   },
   {
     title: "News",
     href: "/news"
   },
-  {
-    title: "Mission & Vision",
-    href: "/mission"
-  }
 ]
 
 const footerLink2 = [
   {
-    title: "Contact Support",
+    title: "Contact Us",
     href: "/contact"
   },
   {
-    title: "Events",
+    title: "Campaign Calendar",
     href: "/calender"
   },
   {
@@ -63,7 +67,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           <h2 className="text-3xl md:text-3xl lg:text-[35px] font-bold uppercase">
             Ìwàlọ́yé{' '}
-            <span className="text-base md:text-lg lg:text-[28px] font-freestyle font-medium align-middle">
+            <span className="text-base md:text-lg lg:text-[28px] normal-case font-carattere font-medium align-middle">
               for
             </span>
           </h2>
@@ -103,8 +107,8 @@ const Footer = () => {
 
           {/* Pages column */}
           <div className="md:col-span-2">
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5">Pages</h4>
-            <ul className="space-y-3">
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-[24px]">Pages</h4>
+            <ul className="space-y-[6px]">
               {footerLink1.map(
                 (item) => (
                   <li key={item.title}>
@@ -121,9 +125,9 @@ const Footer = () => {
           </div>
 
           {/* Help column */}
-          <div className="md:col-span-2">
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5">Help</h4>
-            <ul className="space-y-3">
+          <div className="md:col-span-3">
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-[24px]">Help</h4>
+            <ul className="space-y-[6px]">
               {footerLink2.map((item) => (
                 <li key={item.title}>
                   <Link
@@ -138,9 +142,9 @@ const Footer = () => {
           </div>
 
           {/* Socials column */}
-          <div className="md:col-span-3 md:text-right">
-            <h4 className="text-sm font-bold uppercase tracking-wider mb-5">Socials</h4>
-            <div className="flex md:justify-end gap-3">
+          <div className="md:col-span-2 md:text-left">
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-[24px]">Socials</h4>
+            <div className="flex md:justify-start gap-3">
               {/* Facebook */}
               <Link
                 href="#"
@@ -185,7 +189,7 @@ const Footer = () => {
           <p className="text-[11px] text-gray-400 mt-1">
             Powered by{' '}
             <Link href="#" className="text-[#E8792B] hover:underline font-medium">
-              guru.uk
+              Teslis Contractors Nigeria Ltd
             </Link>
           </p>
         </div>

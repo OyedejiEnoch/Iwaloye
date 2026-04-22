@@ -9,6 +9,20 @@ import { useGSAP } from '@gsap/react'
 import { Button } from '@/components/ui/button'
 import { features } from '@/components/landing/Mission'
 import { useGetAllVisionQuery } from '@/redux/api/detailsApi'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import NewButton from '@/components/NewButton'
 
 
 gsap.registerPlugin(ScrollTrigger)
@@ -21,6 +35,26 @@ const ManifestoItems = [
 ]
 
 const PriorityAreas = [
+  {
+    icon: LineChart,
+    title: "Economy, Infrastructure & Investment",
+    desc: "We must build a resilient economy through modern development. My priority is to launch an infrastructure drive that supports local businesses while attracting foreign investment to create sustainable jobs.",
+    focus: [
+      "Focus on reliable power, modern transport, and digital connectivity.",
+      "Support for SMEs through industrial hubs and public-private partnerships.",
+      "Incentives for local and foreign investors to boost productivity and job creation."
+    ]
+  },
+  {
+    icon: LineChart,
+    title: "Healthcare Access & Quality",
+    desc: "A healthy state is a productive state. My priority is to bring affordable healthcare closer to the people, especially in rural and underserved areas, through standardized and well-equipped community centers.",
+    focus: [
+      "'Community Health First' initiative with well-equipped centers in every ward.",
+      "Revival of the Osun State Ambulance Service for timely paramedical interventions.",
+      "Investment in the welfare, training, and global-standard skills of medical professionals."
+    ]
+  },
   {
     icon: LineChart,
     title: "Security",
@@ -181,32 +215,32 @@ const Priorities = () => {
   }, { scope: container })
 
   const PriorityCard = ({ text }: { text: string }) => (
-    <div className="flex items-start gap-3 border border-gray-200 rounded p-4">
+    <div className="flex items-start gap-3 border border-gray-200 rounded p-4 hover:bg-green-50 transition-colors duration-300">
       <CheckCircleIcon size={40} className='text-green-500' />
-      <p className="text-sm leading-relaxed text-gray-600">{text}</p>
+      <p className="text-xs md:text-sm leading-relaxed text-gray-600">{text}</p>
     </div>
   );
 
   return (
-    <main ref={container} className="min-h-screen bg-white pt-32 pb-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <main ref={container} className="min-h-screen bg-white pt-20 pb-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 lg:px-12">
 
         {/* Header */}
         <div ref={headerRef} className="text-center mb-24">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans uppercase font-semibold text-gray-900 mb-4">My Vision for osun state</h1>
-          <p className="text-black/70 text-sm">“A comprehensive plan for building a stronger, more prosperous Osun State.”</p>
+          <h1 className="text-3xl md:text-5xl lg:text-[80px] font-sans uppercase text-gray-900 mb-4">My Vision for osun state</h1>
+          <p className="text-black/70 text-[20px] font-gentium">“A comprehensive plan for building a stronger, more prosperous Osun State.”</p>
         </div>
 
         {/* Vision Statement */}
         <section className="mb-32 vision-section">
           <div className="flex items-center justify-center gap-2 mb-4">
             <span className="w-2 h-2 bg-[#F47321] rounded-full"></span>
-            <h2 className="text-xl font-bold text-gray-900">Vision Statement</h2>
+            <h2 className="text-2xl font-bold font-sans text-gray-900">Vision Statement</h2>
           </div>
           <p className="text-gray-500 text-sm mb-6 -mt-3 ml-4 text-center">A Stronger Osun, Built for the People</p>
 
           <div className="max-w-6xl ml-4">
-            <p className="text-black/70 text-center leading-relaxed text-sm md:text-base">
+            <p className="text-black/70 font-inter text-center leading-relaxed text-sm md:text-base">
               We envision an Osun State governed in the true interest of the people, where leadership is accountable, public institutions serve with integrity, and opportunities are created for every citizen to thrive. Guided by the ADC's commitment to people-driven governance and democratic reform, our focus is on building an Osun where progress is inclusive, public services are strengthened, and decision-making reflects the collective will of the people. From our towns to our rural communities, Osun deserves a government that listens, serves, and puts the people first.
             </p>
           </div>
@@ -222,21 +256,21 @@ const Priorities = () => {
             </div>
             {/* <p className="text-gray-400 text-sm mb-6 ml-4">Our Plan for a Prosperous Osun State</p> */}
 
-            <div className="ml-4 w-full md:max-w-2xl mb-12">
-              <p className="text-black/70 text-sm leading-relaxed">
+            <div className="ml-4 w-full md:max-w-2xl mb-12 mx-auto">
+              <p className="text-black/70 text-sm leading-relaxed ">
                 This manifesto presents a clear and practical roadmap for rebuilding Osun State's economy, strengthening public institutions, and improving the quality of life for all citizens.
                 It is guided by the values of fairness, inclusion, accountability, and sustainable development.
               </p>
             </div>
 
-            <div className="max-w-4xl mx-auto grid grid-cols-[1fr_48px_1fr] gap-0">
+            <div className="max-w-4xl hidden md:grid mx-auto grid-cols-[1fr_48px_1fr] gap-0">
 
               {/* ── Left column ── */}
               <div className="flex flex-col pr-8 gap-8">
                 {/* Top spacer — aligns first left card to sit between dot 1 and dot 2 */}
-                <div className="h-24" />
+                <div className="h-12 md:h-24 " />
                 <PriorityCard text={ManifestoItems[0]} />
-                <div className="h-24" />
+                <div className="h-12 md:h-24" />
                 <PriorityCard text={ManifestoItems[1]} />
               </div>
 
@@ -263,13 +297,14 @@ const Priorities = () => {
               {/* ── Right column ── */}
               <div className="flex flex-col pl-8 gap-8">
                 <PriorityCard text={ManifestoItems[2]} />
-                <div className="h-24" />
+                <div className="h-12 md:h-24" />
                 <PriorityCard text={ManifestoItems[3]} />
-                <button className="bg-black text-white hover:bg-gray-900 transition-colors flex items-center justify-center py-4 px-6 min-w-[190px] min-h-[50px] mt-10 gap-5">
+                {/* <button className="bg-black text-white hover:bg-gray-900 transition-colors flex items-center justify-center py-4 px-6 min-w-[190px] min-h-[50px] mt-10 gap-5">
                   <span className="text-sm font-medium">Download Manifesto</span>
                   <Image src={"/icons/Note.png"} alt='icon' width={30} height={30} />
 
-                </button>
+                </button> */}
+                <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-10 bg-black text-white py-4 px-6 min-w-[190px] min-h-[50px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
               </div>
 
             </div>
@@ -278,53 +313,68 @@ const Priorities = () => {
         </section>
 
         {/* Stats & Experience Section */}
-        <section className='mt-30'>
+        {/* <section className='mt-30'>
           <div className="flex items-center gap-2 mb-2 ">
-            <span className="w-2 h-2 bg-[#F47321] rounded-full"></span>
+            <span className="w-[7px] h-[7px] bg-[#F47321]"></span>
             <h2 className="text-3xl font-bold text-gray-900 font-sans">Creating a transparent, accountable political system free from elite control.</h2>
           </div>
           <p className="text-gray-400 text-sm mb-16 ml-4">
             These are the core areas where I will focus my efforts to transform Osun State
           </p>
 
-          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-6 mb-24">
-            {isLoading ? [1, 2, 3].map((_, idx) => (
-              <div key={idx} className="flex flex-col group animate-pulse">
-                <div className="relative w-full aspect-[16/9] md:aspect-[7/3] mb-6 overflow-hidden bg-gray-200" />
-                <div className='px-5'>
-                  <h3 className="text-[22px] font-gentium font-bold text-gray-900 mb-3 bg-gray-200 h-6 w-3/4" />
-                  <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow bg-gray-200 h-4 w-full" />
-                  <Button className='w-[257px] mt-4 bg-transparent text-black border border-black py-6 rounded-none hover:bg-[#F47321] hover:border-[#F47321] hover:text-white transition-all duration-300'>
-                    <span className="bg-gray-200 h-4 w-20" />
-                  </Button>
-                </div>
-              </div>))
-              :
-              features.map((feature, idx) => (
-                <div key={idx} className="flex flex-col group">
-                  <div className="relative w-full aspect-[16/9] md:aspect-[7/3] mb-6 overflow-hidden bg-gray-100">
-                    <Image
-                      src={feature.image}
-                      alt={feature.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className='px-5'>
-                    <h3 className="text-[22px] font-gentium font-bold text-gray-900 mb-3">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow">
-                      {feature.description}
-                    </p>
-                    <Button className='w-[257px] mt-4 bg-transparent text-black border border-black py-6 rounded-none hover:bg-[#F47321] hover:border-[#F47321] hover:text-white transition-all duration-300'>
-                      Read All
-                    </Button>
-                  </div>
-                </div>
-              ))}
+          <div ref={gridRef} className="mb-24 w-full">
+            <Accordion type="single" collapsible defaultValue="item-0" className="w-full">
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {isLoading ? [1, 2, 3].map((_, idx) => (
+                    <CarouselItem key={idx} className="md:basis-1/3">
+                      <div className="flex flex-col group animate-pulse">
+                        <div className="relative w-full aspect-[16/9] md:aspect-[7/3] mb-6 overflow-hidden bg-gray-200" />
+                        <div className='px-5'>
+                          <h3 className="text-[22px] font-gentium font-bold text-gray-900 mb-3 bg-gray-200 h-6 w-3/4" />
+                          <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow bg-gray-200 h-4 w-full" />
+                          <Button className='w-[257px] mt-4 bg-transparent text-black border border-black py-6 rounded-none hover:bg-[#F47321] hover:border-[#F47321] hover:text-white transition-all duration-300'>
+                            <span className="bg-gray-200 h-4 w-20" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CarouselItem>
+                  ))
+                    :
+                    features.map((feature, idx) => (
+                      <CarouselItem key={idx} className="md:basis-1/3">
+                        <AccordionItem value={`item-${idx}`} className="border-none bg-white">
+                          <AccordionTrigger className="hover:no-underline flex-col items-start px-0 py-0 outline-none pb-4 data-[state=open]:pb-2">
+                            <div className="relative w-full aspect-[16/9] md:aspect-[7/3] mb-6 overflow-hidden bg-gray-100 flex-shrink-0">
+                              <Image
+                                src={feature.image}
+                                alt={feature.title}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                              />
+                            </div>
+                            <div className="px-5 text-left w-full flex items-start justify-between gap-4">
+                              <h3 className="text-[22px] font-gentium font-bold text-gray-900 leading-tight">
+                                {feature.title}
+                              </h3>
+                            </div>
+                          </AccordionTrigger>
+                          <AccordionContent className="px-5 text-left">
+                            <p className="text-gray-500 text-sm leading-relaxed mb-6 pt-2">
+                              {feature.description}
+                            </p>
+                            <Button className='w-full sm:w-[257px] bg-transparent text-black border border-black py-6 rounded-none hover:bg-[#F47321] hover:border-[#F47321] hover:text-white transition-all duration-300'>
+                              Read All
+                            </Button>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </CarouselItem>
+                    ))}
+                </CarouselContent>
+              </Carousel>
+            </Accordion>
           </div>
-        </section>
+        </section> */}
 
 
         {/* Key Priority Areas */}

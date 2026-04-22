@@ -3,6 +3,7 @@ import { useNewsLetterMutation } from '@/redux/api/membershipApi'
 import { Button } from '../ui/button'
 import { toast } from 'sonner'
 import { useState } from 'react'
+import NewButton from '../NewButton'
 
 const Newsletter = () => {
 
@@ -31,9 +32,13 @@ const Newsletter = () => {
           <p className='text-xs text-gray-300'>Stay informed, subscribe to our newsletter.</p>
         </div>
 
+
         <form className='flex md:items-center gap-2 md:flex-row flex-col max-sm:mt-6 max-sm:gap-4'>
-          <input value={details.email} onChange={(e) => setDetails({ ...details, email: e.target.value })} type="text" placeholder='Enter your email' className='bg-white py-4 px-6 md:w-125' />
-          <Button onClick={handleSubmit} className='bg-black text-white border-white py-7 px-6 rounded-none hover:bg-[#F47321] hover:border-[#F47321]'>Subscribe Now</Button>
+          {/* make then align together */}
+          <input value={details.email} onChange={(e) => setDetails({ ...details, email: e.target.value })} type="text" placeholder='Enter your email' className='bg-white py-4 px-6 md:w-125 md:h-[62px]' />
+          <div>
+            <NewButton text='Subscribe Now' link='/' className='bg-black border-white text-white w-[225px] h-[62px] !mt-0' />
+          </div>
         </form>
       </div>
     </section>

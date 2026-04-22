@@ -1,4 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { ChevronsRight } from "lucide-react";
 
 const members = [
     { name: "Dr. Amina Hassan", role: "National Coordinator" },
@@ -49,6 +52,15 @@ const Team = () => {
                         <MemberCard key={index} {...member} />
                     ))}
                 </div>
+            </div>
+
+            <div className='mt-20 flex justify-center'>
+                <Link href="/">
+                    <Button className='w-full md:w-fit px-12 border border-black py-6 rounded-none bg-black text-white hover:bg-black hover:text-white transition-all'>
+                        View All
+                        <ChevronsRight className="ml-2" />
+                    </Button>
+                </Link>
             </div>
         </section>
     )
