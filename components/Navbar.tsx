@@ -117,7 +117,7 @@ const Navbar = () => {
                         {navLinks.map((link) => (
                             <li key={link.title}>
                                 {link.subLinks ? (
-                                    <DropdownMenu>
+                                    <DropdownMenu modal={false}>
                                         <DropdownMenuTrigger asChild>
                                             <button className={`flex items-center gap-1 text-xs hover:text-[15px] transition-all duration-300 font-medium cursor-pointer outline-none ${isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-500 hover:text-gray-900'}`}>
                                                 {link.title}
@@ -155,10 +155,10 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="hidden md:flex items-center space-x-3">
-                    <a href="https://www.facebook.com/share/17MZxWnGPE/?mibextid=wwXIfr" className={`${isTransparent ? "flex items-center justify-center hover:bg-white/10" : "flex items-center justify-center"} transition-transform duration-300 hover:-translate-y-2`}><Image src={isTransparent ? '/icons/FacebookWhite.png' : '/icons/Facebook.png'} alt="facebook" width={26} height={26} /></a>
-                    <a href="https://x.com/najeemfsalaam?s=11" className={`${isTransparent ? "flex items-center justify-center hover:bg-white/10" : "flex items-center justify-center"} transition-transform duration-300 hover:-translate-y-2`}><Image src={isTransparent ? '/icons/XWhite.png' : '/icons/X.png'} alt="x" width={26} height={26} /></a>
-                    <a href="https://www.instagram.com/najeemsalaam?igsh=MW13bzc5M2kzbWllcQ==" className={`${isTransparent ? "flex items-center justify-center hover:bg-white/10" : "flex items-center justify-center"} transition-transform duration-300 hover:-translate-y-2`}><Image src={isTransparent ? '/icons/InstagramWhite.png' : '/icons/Instagram.png'} alt="instagram" width={26} height={26} /></a>
-                    <a href="https://wa.me/2348033589733" className={`${isTransparent ? "flex items-center justify-center hover:bg-white/10" : "flex items-center justify-center"} transition-transform duration-300 hover:-translate-y-2`}><Image src={isTransparent ? '/icons/WhatsAppWhite.png' : '/icons/WhatsApp.png'} alt="whatsapp" width={26} height={26} /></a>
+                    <a href="https://www.facebook.com/share/17MZxWnGPE/?mibextid=wwXIfr" className={`${isTransparent ? "flex items-center justify-center " : "flex items-center justify-center"} transition-transform duration-300 hover:-translate-y-2`}><Image src={isTransparent ? '/icons/FacebookWhite.svg' : '/icons/Facebook.svg'} alt="facebook" width={26} height={26} /></a>
+                    <a href="https://x.com/najeemfsalaam?s=11" className={`${isTransparent ? "flex items-center justify-center " : "flex items-center justify-center"} transition-transform duration-300 hover:-translate-y-2`}><Image src={isTransparent ? '/icons/XWhite.svg' : '/icons/X.svg'} alt="x" width={26} height={26} /></a>
+                    <a href="https://www.instagram.com/najeemsalaam?igsh=MW13bzc5M2kzbWllcQ==" className={`${isTransparent ? "flex items-center justify-center " : "flex items-center justify-center"} transition-transform duration-300 hover:-translate-y-2`}><Image src={isTransparent ? '/icons/InstagramWhite.svg' : '/icons/Instagram.svg'} alt="instagram" width={26} height={26} /></a>
+                    <a href="https://wa.me/c/2348150794750" className={`${isTransparent ? "flex items-center justify-center " : "flex items-center justify-center"} transition-transform duration-300 hover:-translate-y-2`}><Image src={isTransparent ? '/icons/WhatsAppWhite.svg' : '/icons/WhatsApp.svg'} alt="whatsapp" width={26} height={26} /></a>
                     <div className={`h-6 w-[2px] ${isTransparent ? 'bg-white/60' : 'bg-black'}`} />
 
                     <a href="https://adc.org.ng/" target="_blank" rel="noopener noreferrer" className="ml-2 transition-transform duration-300 hover:scale-105">

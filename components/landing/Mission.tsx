@@ -17,17 +17,17 @@ export const features = [
   {
     title: 'Economy, Infrastructure & Investment',
     description: 'We must build a resilient economy through modern development. My priority is to launch an infrastructure drive that supports local businesses while attracting foreign investment to create sustainable jobs.',
-    image: '/assets/img1.png',
+    image: '/assets/newImg.png',
   },
   {
     title: 'Healthcare Access & Quality',
     description: 'A healthy state is a productive state. My priority is to bring affordable healthcare closer to the people, especially in rural and underserved areas, through standardized and well-equipped community centers.',
-    image: '/assets/img2.png',
+    image: '/assets/newImg2.png',
   },
   {
     title: 'Security',
     description: 'Safety and trust are the pillars of every community. My priority is to create a locally driven security system that combines modern technology with strong community collaboration to protect lives and property.',
-    image: '/assets/img3.png',
+    image: '/assets/newImg1.png',
   },
 ];
 
@@ -49,7 +49,10 @@ export default function Mission() {
       opacity: 0,
       y: 40,
       duration: 1,
-      ease: "power2.out"
+      ease: "power2.out",
+      onComplete: () => {
+        gsap.set(headerRef.current, { clearProps: "all" });
+      }
     });
 
     // Grid cards staggered reveal
@@ -64,7 +67,10 @@ export default function Mission() {
         y: 60,
         duration: 0.8,
         stagger: 0.2,
-        ease: "power2.out"
+        ease: "power2.out",
+        onComplete: () => {
+          gsap.set(cards, { clearProps: "all" });
+        }
       });
     }
 
@@ -77,7 +83,10 @@ export default function Mission() {
       opacity: 0,
       y: 40,
       duration: 1.2,
-      ease: "power3.out"
+      ease: "power3.out",
+      onComplete: () => {
+        gsap.set(bannerRef.current, { clearProps: "opacity,y" });
+      }
     });
   }, { scope: container });
 

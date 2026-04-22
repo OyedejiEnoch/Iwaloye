@@ -263,7 +263,7 @@ const Priorities = () => {
               </p>
             </div>
 
-            <div className="max-w-4xl hidden md:grid mx-auto grid-cols-[1fr_48px_1fr] gap-0">
+            <div className="relative max-w-4xl hidden md:grid mx-auto grid-cols-[1fr_48px_1fr] gap-0">
 
               {/* ── Left column ── */}
               <div className="flex flex-col pr-8 gap-8">
@@ -285,7 +285,7 @@ const Priorities = () => {
                   }}
                 />
                 {/* 4 dots — one per card */}
-                {[12, 37, 62, 87].map((pct, i) => (
+                {[12, 37, 62, 87, 105].map((pct, i) => (
                   <div
                     key={i}
                     className="absolute left-1/2 -translate-x-1/2 w-[8px] h-[8px] rounded-full bg-gray-900 z-10"
@@ -299,12 +299,9 @@ const Priorities = () => {
                 <PriorityCard text={ManifestoItems[2]} />
                 <div className="h-12 md:h-24" />
                 <PriorityCard text={ManifestoItems[3]} />
-                {/* <button className="bg-black text-white hover:bg-gray-900 transition-colors flex items-center justify-center py-4 px-6 min-w-[190px] min-h-[50px] mt-10 gap-5">
-                  <span className="text-sm font-medium">Download Manifesto</span>
-                  <Image src={"/icons/Note.png"} alt='icon' width={30} height={30} />
-
-                </button> */}
-                <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-10 bg-black text-white py-4 px-6 min-w-[190px] min-h-[50px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
+              </div>
+              <div className="absolute -bottom-17 flex right-0 w-[315px] justify-end">
+                <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-10 bg-black text-white py-4 px-6 min-w-[190px] min-h-[60px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
               </div>
 
             </div>

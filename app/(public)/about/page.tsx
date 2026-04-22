@@ -123,13 +123,10 @@ export default function AboutPage() {
                         <p className="text-lg md:text-xl font-medium text-[#8BC34A] mb-2 font-poppins">
                             The Resilient Trailblazer
                         </p>
-                        <h1 className="text-5xl md:text-7xl font-bold font-sans text-white mb-8 tracking-wide drop-shadow-lg">
+                        <h1 className="text-5xl md:text-7xl font-bold font-sans text-white mb-1 tracking-wide drop-shadow-lg">
                             MEET ÌWÀLÓYÈ
                         </h1>
-                        <button className="bg-white text-black font-semibold py-4 px-6 flex items-center gap-2 hover:bg-gray-100 transition-colors text-sm">
-                            Download Manifesto <FileText className="w-4 h-4 ml-2" />
-                        </button>
-                        <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-10 bg-black text-white py-4 px-6 min-w-[10px] min-h-[50px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
+                        <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-10 bg-white text-black py-2 px-6 w-[230px] min-h-[60px]' hoverBgClass='bg-black border border-black text-white' hoverTextClass='group-hover:text-white' />
                     </div>
                 </div>
             </section>
