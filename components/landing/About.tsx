@@ -34,7 +34,7 @@ const About = () => {
 
   return (
     <section className='py-18 md:py-22 bg-white overflow-hidden'>
-      <div ref={container} className='max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-18 md:gap-9 flex-wrap '>
+      <div ref={container} className='max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-18 md:gap-9 flex-wrap '>
         <div className='flex flex-col max-sm:items-center'>
           <Image src={"/icons/aboutIcon.png"} alt='image' width={60} height={60} />
 

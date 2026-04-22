@@ -66,7 +66,7 @@ const Footer = () => {
     <footer className="bg-white text-black">
       {/* Top branding bar */}
       <div className="border-b border-gray-200 py-10 md:py-14">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 text-center">
           <h2 className="text-3xl md:text-3xl lg:text-[35px] font-bold uppercase">
             Ìwàlọ́yé{' '}
             <span className="text-base md:text-lg lg:text-[28px] normal-case font-carattere font-medium align-middle">

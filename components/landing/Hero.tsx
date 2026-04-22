@@ -114,7 +114,7 @@ export default function Hero() {
     }, []);
 
     return (
-        <div ref={container}>
+        <div ref={container} className='md:pt-2'>
             {/* ── MOBILE LAYOUT (hidden on md+) ── */}
             <div className="md:hidden">
                 {/* Section 1: Full-screen hero */}
@@ -197,7 +197,7 @@ export default function Hero() {
             </div>
 
             {/* ── DESKTOP LAYOUT (hidden on mobile) ── */}
-            <section className="hidden md:flex relative w-full h-screen min-h-[600px] overflow-hidden bg-white text-white">
+            <section className="hidden md:flex relative w-full h-screen min-h-[100vh] overflow-hidden bg-white text-white">
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <Image
@@ -218,7 +218,7 @@ export default function Hero() {
                         <span className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-400 mb-6 font-semibold">
                             Together Today
                         </span>
-                        <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-sans font-bold leading-[1] mb-12 text-white">
+                        <h1 className="text-5xl md:text-7xl lg:text-[4.3rem] font-sans font-bold leading-[1] mb-2 text-white">
                             A New <br /> Direction
                         </h1>
                         <div>
@@ -228,12 +228,12 @@ export default function Hero() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
                                 </svg>
                             </button> */}
-                            <NewButton text='Join The Movement' className='mt-10 bg-[#00d65b] text-white text-[10px] md:text-xs mt-1 font-bold uppercase tracking-widest py-4 px-8 w-[250px] h-[50px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
+                            <NewButton text='Join The Movement' className='mt-10 bg-[#00d65b] text-white text-[10px] md:text-xs mt-1 font-bold uppercase tracking-widest py-4 px-8 w-[250px] h-[42px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
                         </div>
                         <h1
                             className="font-bold mt-12 uppercase tracking-tighter select-none pointer-events-none opacity-20 whitespace-nowrap"
                             style={{
-                                fontSize: 'clamp(4rem, 8vw, 8rem)',
+                                fontSize: 'clamp(4rem, 8vw, 6rem)',
                                 WebkitTextStroke: '0.8px white',
                                 color: 'transparent',
                                 lineHeight: 1,
@@ -245,7 +245,7 @@ export default function Hero() {
                     </div>
 
                     {/* Bottom Scroll Text */}
-                    <div ref={scrollPrompt} className="flex items-center gap-3 text-sm text-gray-400 mt-auto mb-8 cursor-pointer group">
+                    <div ref={scrollPrompt} className="flex items-center gap-3 text-sm text-gray-400 mt-auto mb-20 cursor-pointer group">
                         <svg className="w-4 h-4 text-[#00d65b] transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                         </svg>
@@ -256,7 +256,7 @@ export default function Hero() {
                 {/* Right Side Overlay Texts */}
                 <div ref={rightOverlay} className="absolute bottom-12 md:bottom-24 right-6 md:right-12 lg:right-28 z-10 flex flex-col items-end md:items-start text-right md:text-left pointer-events-none">
                     <div className="flex relative flex-col md:flex-row items-end md:items-center gap-4">
-                        <h2 className="font-sans text-5xl md:text-7xl lg:text-[5rem] font-bold leading-[0.9] text-white drop-shadow-2xl">
+                        <h2 className="font-sans text-5xl md:text-7xl lg:text-[4.3rem] font-bold leading-[0.9] text-white drop-shadow-2xl">
                             <span className="block mb-1">The</span>
                             Real Change
                         </h2>

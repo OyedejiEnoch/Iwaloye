@@ -86,7 +86,7 @@ const Navbar = () => {
 
     return (
         <nav className={`w-full px-4 fixed top-0 left-0 z-50 transition-all duration-500 ${isTransparent ? 'bg-transparent text-white' : 'bg-white'}`}>
-            <div className={`max-w-7xl mx-auto flex items-center justify-between transition-all duration-500 ${isTransparent ? 'py-1 md:py-0 border-b border-white/10' : 'py-1 border-b border-gray-200'}`}>
+            <div className={`max-w-6xl mx-auto flex items-center justify-between transition-all duration-500 ${isTransparent ? 'py-1 md:py-0 border-b border-white/10' : 'py-1 border-b border-gray-200'}`}>
                 {isTransparent ?
                     <Link href="/" className="transition-transform hover:scale-105 active:scale-95">
                         <Image
@@ -119,7 +119,7 @@ const Navbar = () => {
                                 {link.subLinks ? (
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
-                                            <button className={`flex items-center gap-1 text-sm hover:text-[15px] transition-all duration-300 font-medium cursor-pointer outline-none ${isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-500 hover:text-gray-900'}`}>
+                                            <button className={`flex items-center gap-1 text-xs hover:text-[15px] transition-all duration-300 font-medium cursor-pointer outline-none ${isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-500 hover:text-gray-900'}`}>
                                                 {link.title}
                                                 <ChevronDown size={14} />
                                             </button>
@@ -141,12 +141,12 @@ const Navbar = () => {
                                     </DropdownMenu>
                                 ) : link.title === "Donate" ? (
                                     <Donate trigger={
-                                        <button className={`text-sm hover:text-[15px] transition-all duration-300 font-medium ${isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-500 hover:text-gray-900'}`}>
+                                        <button className={`text-xs hover:text-[15px] transition-all duration-300 font-medium ${isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-500 hover:text-gray-900'}`}>
                                             {link.title}
                                         </button>
                                     } />
                                 ) : (
-                                    <Link href={link.url} className={`text-sm hover:text-[15px] transition-all duration-300 font-medium ${isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-500 hover:text-gray-900'}`}>
+                                    <Link href={link.url} className={`text-xs hover:text-[15px] transition-all duration-300 font-medium ${isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-500 hover:text-gray-900'}`}>
                                         {link.title}
                                     </Link>
                                 )}

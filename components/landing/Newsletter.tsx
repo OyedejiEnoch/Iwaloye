@@ -26,14 +26,14 @@ const Newsletter = () => {
     <section className='w-full relative bg-black py-20 px-4 md:px-4 lg:px-16'>
       {/* <Image src="/assets/rectangle.png" alt='image' fill className='absolute inset-0 rounded-2xl' /> */}
 
-      <div className='max-w-7xl relative mx-auto flex md:flex-row flex-col justify-between items-start'>
+      <div className='max-w-6xl relative mx-auto flex md:flex-row flex-col justify-between max-sm:items-start'>
         <div className='space-y-1 text-white justify-start flex flex-col items-start'>
           <h2 className='font-sans text-3xl md:text-4xl lg:text-5xl font-semibold'>Newsletter</h2>
           <p className='text-xs text-gray-300'>Stay informed, subscribe to our newsletter.</p>
         </div>
 
 
-        <form className='flex md:items-center gap-2 w-full md:flex-row flex-col max-sm:mt-6 max-sm:gap-4'>
+        <form className='flex md:items-center gap-2 w-full md:w-auto md:flex-row flex-col max-sm:mt-6 max-sm:gap-4'>
           {/* make then align together */}
           <input value={details.email} onChange={(e) => setDetails({ ...details, email: e.target.value })} type="text" placeholder='Enter your email' className='bg-white py-4 px-6 md:w-125 md:h-[62px]' />
           <div>

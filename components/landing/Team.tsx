@@ -35,7 +35,7 @@ const MemberCard = ({ name, role }: { name: string; role: string }) => (
 const Team = () => {
     return (
         <section className='py-16 md:py-22 bg-white overflow-hidden'>
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="max-w-6xl mx-auto px-4">
                 {/* Header */}
                 <div className="mb-16 md:mb-24 space-y-4">
                     <h1 className="text-4xl md:text-5xl lg:text-[70px] font-sans font-semibold text-gray-900 tracking-wide uppercase">

@@ -6,6 +6,7 @@ import Candidate from "@/components/landing/Candidate";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import NewButton from "@/components/NewButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -128,6 +129,7 @@ export default function AboutPage() {
                         <button className="bg-white text-black font-semibold py-4 px-6 flex items-center gap-2 hover:bg-gray-100 transition-colors text-sm">
                             Download Manifesto <FileText className="w-4 h-4 ml-2" />
                         </button>
+                        <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-10 bg-black text-white py-4 px-6 min-w-[10px] min-h-[50px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
                     </div>
                 </div>
             </section>

@@ -65,28 +65,64 @@ export default function GalleryDetailsPage({ params }: { params: Promise<{ id: s
           )}
         </div>
 
-        {/* Vertical Image Feed */}
+        {/* Responsive Gallery Layout */}
         {images.length > 0 ? (
-          <div className="flex flex-col items-center gap-12 md:gap-20 mt-16 pb-12 w-full max-w-4xl mx-auto">
+          <div className="flex flex-col items-center gap-12 mt-16 pb-12 w-full max-w-4xl mx-auto md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-5 md:max-w-none md:mx-0">
             {images.map((media: any, index: number) => {
               const src = media.url || `${process.env.NEXT_PUBLIC_BASE_URL}/storage/${media.path}`;
+
+              // Consistent base rotations for a "piled" effect (Desktop Only)
+              const baseRotations = [
+                "-rotate-2",
+                "rotate-1",
+                "-rotate-1",
+                "rotate-2",
+              ];
+              const baseRotation = baseRotations[index % baseRotations.length];
+
+              // Dynamic hover rotation (Desktop Only)
+              const popOutRotations = [
+                "md:group-hover:-rotate-3 md:group-hover:-translate-x-2",
+                "md:group-hover:rotate-2 md:group-hover:-translate-y-2",
+                "md:group-hover:-rotate-2 md:group-hover:translate-x-2",
+                "md:group-hover:rotate-3 md:group-hover:translate-y-2",
+                "md:group-hover:-rotate-1",
+                "md:group-hover:rotate-1 md:group-hover:-translate-y-1"
+              ];
+              const hoverRotation = popOutRotations[index % popOutRotations.length];
 
               return (
                 <div
                   key={media.id || index}
-                  className="group relative w-full aspect-[4/5] md:aspect-video cursor-default"
+                  className="group relative w-full aspect-[4/5] md:aspect-square cursor-default md:cursor-pointer"
                 >
                   <div
-                    className="absolute inset-0 bg-white p-1.5 md:p-3 shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-gray-100"
+                    className={`absolute inset-0 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-gray-100 transition-all duration-500 ease-[cubic-bezier(0.2,1,0.3,1)]
+                                   md:-inset-6 md:p-2.5 md:pb-8 md:shadow-[0_10px_30px_-5px_rgba(0,0,0,0.2)]
+                                   md:group-hover:-inset-10 md:group-hover:-bottom-16 md:group-hover:scale-[1.1] 
+                                   md:group-hover:shadow-[0_40px_80px_-10px_rgba(0,0,0,0.3)]
+                                   md:hover:!z-[999]
+                                   p-1.5 md:${baseRotation} ${hoverRotation} pointer-events-none group-hover:pointer-events-auto`}
+                    style={{ zIndex: (images.length - index) + 10 }}
                   >
                     <div className="relative w-full h-full bg-gray-50 overflow-hidden shadow-inner">
                       <Image
                         src={src}
                         alt={`${album.title} item ${index + 1}`}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105 md:group-hover:scale-110"
                         unoptimized
                       />
+
+                      {/* Checkered pattern overlay (Desktop Only Hint) */}
+                      <div
+                        className="absolute inset-0 opacity-[0.02] pointer-events-none mix-blend-multiply hidden md:block"
+                        style={{
+                          backgroundImage: 'repeating-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), repeating-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000)',
+                          backgroundPosition: '0 0, 10px 10px',
+                          backgroundSize: '20px 20px'
+                        }}
+                      ></div>
                     </div>
                   </div>
                 </div>

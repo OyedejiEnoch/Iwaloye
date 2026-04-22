@@ -206,7 +206,7 @@ const Journey = () => {
 
   return (
     <section ref={container} className="py-8 md:py-28 bg-white overflow-hidden border-none">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
         {/* Heading */}
         <div ref={headingRef} className="mb-4">
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold font-sans lg:text-[70px] uppercase tracking-wide text-black leading-none">
