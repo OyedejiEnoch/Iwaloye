@@ -42,17 +42,18 @@ const overviewItems = [
 ];
 
 const contentItems = [
-  { title: "Mission & Vision", href: "/admin/mission" },
+  // { title: "Mission & Vision", href: "/admin/mission" },
   { title: "News & Publications", href: "/admin/news" },
-  { title: "Meet Our Leaders", href: "/admin/leaders" },
-  { title: "FAQ", href: "/admin/faq" },
-  { title: "Newsletter", href: "/admin/newsletter" },
+  // { title: "Meet Our Leaders", href: "/admin/leaders" },
+  // { title: "FAQ", href: "/admin/faq" },
+  // { title: "Newsletter", href: "/admin/newsletter" },
   { title: "Campaign Calendar", href: "/admin/calender" },
   { title: "Gallery", href: "/admin/gallery" },
+  { title: "Movements", href: "/admin/movements", },
 ];
 
 const userManagementItems = [
-  { title: "Movements", href: "/admin/movements", },
+
   { title: "Admin Management", href: "/admin/admin-management", },
   { title: "Settings", href: "/admin/settings", },
 ];
@@ -101,8 +102,8 @@ export default function AdminSidebar() {
                     asChild
                     isActive={isActive}
                     className={`rounded-lg transition-all duration-150 ${isActive
-                        ? "bg-indigo-50 text-indigo-700 font-semibold"
-                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-indigo-50 text-indigo-700 font-semibold"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                       }`}
                   >
                     <Link href={item.href} className="flex items-center gap-3 px-3 py-2">
@@ -131,8 +132,8 @@ export default function AdminSidebar() {
                     asChild
                     isActive={isActive}
                     className={`rounded-lg transition-all duration-150 ${isActive
-                        ? "bg-indigo-50 text-indigo-700 font-semibold"
-                        : "text-[#364153]/80 hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-indigo-50 text-indigo-700 font-semibold"
+                      : "text-[#364153]/80 hover:bg-gray-100 hover:text-gray-900"
                       }`}
                   >
                     <Link href={item.href} className="flex items-center gap-3 px-3 py-2">
@@ -161,8 +162,8 @@ export default function AdminSidebar() {
                     asChild
                     isActive={isActive}
                     className={`rounded-lg transition-all duration-150 ${isActive
-                        ? "bg-indigo-50 text-indigo-700 font-semibold"
-                        : "text-[#364153]/80 hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-indigo-50 text-indigo-700 font-semibold"
+                      : "text-[#364153]/80 hover:bg-gray-100 hover:text-gray-900"
                       }`}
                   >
                     <Link href={item.href} className="flex items-center gap-3 px-3 py-2">

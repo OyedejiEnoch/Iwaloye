@@ -158,7 +158,7 @@ const Donate = ({ trigger }: DonateProps) => {
                         <CheckCircle2 className="w-16 h-16 text-green-500" />
                         <h3 className="text-xl font-bold text-gray-800">Thank You!</h3>
                         <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-                            Your donation has been received and will go towards building a better Osun State.
+                            Your donation has been received and will go towards supporting our campaign to build a better Osun State.
                         </p>
                         <Button
                             onClick={() => handleOpenChange(false)}

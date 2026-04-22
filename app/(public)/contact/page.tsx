@@ -96,7 +96,7 @@ const Contact = () => {
             <div className="max-w-7xl mx-auto px-6 lg:px-12">
                 <div ref={headerRef} className="text-center mb-20">
                     <h1 className="text-5xl md:text-6xl lg:text-[100px] font-sans text-gray-900 mb-4 uppercase tracking-tight">Contact Us</h1>
-                    <p className="text-black/80 text-[20px] font-gentium">“Have a question, suggestion, or need support? We&apos;re here to listen and respond.”</p>
+                    <p className="text-black/80 text-[20px] font-gentium">“Have a question, suggestion or would like to support?  We&apos;re here to listen and respond.”</p>
                 </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-16'>
@@ -113,7 +113,7 @@ const Contact = () => {
                                 </div>
                                 <div className='flex flex-col gap-1'>
                                     <h2 className='text-lg text-black/70'>Call Us</h2>
-                                    <p className='text-sm font-semibold'>+123 706 678 1234</p>
+                                    <p className='text-sm font-semibold'>+2348150794750</p>
                                 </div>
                             </div>
                             <div className='contact-item flex items-start gap-6 group'>
@@ -122,7 +122,7 @@ const Contact = () => {
                                 </div>
                                 <div className='flex flex-col gap-1'>
                                     <h2 className='text-black/70 text-lg'>Quick Email</h2>
-                                    <p className='text-sm font-semibold'>contact@guru.org.ng</p>
+                                    <p className='text-sm font-semibold'>info@iwaloye2026.com</p>
                                 </div>
                             </div>
                             <div className='contact-item flex items-start gap-6'>
@@ -130,7 +130,7 @@ const Contact = () => {
                                     <Image src="/icons/mapIcon.svg" alt="Map" width={28} height={28} className='text-[#F47321]' />
                                 </div>
                                 <div className='flex flex-col gap-1'>
-                                    <h2 className='text-black/70 text-lg'>Office Address</h2>
+                                    <h2 className='text-black/70 text-lg'>Campaign Address</h2>
                                     <p className='text-sm font-semibold max-w-lg'>Oranmiyan Building, Aregbe, Osogbo, Osun State.</p>
                                 </div>
                             </div>

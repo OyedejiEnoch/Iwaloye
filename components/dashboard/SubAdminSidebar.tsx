@@ -40,11 +40,11 @@ const overviewItems = [
 ];
 
 const contentItems = [
-  { title: "Mission & Vision", href: "/sub-admin/mission", },
-  { title: "News & Publications", href: "/sub-admin/news",  },
-  { title: "Meet Our Leaders", href: "/sub-admin/leaders",  },
-  { title: "FAQ Management", href: "/sub-admin/faq", },
-  { title: "Newsletter", href: "/sub-admin/newsletter",  },
+  // { title: "Mission & Vision", href: "/sub-admin/mission", },
+  { title: "News & Publications", href: "/sub-admin/news", },
+  // { title: "Meet Our Leaders", href: "/sub-admin/leaders",  },
+  // { title: "FAQ Management", href: "/sub-admin/faq", },
+  { title: "Newsletter", href: "/sub-admin/newsletter", },
   { title: "Campaign Calender", href: "/sub-admin/calender", },
 ];
 
@@ -82,7 +82,7 @@ export default function SubAdminSidebar() {
       <SidebarContent className="px-2 py-3">
         {/* Overview Section */}
         <SidebarGroup>
-        
+
           <SidebarMenu>
             {overviewItems.map((item) => {
               const isActive = pathname === item.href;
@@ -91,11 +91,10 @@ export default function SubAdminSidebar() {
                   <SidebarMenuButton
                     asChild
                     isActive={isActive}
-                    className={`rounded-lg transition-all duration-150 ${
-                      isActive
+                    className={`rounded-lg transition-all duration-150 ${isActive
                         ? "bg-emerald-50 text-emerald-700 font-semibold"
                         : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                    }`}
+                      }`}
                   >
                     <Link href={item.href} className="flex items-center gap-3 px-3 py-2">
                       <item.icon className={`h-4 w-4 ${isActive ? "text-emerald-600" : "text-gray-400"}`} />
@@ -123,14 +122,13 @@ export default function SubAdminSidebar() {
                   <SidebarMenuButton
                     asChild
                     isActive={isActive}
-                    className={`rounded-lg transition-all duration-150 ${
-                      isActive
+                    className={`rounded-lg transition-all duration-150 ${isActive
                         ? "bg-emerald-50 text-emerald-700 font-semibold"
                         : "text-[#364153D9] hover:bg-gray-100 hover:text-gray-900"
-                    }`}
+                      }`}
                   >
                     <Link href={item.href} className="flex items-center gap-3 px-3 py-2">
-                    {isActive && <CircleArrowOutUpRight className="text-[#155DFC]" />}
+                      {isActive && <CircleArrowOutUpRight className="text-[#155DFC]" />}
                       {/* <item.icon className={`h-4 w-4 ${isActive ? "text-emerald-600" : "text-gray-400"}`} /> */}
                       <span className={`${isActive ? "text-[#155DFC]" : "text-sm"}`}>{item.title}</span>
                     </Link>
@@ -142,7 +140,7 @@ export default function SubAdminSidebar() {
         </SidebarGroup>
 
 
-        
+
       </SidebarContent>
 
       <SidebarFooter className="border-t border-gray-100 px-4 py-3">

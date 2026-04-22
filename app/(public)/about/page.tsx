@@ -215,7 +215,7 @@ export default function AboutPage() {
                                     <span className="text-5xl md:text-[60px] font-bold font-sans text-gray-900 leading-none stat-number" data-target="2">0</span>
                                     <span className="text-xl md:text-3xl font-bold font-sans text-gray-900 pb-1">Elections Won</span>
                                 </div>
-                                <p className="text-xs text-gray-500 mt-1 font-medium max-w-[300px]">2 Elections Won &ndash; 2007 &amp; 2011 (comeback story adds weight)</p>
+                                <p className="text-xs text-gray-500 mt-1 font-medium max-w-[300px]">3 Elections Won &ndash; 2007, 2011 &amp; 2015 (comeback story adds weight)</p>
                             </div>
 
                             {/* Stat 4 */}
@@ -224,7 +224,7 @@ export default function AboutPage() {
                                     <span className="text-5xl md:text-[60px] font-bold font-sans text-gray-900 leading-none stat-number" data-target="3">0</span>
                                     <span className="text-xl md:text-3xl font-bold font-sans text-gray-900 pb-1">Key Reform Areas</span>
                                 </div>
-                                <p className="text-xs text-gray-500 mt-1 font-medium">Health, Urban Development, Security</p>
+                                <p className="text-xs text-gray-500 mt-1 font-medium">Health, Urban Development, Security, Education, Social welfare</p>
                             </div>
                         </div>
                     </div>
@@ -239,7 +239,7 @@ export default function AboutPage() {
                         </h2>
                     </div>
                     <p className="text-[#364153] font-inter leading-loose text-sm md:text-base text-left md:text-center px-4 md:px-0 font-light">
-                        Dr. Salaam&apos;s influence extends far beyond the realm of politics, marking him as a prolific thinker, writer, and leader whose impact resonates across multiple domains. In 2019, he co-authored the widely recognized textbook Rudiments of Government and Politics, earning respect in both academic and professional circles for his intellectual contributions. His dedication to service has been celebrated through numerous honors, including his induction as Patron of the Sports Writers Association of Nigeria (SWAN), Osun State Chapter, and his recognition as Asiwaju Adinni and Olu Omo of Ejigboland, reflecting both his faith and commitment to community leadership. Following his tenure as Speaker, Dr. Salaam assumed a pivotal role as Executive Director of Marketing and Business Development at Nigeria Communications Satellite Limited (NigComSat), continuing to shape Nigeria&apos;s telecommunications landscape. From an orphaned child in Ejigbo to a trailblazer in politics and academia, his life story is a testament to resilience, determination, and faith, inspiring audiences worldwide through his insights, engagement, and leadership. He is happily married with children, continuing to serve as a beacon of hope and a model of excellence for generations to come.
+                        Dr. Salaam&apos;s influence extends far beyond the realm of politics, marking him as a prolific thinker, writer, and leader whose impact resonates across multiple domains. In 2019, he co-authored the widely recognized textbook Rudiments of Government and Politics, earning respect in both academic and professional circles for his intellectual contributions. His dedication to service has been celebrated through numerous honors, including his induction as Patron of the Sports Writers Association of Nigeria (SWAN), Osun State Chapter, and his recognition as Asiwaju Adinni and Oluomo of Ejigboland, reflecting both his faith and commitment to community leadership. Following his tenure as Speaker, Dr. Salaam assumed a pivotal role as Executive Director of Marketing and Business Development at Nigeria Communications Satellite Limited (NigComSat), continuing to shape Nigeria&apos;s telecommunications landscape. From an orphaned child in Ejigbo to a trailblazer in politics and academia, his life story is a testament to resilience, determination, and faith, inspiring audiences worldwide through his insights, engagement, and leadership. He is happily married with children, continuing to serve as a beacon of hope and a model of excellence for generations to come.
                     </p>
                 </div>
 
