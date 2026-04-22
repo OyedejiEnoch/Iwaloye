@@ -233,9 +233,12 @@ const Priorities = () => {
 
         {/* Vision Statement */}
         <section className="mb-32 vision-section">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="w-2 h-2 bg-[#F47321] rounded-full"></span>
-            <h2 className="text-2xl font-bold font-sans text-gray-900">Vision Statement</h2>
+
+          <div className="flex items-start md:items-center justify-center gap-2  max-sm:px-4 mb-8 mx-auto w-fit">
+            <span className="flex w-[7px] h-[7px] bg-[#ff8a00] shrink-0 mt-3"></span>
+            <h2 className="text-2xl md:text-3xl font-bold font-gentium text-gray-900 text-left">
+              Vision Statement
+            </h2>
           </div>
           <p className="text-gray-500 text-sm mb-6 -mt-3 ml-4 text-center">A Stronger Osun, Built for the People</p>
 
@@ -251,7 +254,7 @@ const Priorities = () => {
           {/* Left Column - Sequence */}
           <div className="relative flex justify-center flex-col w-full md:max-w-3xl mx-auto">
             <div className="flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 bg-[#F47321] rounded-full"></span>
+              <span className="w-[7px] h-[7px] bg-[#F47321]"></span>
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 font-sans">A New Dawn for Osun, A Blueprint for Shared Prosperity</h2>
             </div>
             {/* <p className="text-gray-400 text-sm mb-6 ml-4">Our Plan for a Prosperous Osun State</p> */}
@@ -261,6 +264,16 @@ const Priorities = () => {
                 This manifesto presents a clear and practical roadmap for rebuilding Osun State's economy, strengthening public institutions, and improving the quality of life for all citizens.
                 It is guided by the values of fairness, inclusion, accountability, and sustainable development.
               </p>
+            </div>
+
+            {/* Mobile View - Stacked items */}
+            <div className="flex flex-col gap-6 md:hidden px-4 mb-16">
+              {ManifestoItems.map((item, idx) => (
+                <PriorityCard key={idx} text={item} />
+              ))}
+              <div className="mt-4 flex justify-center">
+                <NewButton text='Download Manifesto' icon='/icons/Note.png' className='w-full bg-black text-white py-4 h-[60px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
+              </div>
             </div>
 
             <div className="relative max-w-4xl hidden md:grid mx-auto grid-cols-[1fr_48px_1fr] gap-0">
@@ -280,7 +293,7 @@ const Priorities = () => {
                 <div
                   className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2"
                   style={{
-                    borderLeft: "1.5px dashed #d1d5db",
+                    borderLeft: "1.9px dashed #d1d5db",
                     width: 0,
                   }}
                 />
@@ -309,76 +322,14 @@ const Priorities = () => {
 
         </section>
 
-        {/* Stats & Experience Section */}
-        {/* <section className='mt-30'>
-          <div className="flex items-center gap-2 mb-2 ">
-            <span className="w-[7px] h-[7px] bg-[#F47321]"></span>
-            <h2 className="text-3xl font-bold text-gray-900 font-sans">Creating a transparent, accountable political system free from elite control.</h2>
-          </div>
-          <p className="text-gray-400 text-sm mb-16 ml-4">
-            These are the core areas where I will focus my efforts to transform Osun State
-          </p>
-
-          <div ref={gridRef} className="mb-24 w-full">
-            <Accordion type="single" collapsible defaultValue="item-0" className="w-full">
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {isLoading ? [1, 2, 3].map((_, idx) => (
-                    <CarouselItem key={idx} className="md:basis-1/3">
-                      <div className="flex flex-col group animate-pulse">
-                        <div className="relative w-full aspect-[16/9] md:aspect-[7/3] mb-6 overflow-hidden bg-gray-200" />
-                        <div className='px-5'>
-                          <h3 className="text-[22px] font-gentium font-bold text-gray-900 mb-3 bg-gray-200 h-6 w-3/4" />
-                          <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow bg-gray-200 h-4 w-full" />
-                          <Button className='w-[257px] mt-4 bg-transparent text-black border border-black py-6 rounded-none hover:bg-[#F47321] hover:border-[#F47321] hover:text-white transition-all duration-300'>
-                            <span className="bg-gray-200 h-4 w-20" />
-                          </Button>
-                        </div>
-                      </div>
-                    </CarouselItem>
-                  ))
-                    :
-                    features.map((feature, idx) => (
-                      <CarouselItem key={idx} className="md:basis-1/3">
-                        <AccordionItem value={`item-${idx}`} className="border-none bg-white">
-                          <AccordionTrigger className="hover:no-underline flex-col items-start px-0 py-0 outline-none pb-4 data-[state=open]:pb-2">
-                            <div className="relative w-full aspect-[16/9] md:aspect-[7/3] mb-6 overflow-hidden bg-gray-100 flex-shrink-0">
-                              <Image
-                                src={feature.image}
-                                alt={feature.title}
-                                fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                              />
-                            </div>
-                            <div className="px-5 text-left w-full flex items-start justify-between gap-4">
-                              <h3 className="text-[22px] font-gentium font-bold text-gray-900 leading-tight">
-                                {feature.title}
-                              </h3>
-                            </div>
-                          </AccordionTrigger>
-                          <AccordionContent className="px-5 text-left">
-                            <p className="text-gray-500 text-sm leading-relaxed mb-6 pt-2">
-                              {feature.description}
-                            </p>
-                            <Button className='w-full sm:w-[257px] bg-transparent text-black border border-black py-6 rounded-none hover:bg-[#F47321] hover:border-[#F47321] hover:text-white transition-all duration-300'>
-                              Read All
-                            </Button>
-                          </AccordionContent>
-                        </AccordionItem>
-                      </CarouselItem>
-                    ))}
-                </CarouselContent>
-              </Carousel>
-            </Accordion>
-          </div>
-        </section> */}
-
 
         {/* Key Priority Areas */}
         <section className="mb-32 mt-40">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-2 h-2 bg-[#F47321] rounded-full"></span>
-            <h2 className="text-xl font-bold text-gray-900 font-sans">Key Priority Areas</h2>
+          <div className="flex text-left gap-2  max-sm:px-4 mb-1 w-fit">
+            <span className="flex w-[7px] h-[7px] bg-[#ff8a00] shrink-0 mt-3"></span>
+            <h2 className="text-xl md:text-2xl font-bold font-gentium text-gray-900 text-left">
+              Creating a transparent, accountable political system free from elite control.
+            </h2>
           </div>
           <p className="text-gray-400 text-sm mb-16 ml-4">These are the core areas where I will focus my efforts to transform Osun State</p>
 
