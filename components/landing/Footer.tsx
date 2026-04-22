@@ -59,6 +59,8 @@ const footerLink3 = [
   }
 ]
 
+import Donate from '../Donate'
+
 const Footer = () => {
   return (
     <footer className="bg-white text-black">
@@ -112,12 +114,20 @@ const Footer = () => {
               {footerLink1.map(
                 (item) => (
                   <li key={item.title}>
-                    <Link
-                      href={item.href}
-                      className="text-[13px] text-gray-500 hover:text-black transition-colors"
-                    >
-                      {item.title}
-                    </Link>
+                    {item.title === "Donate" ? (
+                      <Donate trigger={
+                        <button className="text-[13px] text-gray-500 hover:text-black transition-colors">
+                          {item.title}
+                        </button>
+                      } />
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="text-[13px] text-gray-500 hover:text-black transition-colors"
+                      >
+                        {item.title}
+                      </Link>
+                    )}
                   </li>
                 )
               )}

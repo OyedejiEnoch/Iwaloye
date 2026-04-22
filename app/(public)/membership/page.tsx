@@ -191,7 +191,7 @@ const MembershipPage = () => {
 
   return (
     <main ref={container} className="min-h-screen bg-white pt-28 pb-20 overflow-hidden">
-      <div className=" mx-auto px-6 lg:px-12">
+      <div className=" mx-auto px-2 md:px-6 lg:px-12">
 
         {/* Header */}
         <div ref={headerRef} className="text-center mb-18">
@@ -234,14 +234,14 @@ const MembershipPage = () => {
         </div>
 
         {/* Join Today Form */}
-        <section className="form-section mb-32 max-w-5xl mx-auto px-4 py-12 rounded-sm">
+        <section className="form-section mb-12 max-w-6xl mx-auto px-4 py-8 rounded-sm">
           <div className="flex items-center justify-center gap-2 mb-16">
             <span className="w-[7px] h-[7px] bg-[#F47321]"></span>
             <h2 className="text-2xl font-bold text-gray-900 font-sans">Join Today</h2>
           </div>
 
           <form className="space-y-8" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-sm:w-full">
               {/* Full Name */}
               <div className="space-y-2">
                 <label className="text-xs font-bold text-gray-600">First Name</label>
@@ -463,7 +463,9 @@ const MembershipPage = () => {
         </section>
 
         {/* FAQ Section */}
-        <Faq />
+        <div className='px-2'>
+          <Faq />
+        </div>
 
       </div>
     </main>

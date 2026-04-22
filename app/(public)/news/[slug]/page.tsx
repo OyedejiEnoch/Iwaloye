@@ -72,7 +72,7 @@ const NewsArticlePage = ({ params }: { params: { slug: string } }) => {
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
 
                 {/* Main Article Content */}
-                <div ref={articleRef} className="flex-1">
+                <div ref={articleRef} className="w-full md:flex-1">
                     <SingleNewsDetail
                         title={data?.data?.title}
                         image={data?.data?.image_or_media_url}
