@@ -12,6 +12,7 @@ const NewButton = React.forwardRef<HTMLButtonElement, any>(({
     className,
     hoverBgClass = "bg-[#F47321]",
     hoverTextClass = "group-hover:text-white",
+    iconClassName,
     ...props
 }, ref) => {
     const backgroundLayer = (
@@ -21,7 +22,17 @@ const NewButton = React.forwardRef<HTMLButtonElement, any>(({
     const innerContent = (
         <span className={`relative z-10 flex group-hover:border-none items-center transition-colors duration-300 ${hoverTextClass}`}>
             {text}
-            {icon ? <Image src={icon} alt='icon' width={20} height={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" /> : <ChevronsRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />}
+            {icon ? (
+                <Image
+                    src={icon}
+                    alt="icon"
+                    width={20}
+                    height={20}
+                    className={`ml-2 transition-all duration-300 group-hover:translate-x-1 ${iconClassName || ""}`}
+                />
+            ) : (
+                <ChevronsRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+            )}
         </span>
     );
 

@@ -131,6 +131,7 @@ const Donate = ({ trigger }: DonateProps) => {
                         text='Donate Now'
                         className='bg-white text-black w-[225px] h-[62px]'
                         icon='/assets/heartIcon.svg'
+                        iconClassName="group-hover:brightness-0 group-hover:invert"
                     />
                 )}
             </DialogTrigger>

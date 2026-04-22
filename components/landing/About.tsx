@@ -39,7 +39,7 @@ const About = () => {
           <Image src={"/icons/aboutIcon.png"} alt='image' width={60} height={60} />
 
           {/* <p className='mt-4 text-xs text-neutral-600 font-semibold'>About</p> */}
-          <h2 className='text-[30px] md:text-3xl font-bold mt-2 font-sans mt-6 max-sm:text-center'>African Democratic Congress</h2>
+          <h2 className='text-[30px] md:text-[26px] font-bold mt-2 font-sans mt-6 max-sm:text-center'>African Democratic Congress</h2>
           <p className='mt-4 text-sm font-medium leading-relaxed max-sm:text-center'>Creating a transparent, accountable political system free from elite control.</p>
           <div className='max-w-2xl md:w-full'>
             <NewButton text='Join the Party' link='https://adc.org.ng/' />
@@ -49,7 +49,7 @@ const About = () => {
           <Image src={"/icons/volunteerIcon.png"} alt='image' width={100} height={70} />
 
           {/* <p className='mt-4 text-xs text-neutral-600 font-semibold'>Become</p> */}
-          <h2 className='text-[30px] md:text-3xl  font-bold mt-2 font-sans mt-6 max-sm:text-center'>Become A Volunteer</h2>
+          <h2 className='text-[30px] md:text-[26px]  font-bold mt-2 font-sans mt-6 max-sm:text-center'>Become A Volunteer</h2>
           <p className='mt-4 leading-relaxed text-sm font-medium max-sm:text-center'>Your support powers our mission. Help spread the message of progress.</p>
           <div className='max-w-2xl md:w-full'>
             <NewButton text='Join the Movement' link='/membership' />
@@ -59,7 +59,7 @@ const About = () => {
           <Image src={"/icons/recognitonIcon.png"} alt='image' width={60} height={60} />
 
           {/* <p className='mt-4 text-xs text-neutral-600 font-semibold'>Groups</p> */}
-          <h2 className='text-[30px] md:text-3xl  font-bold mt-2 font-sans mt-6 max-sm:text-center'>Support Groups</h2>
+          <h2 className='text-[30px] md:text-[26px]  font-bold mt-2 font-sans mt-6 max-sm:text-center'>Support Groups</h2>
           <p className='mt-4 leading-relaxed text-sm font-medium max-sm:text-center'>Celebrating the dedicated individuals powering this movement.</p>
           <div className='max-w-2xl md:w-full'>
             <NewButton text='View Groups' link='' />

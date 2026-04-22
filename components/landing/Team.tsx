@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { ChevronsRight } from "lucide-react";
+import NewButton from "../NewButton";
 
 const members = [
     { name: "Dr. Amina Hassan", role: "National Coordinator" },
@@ -55,12 +56,8 @@ const Team = () => {
             </div>
 
             <div className='mt-8 md:mt-20 flex justify-center'>
-                <Link href="/">
-                    <Button className='w-full md:w-fit px-12 border border-black py-6 rounded-none bg-black text-white hover:bg-black hover:text-white transition-all'>
-                        View All
-                        <ChevronsRight className="ml-2" />
-                    </Button>
-                </Link>
+
+                <NewButton text='View All' link='/team' className="w-[225px] h-[60px] bg-black text-white" hoverBgClass="bg-white border border-black" hoverTextClass="group-hover:text-black" />
             </div>
         </section>
     )

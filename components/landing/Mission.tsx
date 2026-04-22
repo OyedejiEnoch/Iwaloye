@@ -120,13 +120,13 @@ export default function Mission() {
                   />
                 </div>
                 <div className='px-5'>
-                  <h3 className="text-[20px] font-gentium font-bold text-gray-900 mb-2">
+                  <h3 className="text-[19px] font-gentium font-bold text-gray-900 mb-2">
                     {feature?.title}
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">
                     {feature?.description}
                   </p>
-                  <NewButton text='Read All' link='/priorities' className="w-[257px] h-[44px] hover:border-none" />
+                  <NewButton text='Read All' link='/priorities' className="w-[257px] h-[44px]" />
                 </div>
               </div>
             ))}
@@ -162,7 +162,7 @@ export default function Mission() {
               <Image src={"/icons/Note.png"} alt='icon' width={30} height={30} />
 
             </button> */}
-            <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-0 bg-black text-white py-2 px-6 min-w-[280px] min-h-[80px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
+            <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-0 bg-black text-white py-2 px-6 w-[280px] h-[80px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
           </div>
         </div>
       </div>

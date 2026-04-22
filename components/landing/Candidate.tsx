@@ -94,7 +94,7 @@ const Candidate = ({ heading, subHeading, text, className, about = false }: { he
                                 <h3 className='md:text-lg lg:text-[24px] font-bold tracking-wider'>A.D.C. 2026</h3>
                                 <div className='w-[139px] h-[1.5px] bg-[#F47321] mb-3' />
                             </div>
-                            <h2 className="text-3xl md:text-4xl lg:text-[66px] font-freestyle">Salam F. Najeem</h2>
+                            <h2 className="text-3xl md:text-4xl lg:text-[66px] font-freestyle">Salaam F. Najeem</h2>
                             <p className='font-bold text-[#000000]/80 text-sm opacity-70'>For Osun State Governor</p>
                         </div>
 
