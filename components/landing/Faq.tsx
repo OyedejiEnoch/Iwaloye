@@ -64,7 +64,7 @@ const Faq = () => {
 
                 <div className="space-y-4">
                     {Faqs.map((faq, idx) => (
-                        <div key={idx} className="faq-card w-[100%] mx-auto md:w-full border border-black/10 overflow-hidden bg-white group">
+                        <div key={idx} className="faq-card w-[90%] mx-auto md:w-full border border-black/10 overflow-hidden bg-white group">
                             <button
                                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                                 className="w-full p-6 flex items-center justify-between text-left transition-all"

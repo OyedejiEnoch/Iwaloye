@@ -107,8 +107,8 @@ const Contact = () => {
                         </div>
 
                         <div className='mt-4 space-y-10'>
-                            <div className='contact-item flex items-center gap-6 group'>
-                                <div className="w-16 h-16 flex items-center justify-center">
+                            <div className='contact-item flex items-start gap-6 group'>
+                                <div className="w-10 h-10 flex items-center justify-center">
                                     <Image src="/icons/phoneIcon.svg" alt="Phone" width={28} height={28} className='text-[#F47321]' />
                                 </div>
                                 <div className='flex flex-col gap-1'>
@@ -116,8 +116,8 @@ const Contact = () => {
                                     <p className='text-sm font-semibold'>+123 706 678 1234</p>
                                 </div>
                             </div>
-                            <div className='contact-item flex items-center gap-6 group'>
-                                <div className="w-16 h-16 flex items-center justify-center">
+                            <div className='contact-item flex items-start gap-6 group'>
+                                <div className="w-10 h-10 flex items-center justify-center">
                                     <Image src="/icons/mailIcon.svg" alt="Mail" width={28} height={28} className='text-[#F47321]' />
                                 </div>
                                 <div className='flex flex-col gap-1'>
@@ -125,8 +125,8 @@ const Contact = () => {
                                     <p className='text-sm font-semibold'>contact@guru.org.ng</p>
                                 </div>
                             </div>
-                            <div className='contact-item flex items-center gap-6'>
-                                <div className="w-16 h-16 flex items-center justify-center">
+                            <div className='contact-item flex items-start gap-6'>
+                                <div className="w-10 h-10 flex items-center justify-center">
                                     <Image src="/icons/mapIcon.svg" alt="Map" width={28} height={28} className='text-[#F47321]' />
                                 </div>
                                 <div className='flex flex-col gap-1'>
@@ -212,10 +212,10 @@ const Contact = () => {
                     </div>
                 </div>
 
-                <div className='flex flex-col'>
+                <div className='flex flex-col mt-8'>
                     <h2 className='font-semibold mb-4'>Follow us</h2>
 
-                    <div className="hidden md:flex items-center space-x-2">
+                    <div className="flex items-center space-x-2">
 
                         <a href="https://www.facebook.com/share/17MZxWnGPE/?mibextid=wwXIfr" className="bg-white rounded-full overflow-hidden flex items-center justify-center p-[2px]"><Image src='/icons/Facebook.png' alt="facebook" width={26} height={26} /></a>
                         <a href="https://x.com/najeemfsalaam?s=11" className="bg-white rounded-full overflow-hidden flex items-center justify-center p-[2px]"><Image src='/icons/X.png' alt="x" width={26} height={26} /></a>
