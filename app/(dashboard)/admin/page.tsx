@@ -141,7 +141,7 @@ export default function AdminDashboardPage() {
                 <div>
                   <p className="text-[13px] text-[#6A7282] mb-1">{stat.label}</p>
                   <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-                  <p className="text-xs text-green-600 mt-1">{stat.change}</p>
+                  {/* <p className="text-xs text-green-600 mt-1">{stat.change}</p> */}
                 </div>
                 <div className={`h-12 w-12 rounded-lg ${stat.iconBg} flex items-center justify-center shrink-0`}>
                   <stat.icon className={`h-6 w-6 ${stat.iconColor}`} />

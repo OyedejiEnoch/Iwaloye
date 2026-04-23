@@ -13,8 +13,9 @@ import {
   Calendar,
   CheckCircle,
   UserCircle,
+  Users,
 } from "lucide-react";
-import { useGetAllCalendersQuery, useGetAllLeadersQuery, useGetAllNewsQuery } from "@/redux/api/adminApi";
+import { useGetAllCalendersQuery, useGetAllLeadersQuery, useGetAllNewsQuery, useGetAllVolunteersQuery } from "@/redux/api/adminApi";
 
 
 const recentActivity = [
@@ -58,7 +59,8 @@ export default function SubAdminDashboardPage() {
   const dispatch = useDispatch();
   const { data: newsData, isLoading, error: newsError } = useGetAllNewsQuery();
   const { data: calendersData, error: calendersError } = useGetAllCalendersQuery()
-  const { data: leadersData, error: leadersError } = useGetAllLeadersQuery();
+  // const { data: leadersData, error: leadersError } = useGetAllLeadersQuery();
+  const { data: volunteersData, error: volunteersError } = useGetAllVolunteersQuery();
 
   useEffect(() => {
     const checkErrors = (...errors: any[]) => {
@@ -70,31 +72,29 @@ export default function SubAdminDashboardPage() {
         }
       }
     };
-    
-    checkErrors(newsError, calendersError, leadersError);
-  }, [newsError, calendersError, leadersError, dispatch, router]);
+
+    checkErrors(newsError, volunteersError, calendersError);
+  }, [newsError, volunteersError, calendersError, dispatch, router]);
 
   const newsItems = newsData?.data || (Array.isArray(newsData) ? newsData : newsData ? [newsData] : []);
   const calendersItems = calendersData?.data || (Array.isArray(calendersData) ? calendersData : calendersData ? [calendersData] : []);
-  const leadersItems = leadersData?.data || (Array.isArray(leadersData) ? leadersData : leadersData ? [leadersData] : []);
-
+  // const leadersItems = leadersData?.data || (Array.isArray(leadersData) ? leadersData : leadersData ? [leadersData] : []);
+  const volunteersItems = volunteersData?.data || (Array.isArray(volunteersData) ? volunteersData : volunteersData ? [volunteersData] : []);
 
   const stats = [
     {
       label: "Published News",
       value: newsItems.length,
-      change: "+2 this month",
       icon: Newspaper,
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600",
     },
     {
-      label: "Active Leaders",
-      value: leadersItems.length,
-      change: "All regions",
-      icon: UserCircle,
-      iconBg: "bg-[#FFF7ED]",
-      iconColor: "text-amber-600",
+      label: "Total Volunteers",
+      value: volunteersItems.length,
+      icon: Users,
+      iconBg: "bg-[#EFF6FF]",
+      iconColor: "text-indigo-600",
     },
   ];
 
@@ -125,7 +125,7 @@ export default function SubAdminDashboardPage() {
                 <div>
                   <p className="text-[13px] text-[#6A7282] mb-1">{stat.label}</p>
                   <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-                  <p className="text-xs text-emerald-600 mt-1">{stat.change}</p>
+                  {/* <p className="text-xs text-emerald-600 mt-1">{stat.change}</p> */}
                 </div>
                 <div className={`h-12 w-12 rounded-full ${stat.iconBg} flex items-center justify-center flex-shrink-0`}>
                   <stat.icon className={`h-6 w-6 ${stat.iconColor}`} />

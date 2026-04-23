@@ -55,7 +55,7 @@ const contentItems = [
 const userManagementItems = [
 
   { title: "Admin Management", href: "/admin/admin-management", },
-  { title: "Settings", href: "/admin/settings", },
+  // { title: "Settings", href: "/admin/settings", },
 ];
 
 export default function AdminSidebar() {

@@ -24,7 +24,7 @@ const Contact = () => {
         message: ""
     })
 
-    const [submitContact, { isLoading }] = useSubmitContactMutation()
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setDetails({ ...details, [e.target.id]: e.target.value })
@@ -38,18 +38,39 @@ const Contact = () => {
             return
         }
 
+        setIsLoading(true);
+
+        const formData = new FormData();
+        formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "");
+        formData.append("name", details.full_name);
+        formData.append("email", details.email);
+        formData.append("subject", details.subject);
+        formData.append("message", details.message);
+
         try {
-            await submitContact(details).unwrap()
-            toast.success("Message sent successfully!")
-            setDetails({
-                full_name: "",
-                email: "",
-                subject: "",
-                message: ""
-            })
-        } catch (err: any) {
-            console.error("Contact Error:", err)
-            toast.error(err?.data?.message || "Failed to send message. Please try again.")
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                toast.success("Message sent successfully!");
+                setDetails({
+                    full_name: "",
+                    email: "",
+                    subject: "",
+                    message: ""
+                });
+            } else {
+                toast.error("Failed to send message: " + data.message);
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to submit feedback. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -195,7 +216,7 @@ const Contact = () => {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full p-4 bg-[#F47321] flex items-center gap-2 justify-center text-white font-bold text-sm tracking-widest hover:bg-orange-700 transition-all shadow-lg disabled:opacity-50"
+                                className="w-full p-4 bg-[#F47321] flex items-center gap-2 justify-center text-white font-bold text-sm tracking-widest cursor-pointer transition-all shadow-lg disabled:opacity-50"
                             >
                                 {isLoading ? (
                                     <>
@@ -217,9 +238,9 @@ const Contact = () => {
 
                     <div className="flex items-center space-x-2">
 
-                        <a href="https://www.facebook.com/share/17MZxWnGPE/?mibextid=wwXIfr" className="bg-white rounded-full overflow-hidden flex items-center justify-center p-[2px]"><Image src='/icons/Facebook.png' alt="facebook" width={26} height={26} /></a>
-                        <a href="https://x.com/najeemfsalaam?s=11" className="bg-white rounded-full overflow-hidden flex items-center justify-center p-[2px]"><Image src='/icons/X.png' alt="x" width={26} height={26} /></a>
-                        <a href="https://www.instagram.com/najeemsalaam?igsh=MW13bzc5M2kzbWllcQ==" className="bg-white rounded-full overflow-hidden flex items-center justify-center p-[2px]"><Image src='/icons/Instagram.png' alt="instagram" width={26} height={26} /></a>
+                        <a href="https://www.facebook.com/share/17MZxWnGPE/?mibextid=wwXIfr" target='_blank' rel='noopener noreferrer' className="bg-white rounded-full overflow-hidden flex items-center justify-center p-[2px]"><Image src='/icons/Facebook.png' alt="facebook" width={26} height={26} /></a>
+                        <a href="https://x.com/najeemfsalaam?s=11" target='_blank' rel='noopener noreferrer' className="bg-white rounded-full overflow-hidden flex items-center justify-center p-[2px]"><Image src='/icons/X.png' alt="x" width={26} height={26} /></a>
+                        <a href="https://www.instagram.com/najeemsalaam?igsh=MW13bzc5M2kzbWllcQ==" target='_blank' rel='noopener noreferrer' className="bg-white rounded-full overflow-hidden flex items-center justify-center p-[2px]"><Image src='/icons/Instagram.png' alt="instagram" width={26} height={26} /></a>
                         {/* <a href="https://wa.me/2348033589733" className= "invert brightness-200 bg-black rounded-full overflow-hidden flex items-center justify-center p-[2px]" : ""}><Image src='/icons/WhatsApp.png' alt="whatsapp" width={26} height={26} /></a> */}
                         <div className="h-8 w-[2px] bg-black" />
 

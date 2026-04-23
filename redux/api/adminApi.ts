@@ -254,7 +254,7 @@ export const adminApi = createApi({
 
         // Admin Management
         getAllAdmins: builder.query<any, void>({
-            query: () => '/super-admin/admins-index',
+            query: () => '/admin/admins',
             providesTags: ['Admins'],
         }),
         createAdmin: builder.mutation<any, any>({

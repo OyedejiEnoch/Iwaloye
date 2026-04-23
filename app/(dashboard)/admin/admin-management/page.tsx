@@ -72,8 +72,8 @@ export default function AdminManagementPage() {
 
   const handleEdit = (admin: any) => {
     setEditingAdmin(admin);
-    setFirstName(admin.full_name);
-    setLastName(admin.last_name);
+    setFirstName(admin.first_name || admin.full_name || "");
+    setLastName(admin.last_name || "");
     setEmail(admin.email);
     setRole(admin.role || "admin");
     setPassword(""); // Don't pre-fill password for security
@@ -175,12 +175,12 @@ export default function AdminManagementPage() {
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2 text-left">
-                      <Label htmlFor="full_name" className="text-sm font-medium text-gray-700">Full Name</Label>
+                      <Label htmlFor="first_name" className="text-sm font-medium text-gray-700">First Name</Label>
                       <Input
-                        id="full_name"
+                        id="first_name"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
-                        placeholder="Enter full name"
+                        placeholder="Enter first name"
                         className="h-11 border-gray-200 bg-gray-50/50"
                       />
                     </div>
@@ -205,7 +205,7 @@ export default function AdminManagementPage() {
                         className="h-11 border-gray-200 bg-gray-50/50"
                       />
                     </div>
-                    <div className="space-y-2 text-left">
+                    {/* <div className="space-y-2 text-left">
                       <Label htmlFor="role" className="text-sm font-medium text-gray-700">Role</Label>
                       <Select value={role} onValueChange={setRole}>
                         <SelectTrigger className="h-11 border-gray-200 bg-gray-50/50 text-left">
@@ -217,7 +217,7 @@ export default function AdminManagementPage() {
                           <SelectItem value="content-editor">Content Editor</SelectItem>
                         </SelectContent>
                       </Select>
-                    </div>
+                    </div> */}
                     <div className="space-y-2 md:col-span-2 text-left">
                       <Label htmlFor="tempPassword" className="text-sm font-medium text-gray-700">
                         {editingAdmin ? "New Password (Optional)" : "Password"}
@@ -283,7 +283,9 @@ export default function AdminManagementPage() {
                       admins.map((admin: any) => (
                         <TableRow key={admin.id || admin._id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
                           <TableCell className="font-medium text-gray-900 py-4 text-sm">
-                            {admin.full_name}
+                            {admin.first_name && admin.last_name 
+                              ? `${admin.first_name} ${admin.last_name}` 
+                              : admin.full_name || "Admin"}
                           </TableCell>
                           <TableCell className="text-gray-500 text-sm">{admin.email}</TableCell>
                           <TableCell className="text-gray-500 text-sm capitalize">
