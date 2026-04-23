@@ -199,7 +199,7 @@ export default function Hero() {
             {/* ── DESKTOP LAYOUT (hidden on mobile) ── */}
             <section className="hidden md:flex relative w-full h-screen min-h-[100vh] overflow-hidden bg-white text-white">
                 {/* Background Image */}
-                <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 z-0 -top-14">
                     <Image
                         src="/assets/mainBg.png"
                         alt="Background"
@@ -228,7 +228,7 @@ export default function Hero() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
                                 </svg>
                             </button> */}
-                            <NewButton text='Join The Movement' className='mt-10 bg-[#00d65b] text-white text-[10px] md:text-xs mt-1 font-bold uppercase tracking-widest py-4 px-8 w-[250px] h-[42px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
+                            <NewButton text='Join The Movement' link="/membership" className='mt-10 bg-[#00d65b] text-white text-[10px] md:text-xs mt-1 font-bold uppercase tracking-widest py-4 px-8 w-[250px] h-[42px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
                         </div>
                         <h1
                             className="font-bold mt-12 uppercase tracking-tighter select-none pointer-events-none opacity-20 whitespace-nowrap"

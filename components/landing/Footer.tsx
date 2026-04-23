@@ -214,9 +214,9 @@ const Footer = () => {
           </p>
           <p className="text-[11px] text-gray-400 mt-1">
             Powered by{' '}
-            <Link href="#" className="text-[#E8792B] hover:underline font-medium">
+            <a href="mailto:admin@tesliscontractors.com" target="_blank" rel="noopener noreferrer" className="text-[#E8792B] hover:underline font-medium">
               Teslis Contractors Nigeria Ltd
-            </Link>
+            </a>
           </p>
         </div>
       </div>

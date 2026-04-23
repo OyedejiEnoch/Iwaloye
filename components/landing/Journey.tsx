@@ -22,6 +22,7 @@ interface PostData {
   date?: string,
   username?: string,
   profilePic?: string
+  link?: string
 }
 
 const InstagramPosts: PostData[] = [
@@ -35,7 +36,8 @@ const InstagramPosts: PostData[] = [
     platform: 'Instagram',
     date: '22 April',
     username: 'najeemsalaam',
-    profilePic: '/assets/profileInstagram.jpg'
+    profilePic: '/assets/profileInstagram.jpg',
+    link: "https://www.instagram.com/p/DXcBIz6jJOI/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
   },
   {
     image: '/instagram/second.png',
@@ -47,7 +49,8 @@ const InstagramPosts: PostData[] = [
     platform: 'Instagram',
     date: '11 April',
     username: 'najeemsalaam',
-    profilePic: '/assets/profileInstagram.jpg'
+    profilePic: '/assets/profileInstagram.jpg',
+    link: "https://www.instagram.com/p/DW_8YhJDB4r/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
   },
   {
     image: '/instagram/third.png',
@@ -59,7 +62,8 @@ const InstagramPosts: PostData[] = [
     platform: 'Instagram',
     date: '9 April',
     username: 'najeemsalaam',
-    profilePic: '/assets/profileInstagram.jpg'
+    profilePic: '/assets/profileInstagram.jpg',
+    link: "https://www.instagram.com/p/DW66ok3DFGY/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
   },
   {
     image: '/instagram/fourth.png',
@@ -71,7 +75,8 @@ const InstagramPosts: PostData[] = [
     platform: 'Instagram',
     date: '9 April',
     username: 'najeemsalaam',
-    profilePic: '/assets/profileInstagram.jpg'
+    profilePic: '/assets/profileInstagram.jpg',
+    link: "https://www.instagram.com/p/CBOc7j0AMmM/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
   },
 ]
 
@@ -86,7 +91,8 @@ const FacebookPosts: PostData[] = [
     platform: 'Facebook',
     date: '22 April',
     username: 'Dr. Najeem Folasayo Salaam',
-    profilePic: '/assets/profileFacebook.jpg'
+    profilePic: '/assets/profileFacebook.jpg',
+    link: "https://web.facebook.com/share/p/1DXUgx2Bdd/?mibextid=wwXIfr"
   },
   {
     image: '/facebook/second.png',
@@ -98,7 +104,8 @@ const FacebookPosts: PostData[] = [
     platform: 'Facebook',
     date: '9 April',
     username: 'Dr. Najeem Folasayo Salaam',
-    profilePic: '/assets/profileFacebook.jpg'
+    profilePic: '/assets/profileFacebook.jpg',
+    link: "https://web.facebook.com/share/p/1KRRRRNMTx/?mibextid=wwXIfr"
   },
   {
     image: '/facebook/third.png',
@@ -110,7 +117,8 @@ const FacebookPosts: PostData[] = [
     platform: 'Facebook',
     date: '13 March',
     username: 'Dr. Najeem Folasayo Salaam',
-    profilePic: '/assets/profileFacebook.jpg'
+    profilePic: '/assets/profileFacebook.jpg',
+    link: "https://web.facebook.com/share/p/17JmXurMBg/?mibextid=wwXIfr"
   },
   {
     image: '/facebook/fourth.png',
@@ -122,7 +130,8 @@ const FacebookPosts: PostData[] = [
     platform: 'Facebook',
     date: '12 March',
     username: 'Dr. Najeem Folasayo Salaam',
-    profilePic: '/assets/profileFacebook.jpg'
+    profilePic: '/assets/profileFacebook.jpg',
+    link: "https://web.facebook.com/share/p/1E1DHGbH3A/?mibextid=wwXIfr"
   },
 ]
 
@@ -137,7 +146,8 @@ const XPosts: PostData[] = [
     platform: 'Twitter',
     date: '15 April',
     username: '@NajeemFSalaam',
-    profilePic: '/assets/profileX.jpg'
+    profilePic: '/assets/profileX.jpg',
+    link: "https://x.com/NajeemFSalaam/status/2044435950739046562?s=20"
   },
   {
     image: '/twitter/second.png',
@@ -149,7 +159,8 @@ const XPosts: PostData[] = [
     platform: 'Twitter',
     date: '12 April',
     username: '@NajeemFSalaam',
-    profilePic: '/assets/profileX.jpg'
+    profilePic: '/assets/profileX.jpg',
+    link: "https://x.com/NajeemFSalaam/status/2043272809862902141?s=20"
   },
   {
     image: '/twitter/third.png',
@@ -161,7 +172,8 @@ const XPosts: PostData[] = [
     platform: 'Twitter',
     date: '26 March',
     username: '@NajeemFSalaam',
-    profilePic: '/assets/profileX.jpg'
+    profilePic: '/assets/profileX.jpg',
+    link: "https://x.com/NajeemFSalaam/status/2037185098634645987?s=20"
   },
   {
     image: '/twitter/fourth.png',
@@ -173,7 +185,8 @@ const XPosts: PostData[] = [
     platform: 'Twitter',
     date: '26 Febuary',
     username: '@NajeemFSalaam',
-    profilePic: '/assets/profileX.jpg'
+    profilePic: '/assets/profileX.jpg',
+    link: "https://x.com/Rashaf01/status/2027124044240216433?s=20"
   },
 ]
 
@@ -264,12 +277,15 @@ const SocialCard = ({ post }: { post: PostData }) => {
         </div>
 
         <div className="relative w-full aspect-square">
-          <Image
-            src={post.image}
-            alt="Post"
-            fill
-            className="object-cover"
-          />
+          <a href={post.link} target="_blank" rel="noopener noreferrer" >
+
+            <Image
+              src={post.image}
+              alt="Post"
+              fill
+              className="object-cover"
+            />
+          </a>
         </div>
 
         <div className="px-3 pt-2 pb-1 h-[40px]">
@@ -351,7 +367,7 @@ const Journey = () => {
   }, { scope: container })
 
   return (
-    <section ref={container} className="py-8 md:py-28 bg-white overflow-hidden border-none">
+    <section ref={container} className="py-8 md:py-28 bg-white overflow-hidden border-none hide-scrollbar">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <div ref={headingRef} className="mb-4">
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold font-sans lg:text-[70px] uppercase tracking-wide text-black leading-none">
