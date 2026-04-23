@@ -56,11 +56,32 @@ const recentActivity = [
 
 
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/features/authSlice";
+
 export default function AdminDashboardPage() {
-  const { data: newsData, isLoading } = useGetAllNewsQuery();
-  const { data: leadersData } = useGetAllLeadersQuery();
-  const { data: volunteersData } = useGetAllVolunteersQuery();
-  const { data: calendersData } = useGetAllCalendersQuery()
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { data: newsData, isLoading, error: newsError } = useGetAllNewsQuery();
+  const { data: leadersData, error: leadersError } = useGetAllLeadersQuery();
+  const { data: volunteersData, error: volunteersError } = useGetAllVolunteersQuery();
+  const { data: calendersData, error: calendersError } = useGetAllCalendersQuery()
+
+  useEffect(() => {
+    const checkErrors = (...errors: any[]) => {
+      for (const error of errors) {
+        if (error && (error.status === 401 || error.status === 403)) {
+          dispatch(logout());
+          router.push("/login");
+          return;
+        }
+      }
+    };
+    
+    checkErrors(newsError, leadersError, volunteersError, calendersError);
+  }, [newsError, leadersError, volunteersError, calendersError, dispatch, router]);
 
   const newsItems = newsData?.data || (Array.isArray(newsData) ? newsData : newsData ? [newsData] : []);
   const leadersItems = leadersData?.data || (Array.isArray(leadersData) ? leadersData : leadersData ? [leadersData] : []);

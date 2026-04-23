@@ -26,48 +26,40 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
   });
 
   useEffect(() => {
-    // Small delay to ensure state is hydrated from localStorage (handled in authSlice initialState)
-    const checkAuth = () => {
-      if (!isAuthenticated || !token) {
+    // If not authenticated or no token, redirect to login immediately
+    if (!isAuthenticated || !token) {
+      router.push("/login");
+      return;
+    }
+
+    if (error) {
+      const fetchError = error as any;
+      if (fetchError.status === 401) {
+        dispatch(logout());
         router.push("/login");
         return;
       }
+      setIsVerifying(false);
+      return;
+    }
 
-      if (error) {
-        const fetchError = error as any;
-        if (fetchError.status === 401) {
-          dispatch(logout());
+    if (data) {
+      if (allowedRoles && !allowedRoles.includes(role as any)) {
+        if (role === "super-admin") {
+          router.push("/admin");
+        } else if (role === "sub-admin") {
+          router.push("/sub-admin");
+        } else {
           router.push("/login");
-          return;
         }
-        // If it's any other error (like 404 or 500), we don't want to get stuck
-        setIsVerifying(false);
         return;
       }
+      setIsVerifying(false);
+    }
+  }, [isAuthenticated, token, role, allowedRoles, router, data, error, isMeLoading, dispatch]);
 
-      if (data) {
-        if (allowedRoles && !allowedRoles.includes(role as any)) {
-          if (role === "super-admin") {
-            router.push("/admin");
-          } else if (role === "sub-admin") {
-            router.push("/sub-admin");
-          } else {
-            router.push("/login");
-          }
-          return;
-        }
-        setIsVerifying(false);
-      } else if (!isMeLoading && !isAuthenticated) {
-         // This case should be handled by the first if, but just in case
-         router.push("/login");
-      }
-    };
-
-    checkAuth();
-  }, [isAuthenticated, token, role, allowedRoles, router, pathname, data, error, isMeLoading, dispatch]);
-
-  // Case 1: Still verifying or redirecting
-  if (isVerifying || isMeLoading || !isAuthenticated || !token || (allowedRoles && !allowedRoles.includes(role as any))) {
+  // Case 1: Still verifying or missing basics
+  if (isVerifying || isMeLoading || !isAuthenticated || !token) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center bg-white gap-4">
         <Loader2 className="h-10 w-10 animate-spin text-indigo-600" />

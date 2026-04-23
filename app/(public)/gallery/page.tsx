@@ -26,7 +26,7 @@ export default function GalleryPage() {
     return (
         <div className="min-h-screen bg-white">
             {/* Header Section */}
-            <section className="pt-20 pb-16 px-6 text-center max-w-4xl mx-auto">
+            <section className="pt-30 pb-16 px-6 text-center max-w-4xl mx-auto">
                 <h1
                     className="text-6xl md:text-7xl mb-6 text-[#101828] font-sans"
                 >

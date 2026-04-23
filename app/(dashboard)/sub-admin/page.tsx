@@ -48,10 +48,31 @@ const recentActivity = [
   },
 ];
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/features/authSlice";
+
 export default function SubAdminDashboardPage() {
-  const { data: newsData, isLoading } = useGetAllNewsQuery();
-  const { data: calendersData } = useGetAllCalendersQuery()
-  const { data: leadersData } = useGetAllLeadersQuery();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { data: newsData, isLoading, error: newsError } = useGetAllNewsQuery();
+  const { data: calendersData, error: calendersError } = useGetAllCalendersQuery()
+  const { data: leadersData, error: leadersError } = useGetAllLeadersQuery();
+
+  useEffect(() => {
+    const checkErrors = (...errors: any[]) => {
+      for (const error of errors) {
+        if (error && (error.status === 401 || error.status === 403)) {
+          dispatch(logout());
+          router.push("/login");
+          return;
+        }
+      }
+    };
+    
+    checkErrors(newsError, calendersError, leadersError);
+  }, [newsError, calendersError, leadersError, dispatch, router]);
 
   const newsItems = newsData?.data || (Array.isArray(newsData) ? newsData : newsData ? [newsData] : []);
   const calendersItems = calendersData?.data || (Array.isArray(calendersData) ? calendersData : calendersData ? [calendersData] : []);

@@ -1,18 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import { baseQueryWithLogout } from './baseQuery'
 
 
 export const detailsApi = createApi({
     reducerPath: 'detailsApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: '/api',
-        prepareHeaders: (headers, { getState }) => {
-            const token = (getState() as any).auth.token
-            if (token) {
-                headers.set('authorization', `Bearer ${token}`)
-            }
-            return headers;
-        },
-    }),
+    baseQuery: baseQueryWithLogout,
     endpoints: (builder) => ({
         getAllVision: builder.query({
             query: () => '/vision/all',

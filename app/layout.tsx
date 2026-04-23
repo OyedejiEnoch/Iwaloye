@@ -48,8 +48,8 @@ export default function RootLayout({
       >
         <StoreProvider>
           <SmoothScroll>
-            {children}
             <Toaster />
+            {children}
           </SmoothScroll>
         </StoreProvider>
       </body>
