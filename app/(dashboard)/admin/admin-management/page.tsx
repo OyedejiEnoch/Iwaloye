@@ -101,7 +101,7 @@ export default function AdminManagementPage() {
   };
 
   const handleSave = async () => {
-    if (!firstName || !lastName || !email) {
+    if (!firstName || !email) {
       toast.error("Please fill in all required fields");
       return;
     }
