@@ -254,12 +254,12 @@ export const adminApi = createApi({
 
         // Admin Management
         getAllAdmins: builder.query<any, void>({
-            query: () => '/admin/admins',
+            query: () => '/super-admin/admins-index',
             providesTags: ['Admins'],
         }),
         createAdmin: builder.mutation<any, any>({
             query: (data) => ({
-                url: '/super-admin/admins-index',
+                url: '/admin/admins',
                 method: 'POST',
                 body: data,
             }),
