@@ -39,13 +39,12 @@ export const adminApi = createApi({
             invalidatesTags: ['Vision'],
         }),
 
-        // News
         getAllNews: builder.query<any, void>({
-            query: () => '/admin/news',
+            query: () => '/news', // Temporary workaround: /admin/news is missing the 'id' field in the array
             providesTags: ['News'],
         }),
         getNewsById: builder.query<any, string>({
-            query: (id) => `/admin/news/${id}`,
+            query: (id) => `/news/${id}`, // Temporary workaround: use public endpoint to guarantee robust standard data
             providesTags: (result, error, id) => [{ type: 'News', id }],
         }),
         createNews: builder.mutation<any, any>({
@@ -59,15 +58,17 @@ export const adminApi = createApi({
         updateNews: builder.mutation<any, { id: string, data: any }>({
             query: ({ id, data }) => ({
                 url: `/admin/news/${id}`,
-                method: 'PUT',
+                method: 'POST',
                 body: data,
+                params: { _method: 'PUT' }
             }),
             invalidatesTags: ['News'],
         }),
         deleteNews: builder.mutation<any, string>({
             query: (id) => ({
                 url: `/admin/news/${id}`,
-                method: 'DELETE',
+                method: 'POST',
+                params: { _method: 'DELETE' }
             }),
             invalidatesTags: ['News'],
         }),
@@ -258,7 +259,7 @@ export const adminApi = createApi({
         }),
         createAdmin: builder.mutation<any, any>({
             query: (data) => ({
-                url: '/admin/admins',
+                url: '/super-admin/admins-index',
                 method: 'POST',
                 body: data,
             }),

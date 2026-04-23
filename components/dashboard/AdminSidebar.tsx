@@ -49,7 +49,7 @@ const contentItems = [
   // { title: "Newsletter", href: "/admin/newsletter" },
   { title: "Campaign Calendar", href: "/admin/calender" },
   { title: "Gallery", href: "/admin/gallery" },
-  { title: "Movements", href: "/admin/movements", },
+  { title: "Volunteers", href: "/admin/movements", },
 ];
 
 const userManagementItems = [
@@ -179,7 +179,7 @@ export default function AdminSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-gray-100 px-4 py-3">
-        <div className="flex items-center gap-3 mb-3">
+        {/* <div className="flex items-center gap-3 mb-3">
           <Avatar className="h-8 w-8 ring-2 ring-indigo-200">
             <AvatarFallback className="bg-indigo-600 text-white text-xs font-bold">
               AD
@@ -189,7 +189,7 @@ export default function AdminSidebar() {
             <p className="text-sm font-semibold text-gray-900 truncate">Admin User</p>
             <p className="text-xs text-gray-500 truncate">Super Admin</p>
           </div>
-        </div>
+        </div> */}
         <button
           onClick={handleLogout}
           disabled={isLoggingOut}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, use } from "react";
+import AdminSidebar from "@/components/dashboard/AdminSidebar";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -15,10 +16,10 @@ import {
   X,
   ArrowLeft,
 } from "lucide-react";
-import SubAdminSidebar from "@/components/dashboard/SubAdminSidebar";
 import { useGetNewsByIdQuery, useUpdateNewsMutation } from "@/redux/api/adminApi";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import SubAdminSidebar from "@/components/dashboard/SubAdminSidebar";
 
 interface EditNewsPageProps {
   params: Promise<{ id: string }>;
@@ -28,7 +29,7 @@ export default function EditNewsArticlePage({ params }: EditNewsPageProps) {
   const { id } = use(params);
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const { data: newsData, isLoading: isFetching } = useGetNewsByIdQuery(id);
   const [updateNews, { isLoading: isUpdating }] = useUpdateNewsMutation();
 
@@ -38,14 +39,17 @@ export default function EditNewsArticlePage({ params }: EditNewsPageProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
-    if (newsData?.data) {
-      const news = newsData.data;
+    if (newsData) {
+      const news = newsData.data || newsData;
       setNewsTitle(news.title || "");
       setArticleBody(news.body || "");
-      if (news.image_or_media) {
-        const fullImageUrl = news.image_or_media.startsWith('http') 
-          ? news.image_or_media 
-          : `/${news.image_or_media.startsWith('/') ? news.image_or_media.slice(1) : news.image_or_media}`;
+
+      // Use image_or_media_url if available, fallback to image_or_media
+      const imageUrl = news.image_or_media_url || news.image_or_media;
+      if (imageUrl) {
+        const fullImageUrl = imageUrl.startsWith('http')
+          ? imageUrl
+          : `/${imageUrl.startsWith('/') ? imageUrl.slice(1) : imageUrl}`;
         setImagePreview(fullImageUrl);
       }
     }
@@ -109,9 +113,9 @@ export default function EditNewsArticlePage({ params }: EditNewsPageProps) {
       <SubAdminSidebar />
       <SidebarInset className="flex flex-col flex-1 min-w-0">
         <DashboardNavbar
-          userName="Sub-Admin User"
-          userRole="Sub Admin"
-          userInitials="SA"
+          userName="Admin User"
+          userRole="Super Admin"
+          userInitials="AD"
         />
         <main className="flex-1 overflow-y-auto p-6 bg-gray-50/50">
           <div className="max-w-7xl mx-auto space-y-6">
@@ -140,21 +144,21 @@ export default function EditNewsArticlePage({ params }: EditNewsPageProps) {
               <div className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="newsTitle" className="text-sm font-medium text-gray-700">News Title</Label>
-                  <Input 
-                    id="newsTitle" 
-                    placeholder="Enter article title" 
+                  <Input
+                    id="newsTitle"
+                    placeholder="Enter article title"
                     className="h-11 border-gray-200 bg-gray-50/50"
                     value={newsTitle}
                     onChange={(e) => setNewsTitle(e.target.value)}
                     maxLength={255}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="articleBody" className="text-sm font-medium text-gray-700">Article Body</Label>
-                  <Textarea 
-                    id="articleBody" 
-                    placeholder="Write your article content here..." 
+                  <Textarea
+                    id="articleBody"
+                    placeholder="Write your article content here..."
                     className="min-h-[200px] border-gray-200 bg-gray-50/50 resize-y"
                     value={articleBody}
                     onChange={(e) => setArticleBody(e.target.value)}
@@ -170,18 +174,18 @@ export default function EditNewsArticlePage({ params }: EditNewsPageProps) {
                     accept="image/*"
                     className="hidden"
                   />
-                  
+
                   {imagePreview ? (
                     <div className="relative rounded-xl overflow-hidden border border-gray-200 group">
-                      <img 
-                        src={imagePreview} 
-                        alt="Preview" 
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
                         className="w-full h-64 object-cover"
                       />
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <Button 
-                          variant="destructive" 
-                          size="sm" 
+                        <Button
+                          variant="destructive"
+                          size="sm"
                           onClick={removeImage}
                           className="gap-2"
                         >
@@ -191,7 +195,7 @@ export default function EditNewsArticlePage({ params }: EditNewsPageProps) {
                       </div>
                     </div>
                   ) : (
-                    <div 
+                    <div
                       onClick={() => fileInputRef.current?.click()}
                       className="border border-dashed border-gray-300 rounded-xl bg-gray-50/30 p-12 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 transition-colors"
                     >
@@ -216,7 +220,7 @@ export default function EditNewsArticlePage({ params }: EditNewsPageProps) {
                     Cancel
                   </Button>
                 </Link>
-                <Button 
+                <Button
                   className="bg-[#155DFC] hover:bg-[#1458ec] text-white font-medium px-6 h-10 gap-2"
                   onClick={handleSave}
                   disabled={isUpdating}

@@ -31,13 +31,13 @@ import {
 } from "@/redux/api/adminApi";
 import { toast } from "sonner";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogClose,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
 
 export default function AdminManagementPage() {
@@ -72,8 +72,8 @@ export default function AdminManagementPage() {
 
   const handleEdit = (admin: any) => {
     setEditingAdmin(admin);
-    setFirstName(admin.first_name);
-    setLastName(admin.last_name);
+    setFirstName(admin.full_name);
+    // setLastName(admin.last_name);
     setEmail(admin.email);
     setRole(admin.role || "admin");
     setPassword(""); // Don't pre-fill password for security
@@ -158,7 +158,7 @@ export default function AdminManagementPage() {
               {!isAddingAdmin && (
                 <Button
                   onClick={() => setIsAddingAdmin(true)}
-                  className="bg-[#4F00FF] hover:bg-[#3d00cc] text-white gap-2 h-10 px-6 rounded-lg transition-all shadow-sm"
+                  className="bg-[#155DFC] text-white gap-2 h-10 px-6 rounded-none transition-all shadow-sm"
                 >
                   <Plus className="w-4 h-4" /> Add Admin
                 </Button>
@@ -175,16 +175,16 @@ export default function AdminManagementPage() {
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2 text-left">
-                      <Label htmlFor="firstName" className="text-sm font-medium text-gray-700">First Name</Label>
+                      <Label htmlFor="full_name" className="text-sm font-medium text-gray-700">Full Name</Label>
                       <Input
-                        id="firstName"
+                        id="full_name"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
-                        placeholder="Enter first name"
+                        placeholder="Enter full name"
                         className="h-11 border-gray-200 bg-gray-50/50"
                       />
                     </div>
-                    <div className="space-y-2 text-left">
+                    {/* <div className="space-y-2 text-left">
                       <Label htmlFor="lastName" className="text-sm font-medium text-gray-700">Last Name</Label>
                       <Input
                         id="lastName"
@@ -193,7 +193,7 @@ export default function AdminManagementPage() {
                         placeholder="Enter last name"
                         className="h-11 border-gray-200 bg-gray-50/50"
                       />
-                    </div>
+                    </div> */}
                     <div className="space-y-2 text-left">
                       <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address</Label>
                       <Input
@@ -244,7 +244,7 @@ export default function AdminManagementPage() {
                     <Button
                       onClick={handleSave}
                       disabled={isCreating || isUpdating}
-                      className="bg-[#4F00FF] hover:bg-[#3d00cc] text-white font-medium px-6 h-10 gap-2"
+                      className="bg-[#155DFC] rounded-none text-white font-medium px-6 h-10 gap-2"
                     >
                       {(isCreating || isUpdating) && <Loader2 className="w-4 h-4 animate-spin" />}
                       {editingAdmin ? "Update Administrator" : "Add Administrator"}
@@ -283,7 +283,7 @@ export default function AdminManagementPage() {
                       admins.map((admin: any) => (
                         <TableRow key={admin.id || admin._id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
                           <TableCell className="font-medium text-gray-900 py-4 text-sm">
-                            {admin.first_name} {admin.last_name}
+                            {admin.full_name}
                           </TableCell>
                           <TableCell className="text-gray-500 text-sm">{admin.email}</TableCell>
                           <TableCell className="text-gray-500 text-sm capitalize">
@@ -379,31 +379,31 @@ export default function AdminManagementPage() {
 
             {/* Standardized Delete Dialog */}
             <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-                <DialogContent className="max-w-[400px]">
-                    <DialogHeader className="items-center">
-                        <AlertCircle className="h-12 w-12 text-red-500 mb-2" />
-                        <DialogTitle className="text-xl font-bold text-center">Delete Admin?</DialogTitle>
-                        <DialogDescription className="text-center text-gray-600">
-                            Are you sure you want to delete administrator <span className="font-semibold text-gray-900">"{selectedAdmin?.name}"</span>? This action cannot be undone.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter className="flex-col sm:flex-row gap-2 mt-4">
-                        <DialogClose asChild>
-                            <Button variant="outline" className="w-full sm:flex-1 h-11 border-gray-200">Cancel</Button>
-                        </DialogClose>
-                        <Button
-                            onClick={confirmDelete}
-                            disabled={isDeleting}
-                            className="w-full sm:flex-1 h-11 bg-red-600 hover:bg-red-700 text-white font-medium"
-                        >
-                            {isDeleting ? (
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                                "Delete Admin"
-                            )}
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
+              <DialogContent className="max-w-[400px]">
+                <DialogHeader className="items-center">
+                  <AlertCircle className="h-12 w-12 text-red-500 mb-2" />
+                  <DialogTitle className="text-xl font-bold text-center">Delete Admin?</DialogTitle>
+                  <DialogDescription className="text-center text-gray-600">
+                    Are you sure you want to delete administrator <span className="font-semibold text-gray-900">"{selectedAdmin?.name}"</span>? This action cannot be undone.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="flex-col sm:flex-row gap-2 mt-4">
+                  <DialogClose asChild>
+                    <Button variant="outline" className="w-full sm:flex-1 h-11 border-gray-200">Cancel</Button>
+                  </DialogClose>
+                  <Button
+                    onClick={confirmDelete}
+                    disabled={isDeleting}
+                    className="w-full sm:flex-1 h-11 bg-red-600 hover:bg-red-700 text-white font-medium"
+                  >
+                    {isDeleting ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      "Delete Admin"
+                    )}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
             </Dialog>
           </div>
         </main>

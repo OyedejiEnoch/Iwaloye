@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
+
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -16,10 +17,10 @@ import {
   Loader2,
   X,
 } from "lucide-react";
-import SubAdminSidebar from "@/components/dashboard/SubAdminSidebar";
 import { useCreateNewsMutation } from "@/redux/api/adminApi";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import SubAdminSidebar from "@/components/dashboard/SubAdminSidebar";
 
 export default function AddNewsArticlePage() {
   const router = useRouter();
@@ -99,7 +100,7 @@ export default function AddNewsArticlePage() {
                   Manage and publish news articles
                 </p>
               </div>
-              {/* <Link href="/sub-admin/news/add">
+              {/* <Link href="/admin/news/add">
                 <Button className="bg-[#4F00FF] hover:bg-[#3d00cc] text-white font-medium gap-2 h-10 px-6 rounded-lg transition-all shadow-sm">
                   <Plus className="h-4 w-4" />
                   Create News Article

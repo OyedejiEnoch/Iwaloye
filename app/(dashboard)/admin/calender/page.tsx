@@ -17,13 +17,13 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogClose,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
 import AdminSidebar from "@/components/dashboard/AdminSidebar";
 
@@ -89,7 +89,7 @@ export default function CampaignCalendarPage() {
                   Manage campaign activities and events
                 </p>
               </div>
-              <Button asChild className="bg-[#155DFC] hover:bg-[#1458ec] text-white font-medium gap-2 h-10 px-6 rounded-lg transition-all shadow-sm">
+              <Button asChild className="bg-[#155DFC] text-white font-medium gap-2 h-10 px-6 rounded-none transition-all shadow-sm">
                 <Link href="/admin/calender/add">
                   <Plus className="h-4 w-4" />
                   Add Event
@@ -129,7 +129,7 @@ export default function CampaignCalendarPage() {
                                   {event.event_type}
                                 </Badge>
                               </div>
-                              
+
                               <p className="text-sm text-gray-500 leading-relaxed max-w-2xl text-left">
                                 {event.description}
                               </p>
@@ -161,9 +161,9 @@ export default function CampaignCalendarPage() {
                                   Edit
                                 </Button>
                               </Link>
-                              <Button 
-                                variant="outline" 
-                                size="sm" 
+                              <Button
+                                variant="outline"
+                                size="sm"
                                 className="h-9 gap-2 text-red-500 border-gray-100 hover:bg-red-50 hover:border-red-100 rounded-lg px-4"
                                 onClick={() => handleDeleteClick(event.id || event._id, event.title)}
                                 disabled={isDeleting}
@@ -194,31 +194,31 @@ export default function CampaignCalendarPage() {
 
                   {/* Standardized Delete Dialog */}
                   <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-                      <DialogContent className="max-w-[400px]">
-                          <DialogHeader className="items-center">
-                              <AlertCircle className="h-12 w-12 text-red-500 mb-2" />
-                              <DialogTitle className="text-xl font-bold text-center">Delete Event?</DialogTitle>
-                              <DialogDescription className="text-center text-gray-600">
-                                  Are you sure you want to delete event <span className="font-semibold text-gray-900">"{selectedEvent?.title}"</span>? This action cannot be undone.
-                              </DialogDescription>
-                          </DialogHeader>
-                          <DialogFooter className="flex-col sm:flex-row gap-2 mt-4">
-                              <DialogClose asChild>
-                                  <Button variant="outline" className="w-full sm:flex-1 h-11 border-gray-200">Cancel</Button>
-                              </DialogClose>
-                              <Button
-                                  onClick={confirmDelete}
-                                  disabled={isDeleting}
-                                  className="w-full sm:flex-1 h-11 bg-red-600 hover:bg-red-700 text-white font-medium"
-                              >
-                                  {isDeleting ? (
-                                      <Loader2 className="h-4 w-4 animate-spin" />
-                                  ) : (
-                                      "Delete Event"
-                                  )}
-                              </Button>
-                          </DialogFooter>
-                      </DialogContent>
+                    <DialogContent className="max-w-[400px]">
+                      <DialogHeader className="items-center">
+                        <AlertCircle className="h-12 w-12 text-red-500 mb-2" />
+                        <DialogTitle className="text-xl font-bold text-center">Delete Event?</DialogTitle>
+                        <DialogDescription className="text-center text-gray-600">
+                          Are you sure you want to delete event <span className="font-semibold text-gray-900">"{selectedEvent?.title}"</span>? This action cannot be undone.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <DialogFooter className="flex-col sm:flex-row gap-2 mt-4">
+                        <DialogClose asChild>
+                          <Button variant="outline" className="w-full sm:flex-1 h-11 border-gray-200">Cancel</Button>
+                        </DialogClose>
+                        <Button
+                          onClick={confirmDelete}
+                          disabled={isDeleting}
+                          className="w-full sm:flex-1 h-11 bg-red-600 hover:bg-red-700 text-white font-medium"
+                        >
+                          {isDeleting ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            "Delete Event"
+                          )}
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
                   </Dialog>
                 </CardContent>
               </Card>

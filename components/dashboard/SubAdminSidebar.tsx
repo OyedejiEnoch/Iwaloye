@@ -44,8 +44,9 @@ const contentItems = [
   { title: "News & Publications", href: "/sub-admin/news", },
   // { title: "Meet Our Leaders", href: "/sub-admin/leaders",  },
   // { title: "FAQ Management", href: "/sub-admin/faq", },
-  { title: "Newsletter", href: "/sub-admin/newsletter", },
   { title: "Campaign Calender", href: "/sub-admin/calender", },
+  { title: "Gallery", href: "/sub-admin/gallery", },
+  { title: "Volunteers", href: "/sub-admin/movements", },
 ];
 
 
@@ -74,7 +75,7 @@ export default function SubAdminSidebar() {
       <SidebarHeader className="px-4 py-4 border-b border-gray-100">
         <div className="flex items-center gap-2">
           <div>
-            <p className="font-bold text-gray-900 text-sm">Content Editor - Judith</p>
+            <p className="font-bold text-gray-900 text-sm">Sub-admin</p>
           </div>
         </div>
       </SidebarHeader>
@@ -92,8 +93,8 @@ export default function SubAdminSidebar() {
                     asChild
                     isActive={isActive}
                     className={`rounded-lg transition-all duration-150 ${isActive
-                        ? "bg-emerald-50 text-emerald-700 font-semibold"
-                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-emerald-50 text-emerald-700 font-semibold"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                       }`}
                   >
                     <Link href={item.href} className="flex items-center gap-3 px-3 py-2">
@@ -123,8 +124,8 @@ export default function SubAdminSidebar() {
                     asChild
                     isActive={isActive}
                     className={`rounded-lg transition-all duration-150 ${isActive
-                        ? "bg-emerald-50 text-emerald-700 font-semibold"
-                        : "text-[#364153D9] hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-emerald-50 text-emerald-700 font-semibold"
+                      : "text-[#364153D9] hover:bg-gray-100 hover:text-gray-900"
                       }`}
                   >
                     <Link href={item.href} className="flex items-center gap-3 px-3 py-2">
@@ -144,12 +145,12 @@ export default function SubAdminSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-gray-100 px-4 py-3">
-        <div className="flex items-center gap-3 mb-3">
+        {/* <div className="flex items-center gap-3 mb-3">
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-gray-900 truncate">Sub Admin</p>
             <p className="text-xs text-gray-500 truncate">Content Manager</p>
           </div>
-        </div>
+        </div> */}
         <button
           onClick={handleLogout}
           disabled={isLoggingOut}

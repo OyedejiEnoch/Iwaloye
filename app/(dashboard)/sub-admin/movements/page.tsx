@@ -36,6 +36,7 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
+import SubAdminSidebar from "@/components/dashboard/SubAdminSidebar";
 
 export default function MovementManagementPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -76,7 +77,7 @@ export default function MovementManagementPage() {
 
   return (
     <>
-      <AdminSidebar />
+      <SubAdminSidebar />
       <SidebarInset className="flex flex-col flex-1 min-w-0">
         <DashboardNavbar
           userName="Admin User"

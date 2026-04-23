@@ -65,7 +65,7 @@ export default function AdminDashboardPage() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { data: newsData, isLoading, error: newsError } = useGetAllNewsQuery();
-  const { data: leadersData, error: leadersError } = useGetAllLeadersQuery();
+  // const { data: leadersData, error: leadersError } = useGetAllLeadersQuery();
   const { data: volunteersData, error: volunteersError } = useGetAllVolunteersQuery();
   const { data: calendersData, error: calendersError } = useGetAllCalendersQuery()
 
@@ -79,12 +79,12 @@ export default function AdminDashboardPage() {
         }
       }
     };
-    
-    checkErrors(newsError, leadersError, volunteersError, calendersError);
-  }, [newsError, leadersError, volunteersError, calendersError, dispatch, router]);
+
+    checkErrors(newsError, volunteersError, calendersError);
+  }, [newsError, volunteersError, calendersError, dispatch, router]);
 
   const newsItems = newsData?.data || (Array.isArray(newsData) ? newsData : newsData ? [newsData] : []);
-  const leadersItems = leadersData?.data || (Array.isArray(leadersData) ? leadersData : leadersData ? [leadersData] : []);
+  // const leadersItems = leadersData?.data || (Array.isArray(leadersData) ? leadersData : leadersData ? [leadersData] : []);
   const volunteersItems = volunteersData?.data || (Array.isArray(volunteersData) ? volunteersData : volunteersData ? [volunteersData] : []);
   const calendersItems = calendersData?.data || (Array.isArray(calendersData) ? calendersData : calendersData ? [calendersData] : []);
 
@@ -105,14 +105,14 @@ export default function AdminDashboardPage() {
       iconBg: "bg-[#FAF5FF]",
       iconColor: "text-purple-600",
     },
-    {
-      label: "Active Leaders",
-      value: leadersItems.length,
-      change: "All regions",
-      icon: UserCircle,
-      iconBg: "bg-[#FFF7ED]",
-      iconColor: "text-amber-600",
-    },
+    // {
+    //   label: "Active Leaders",
+    //   value: leadersItems.length,
+    //   change: "All regions",
+    //   icon: UserCircle,
+    //   iconBg: "bg-[#FFF7ED]",
+    //   iconColor: "text-amber-600",
+    // },
   ];
 
   return (
@@ -153,7 +153,7 @@ export default function AdminDashboardPage() {
           {/* Bottom Two Columns */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-6">
             {/* Recent Activity */}
-            <div className="bg-white rounded-lg border border-gray-100 shadow-xs p-5">
+            {/* <div className="bg-white rounded-lg border border-gray-100 shadow-xs p-5">
               <div className="flex items-center gap-2 mb-5">
                 <Calendar className="h-4 w-4 text-gray-400" />
                 <h2 className="text-base font-semibold text-gray-800">Recent Activity</h2>
@@ -171,7 +171,7 @@ export default function AdminDashboardPage() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             {/* Upcoming Events */}
             <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-5">
@@ -184,7 +184,7 @@ export default function AdminDashboardPage() {
                   const date = event.event_date ? new Date(event.event_date) : null;
                   const day = date ? date.getDate() : "--";
                   const month = date ? date.toLocaleString('default', { month: 'short' }) : "N/A";
-                  
+
                   return (
                     <li key={event.id || event._id} className="flex items-center gap-4">
                       <div className="h-12 w-12 rounded-xl bg-[#EFF6FF] flex flex-col items-center justify-center flex-shrink-0">

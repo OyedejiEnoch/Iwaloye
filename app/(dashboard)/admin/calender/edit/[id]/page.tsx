@@ -4,7 +4,7 @@ import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { 
-  useGetCalenderByIdQuery, 
+  useGetAllCalendersQuery, 
   useUpdateCalenderMutation 
 } from "@/redux/api/adminApi";
 import Link from "next/link";
@@ -43,7 +43,12 @@ export default function EditEventPage({ params }: EditEventPageProps) {
   const { id } = use(params);
   const router = useRouter();
   
-  const { data: eventData, isLoading: isFetching } = useGetCalenderByIdQuery(id);
+  const { data: calendarsData, isLoading: isFetching } = useGetAllCalendersQuery();
+  
+  // Find the matching event from the cached global list
+  const eventData = calendarsData?.data?.find((ev: any) => String(ev.id || ev._id) === id) 
+    || (Array.isArray(calendarsData) ? calendarsData.find((ev: any) => String(ev.id || ev._id) === id) : null);
+
   const [updateEvent, { isLoading: isUpdating }] = useUpdateCalenderMutation();
 
   const [formData, setFormData] = useState<EventFormData>({
@@ -57,16 +62,42 @@ export default function EditEventPage({ params }: EditEventPageProps) {
   });
 
   useEffect(() => {
-    if (eventData?.data) {
-      const event = eventData.data;
+    if (eventData) {
+      console.log("Found event to prefill:", eventData);
+      
+      let formattedDate = "";
+      if (eventData.event_date) {
+        try {
+          if (/^\d{4}-\d{2}-\d{2}/.test(eventData.event_date)) {
+            formattedDate = eventData.event_date.substring(0, 10);
+          } else {
+            const sep = eventData.event_date.includes('/') ? '/' : (eventData.event_date.includes('-') ? '-' : null);
+            if (sep) {
+               const parts = eventData.event_date.split('T')[0].split(' ')[0].split(sep);
+               if (parts.length === 3 && parts[2].length === 4) {
+                 formattedDate = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+               }
+            }
+            if (!formattedDate) {
+               let d = new Date(eventData.event_date);
+               if (!isNaN(d.getTime())) {
+                 const offset = d.getTimezoneOffset();
+                 d = new Date(d.getTime() - (offset*60*1000));
+                 formattedDate = d.toISOString().split('T')[0];
+               }
+            }
+          }
+        } catch(e) {}
+      }
+
       setFormData({
-        title: event.title || "",
-        description: event.description || "",
-        event_date: event.event_date ? event.event_date.split('T')[0] : "",
-        event_type: event.event_type || "Meeting",
-        start_time: event.start_time || "",
-        end_time: event.end_time || "",
-        location: event.location || "",
+        title: eventData.title || "",
+        description: eventData.description || "",
+        event_date: formattedDate,
+        event_type: eventData.event_type || "Meeting",
+        start_time: (eventData.start_time || "").substring(0, 5),
+        end_time: (eventData.end_time || "").substring(0, 5),
+        location: eventData.location || "",
       });
     }
   }, [eventData]);

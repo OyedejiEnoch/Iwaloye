@@ -96,11 +96,11 @@ const MembershipPage = () => {
     e.preventDefault()
 
     // Validation
-    const phoneRegex = /^\+234\d{10}$/;
-    if (!phoneRegex.test(details.phone)) {
-      toast.error("Phone number must be in format +2341234567890");
-      return;
-    }
+    // const phoneRegex = /^\+234\d{10}$/;
+    // if (!phoneRegex.test(details.phone)) {
+    //   toast.error("Phone number must be in format +2341234567890");
+    //   return;
+    // }
 
     const dobDate = new Date(details.dob);
     const today = new Date();

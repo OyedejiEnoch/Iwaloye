@@ -38,14 +38,17 @@ export default function EditNewsArticlePage({ params }: EditNewsPageProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
-    if (newsData?.data) {
-      const news = newsData.data;
+    if (newsData) {
+      const news = newsData.data || newsData;
       setNewsTitle(news.title || "");
       setArticleBody(news.body || "");
-      if (news.image_or_media) {
-        const fullImageUrl = news.image_or_media.startsWith('http') 
-          ? news.image_or_media 
-          : `/${news.image_or_media.startsWith('/') ? news.image_or_media.slice(1) : news.image_or_media}`;
+      
+      // Use image_or_media_url if available, fallback to image_or_media
+      const imageUrl = news.image_or_media_url || news.image_or_media;
+      if (imageUrl) {
+        const fullImageUrl = imageUrl.startsWith('http') 
+          ? imageUrl 
+          : `/${imageUrl.startsWith('/') ? imageUrl.slice(1) : imageUrl}`;
         setImagePreview(fullImageUrl);
       }
     }

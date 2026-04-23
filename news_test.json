@@ -1,0 +1,50 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Test",
+      "body": "Test article",
+      "image_or_media": "news/500d9aec-f3c1-41c0-a003-fc99bac448f3.png",
+      "image_or_media_url": "https://iwaloye.up.railway.app/storage/news/500d9aec-f3c1-41c0-a003-fc99bac448f3.png",
+      "admin_id": 1,
+      "author_name": "Wale",
+      "created_at": "2026-04-23T12:45:56.000000Z",
+      "updated_at": "2026-04-23T12:45:56.000000Z"
+    }
+  ],
+  "links": {
+    "first": "http://iwaloye.up.railway.app/api/news?page=1",
+    "last": "http://iwaloye.up.railway.app/api/news?page=1",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1,
+    "links": [
+      {
+        "url": null,
+        "label": "&laquo; Previous",
+        "page": null,
+        "active": false
+      },
+      {
+        "url": "http://iwaloye.up.railway.app/api/news?page=1",
+        "label": "1",
+        "page": 1,
+        "active": true
+      },
+      {
+        "url": null,
+        "label": "Next &raquo;",
+        "page": null,
+        "active": false
+      }
+    ],
+    "path": "http://iwaloye.up.railway.app/api/news",
+    "per_page": 9,
+    "to": 1,
+    "total": 1
+  }
+}

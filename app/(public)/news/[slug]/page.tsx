@@ -85,7 +85,7 @@ const NewsArticlePage = ({ params }: { params: { slug: string } }) => {
 
                 {/* Sidebar */}
                 <aside ref={sidebarRef} className="lg:w-[400px] sticky top-10">
-                    <RecentPostsSidebar />
+                    <RecentPostsSidebar currentId={data?.data?.id} />
                 </aside>
 
             </div>
