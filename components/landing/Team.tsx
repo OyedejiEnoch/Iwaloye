@@ -57,7 +57,7 @@ const Team = () => {
 
             <div className='mt-8 md:mt-20 flex justify-center'>
 
-                {/* <NewButton text='View All' link='/team' className="w-[225px] h-[60px] bg-black text-white" hoverBgClass="bg-white border border-black" hoverTextClass="group-hover:text-black" /> */}
+                <NewButton text='View All' link='/members' className="w-[225px] h-[60px] bg-black text-white" hoverBgClass="bg-white border border-black" hoverTextClass="group-hover:text-black" />
             </div>
         </section>
     )

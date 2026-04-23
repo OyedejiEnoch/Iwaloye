@@ -1,23 +1,20 @@
 import Image from 'next/image'
 
 const members = [
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
-    { name: "Dr. Amina Hassan", role: "National Coordinator" },
+    { name: "Dr Najeem Folasayo Salaam", role: "Governorship Candidate", image: "portrait.png" },
+    { name: "Yemisi Temitope Agiri", role: "Deputy Governorship Candidate", image: "portrait2.jpeg" },
+    { name: "Hon Prince Segun Olanibi", role: "Campaign Director General", image: "imageHolder.png" },
+    { name: "Hon Abdulhakeem Olaoye", role: "Campaign Director, Osun Central", image: "imageHolder.png" },
+    { name: "Hon Gbenga Ogunkanmi", role: "Campaign Director, Osun West", image: "imageHolder.png" },
+    { name: "Hon Prince Sikiru Ayedun", role: " Campaign Director, Osun East", image: "imageHolder.png" },
+
 ]
 
-const MemberCard = ({ name, role }: { name: string; role: string }) => (
+const MemberCard = ({ name, role, image }: { name: string; role: string, image: string }) => (
     <div className="flex flex-col border border-gray-100 p-1 bg-white hover:shadow-sm transition-shadow">
-        <div className="relative aspect-square w-full bg-gray-50 overflow-hidden">
+        <div className="relative aspect-[4/5] w-full bg-gray-50 overflow-hidden">
             <Image
-                src="/assets/imageHolder.png"
+                src={`/assets/${image}`}
                 alt={name}
                 fill
                 className="object-cover"
@@ -36,7 +33,7 @@ const MemberCard = ({ name, role }: { name: string; role: string }) => (
 
 const MembersPage = () => {
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white pt-10">
             <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
                 {/* Header */}
                 <div className="text-center mb-16 md:mb-24 space-y-4">
