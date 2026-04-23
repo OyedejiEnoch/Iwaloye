@@ -24,7 +24,7 @@ import { useRouter } from "next/navigation";
 export default function AddNewsArticlePage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const [newsTitle, setNewsTitle] = useState("");
   const [articleBody, setArticleBody] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -109,18 +109,18 @@ export default function AddNewsArticlePage() {
 
             {/* Main Content Area */}
             <div className="bg-white border border-gray-100 rounded-xl shadow-sm p-8 space-y-6">
-              
+
               {/* Form Header */}
               <div className="flex items-center justify-between">
                 <h2 className="text-base font-semibold text-[#101828]">
                   Create New Article
                 </h2>
                 <div className="relative w-64">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  {/* <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     placeholder="Search articles..."
                     className="pl-9 bg-gray-50 border-gray-100 focus:bg-white h-10 rounded-lg text-sm"
-                  />
+                  /> */}
                 </div>
               </div>
 
@@ -128,21 +128,21 @@ export default function AddNewsArticlePage() {
               <div className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="newsTitle" className="text-sm font-medium text-gray-700">News Title</Label>
-                  <Input 
-                    id="newsTitle" 
-                    placeholder="Enter article title" 
+                  <Input
+                    id="newsTitle"
+                    placeholder="Enter article title"
                     className="h-11 border-gray-200 bg-gray-50/50"
                     value={newsTitle}
                     onChange={(e) => setNewsTitle(e.target.value)}
                     maxLength={255}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="articleBody" className="text-sm font-medium text-gray-700">Article Body</Label>
-                  <Textarea 
-                    id="articleBody" 
-                    placeholder="Write your article content here..." 
+                  <Textarea
+                    id="articleBody"
+                    placeholder="Write your article content here..."
                     className="min-h-[180px] border-gray-200 bg-gray-50/50 resize-y"
                     value={articleBody}
                     onChange={(e) => setArticleBody(e.target.value)}
@@ -158,18 +158,18 @@ export default function AddNewsArticlePage() {
                     accept="image/*"
                     className="hidden"
                   />
-                  
+
                   {imagePreview ? (
                     <div className="relative rounded-xl overflow-hidden border border-gray-200 group">
-                      <img 
-                        src={imagePreview} 
-                        alt="Preview" 
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
                         className="w-full h-64 object-cover"
                       />
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <Button 
-                          variant="destructive" 
-                          size="sm" 
+                        <Button
+                          variant="destructive"
+                          size="sm"
                           onClick={removeImage}
                           className="gap-2"
                         >
@@ -179,7 +179,7 @@ export default function AddNewsArticlePage() {
                       </div>
                     </div>
                   ) : (
-                    <div 
+                    <div
                       onClick={() => fileInputRef.current?.click()}
                       className="border border-dashed border-gray-300 rounded-xl bg-gray-50/30 p-12 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 transition-colors"
                     >
@@ -204,11 +204,7 @@ export default function AddNewsArticlePage() {
                     Cancel
                   </Button>
                 </Link>
-                <Button variant="outline" className="border-gray-200 text-gray-700 font-medium px-6 h-10 gap-2">
-                  <Eye className="w-4 h-4" />
-                  Preview
-                </Button>
-                <Button 
+                <Button
                   className="bg-[#155DFC] hover:bg-[#1458ec] text-white font-medium px-6 h-10 gap-2"
                   onClick={() => handleSave(true)}
                   disabled={isLoading}

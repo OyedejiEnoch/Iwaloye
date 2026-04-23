@@ -89,7 +89,7 @@ export default function CampaignCalendarPage() {
                   Manage campaign activities and events
                 </p>
               </div>
-              <Button asChild className="bg-[#155DFC] hover:bg-[#1458ec] text-white font-medium gap-2 h-10 px-6 rounded-lg transition-all shadow-sm">
+              <Button asChild className="bg-[#155DFC] text-white font-medium gap-2 h-10 px-6 rounded-lg transition-all shadow-sm">
                 <Link href="/sub-admin/calender/add">
                   <Plus className="h-4 w-4" />
                   Add Event

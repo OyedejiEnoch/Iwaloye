@@ -37,7 +37,7 @@ const InstagramPosts: PostData[] = [
     date: '22 April',
     username: 'najeemsalaam',
     profilePic: '/assets/profileInstagram.jpg',
-    link: "https://www.instagram.com/p/DXcBIz6jJOI/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    link: "https://www.instagram.com/najeemsalaam/"
   },
   {
     image: '/instagram/second.png',
@@ -50,7 +50,7 @@ const InstagramPosts: PostData[] = [
     date: '11 April',
     username: 'najeemsalaam',
     profilePic: '/assets/profileInstagram.jpg',
-    link: "https://www.instagram.com/p/DW_8YhJDB4r/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    link: "https://www.instagram.com/najeemsalaam/"
   },
   {
     image: '/instagram/third.png',
@@ -63,7 +63,7 @@ const InstagramPosts: PostData[] = [
     date: '9 April',
     username: 'najeemsalaam',
     profilePic: '/assets/profileInstagram.jpg',
-    link: "https://www.instagram.com/p/DW66ok3DFGY/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    link: "https://www.instagram.com/najeemsalaam/"
   },
   {
     image: '/instagram/fourth.png',
@@ -76,7 +76,7 @@ const InstagramPosts: PostData[] = [
     date: '9 April',
     username: 'najeemsalaam',
     profilePic: '/assets/profileInstagram.jpg',
-    link: "https://www.instagram.com/p/CBOc7j0AMmM/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    link: "https://www.instagram.com/najeemsalaam/"
   },
 ]
 
@@ -92,7 +92,7 @@ const FacebookPosts: PostData[] = [
     date: '22 April',
     username: 'Dr. Najeem Folasayo Salaam',
     profilePic: '/assets/profileFacebook.jpg',
-    link: "https://web.facebook.com/share/p/1DXUgx2Bdd/?mibextid=wwXIfr"
+    link: "https://web.facebook.com/OsunSpeaker"
   },
   {
     image: '/facebook/second.png',
@@ -105,7 +105,7 @@ const FacebookPosts: PostData[] = [
     date: '9 April',
     username: 'Dr. Najeem Folasayo Salaam',
     profilePic: '/assets/profileFacebook.jpg',
-    link: "https://web.facebook.com/share/p/1KRRRRNMTx/?mibextid=wwXIfr"
+    link: "https://web.facebook.com/OsunSpeaker"
   },
   {
     image: '/facebook/third.png',
@@ -118,7 +118,7 @@ const FacebookPosts: PostData[] = [
     date: '13 March',
     username: 'Dr. Najeem Folasayo Salaam',
     profilePic: '/assets/profileFacebook.jpg',
-    link: "https://web.facebook.com/share/p/17JmXurMBg/?mibextid=wwXIfr"
+    link: "https://web.facebook.com/OsunSpeaker"
   },
   {
     image: '/facebook/fourth.png',
@@ -131,7 +131,7 @@ const FacebookPosts: PostData[] = [
     date: '12 March',
     username: 'Dr. Najeem Folasayo Salaam',
     profilePic: '/assets/profileFacebook.jpg',
-    link: "https://web.facebook.com/share/p/1E1DHGbH3A/?mibextid=wwXIfr"
+    link: "https://web.facebook.com/OsunSpeaker"
   },
 ]
 
@@ -147,7 +147,7 @@ const XPosts: PostData[] = [
     date: '15 April',
     username: '@NajeemFSalaam',
     profilePic: '/assets/profileX.jpg',
-    link: "https://x.com/NajeemFSalaam/status/2044435950739046562?s=20"
+    link: "https://x.com/NajeemFSalaam?s=20"
   },
   {
     image: '/twitter/second.png',
@@ -160,7 +160,7 @@ const XPosts: PostData[] = [
     date: '12 April',
     username: '@NajeemFSalaam',
     profilePic: '/assets/profileX.jpg',
-    link: "https://x.com/NajeemFSalaam/status/2043272809862902141?s=20"
+    link: "https://x.com/NajeemFSalaam?s=20"
   },
   {
     image: '/twitter/third.png',
@@ -173,7 +173,7 @@ const XPosts: PostData[] = [
     date: '26 March',
     username: '@NajeemFSalaam',
     profilePic: '/assets/profileX.jpg',
-    link: "https://x.com/NajeemFSalaam/status/2037185098634645987?s=20"
+    link: "https://x.com/NajeemFSalaam?s=20"
   },
   {
     image: '/twitter/fourth.png',
@@ -186,7 +186,7 @@ const XPosts: PostData[] = [
     date: '26 Febuary',
     username: '@NajeemFSalaam',
     profilePic: '/assets/profileX.jpg',
-    link: "https://x.com/Rashaf01/status/2027124044240216433?s=20"
+    link: "https://x.com/NajeemFSalaam?s=20"
   },
 ]
 

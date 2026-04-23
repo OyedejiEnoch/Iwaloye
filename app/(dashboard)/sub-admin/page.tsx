@@ -12,8 +12,9 @@ import {
   Mail,
   Calendar,
   CheckCircle,
+  UserCircle,
 } from "lucide-react";
-import { useGetAllCalendersQuery, useGetAllNewsQuery } from "@/redux/api/adminApi";
+import { useGetAllCalendersQuery, useGetAllLeadersQuery, useGetAllNewsQuery } from "@/redux/api/adminApi";
 
 
 const recentActivity = [
@@ -50,20 +51,14 @@ const recentActivity = [
 export default function SubAdminDashboardPage() {
   const { data: newsData, isLoading } = useGetAllNewsQuery();
   const { data: calendersData } = useGetAllCalendersQuery()
+  const { data: leadersData } = useGetAllLeadersQuery();
 
   const newsItems = newsData?.data || (Array.isArray(newsData) ? newsData : newsData ? [newsData] : []);
   const calendersItems = calendersData?.data || (Array.isArray(calendersData) ? calendersData : calendersData ? [calendersData] : []);
+  const leadersItems = leadersData?.data || (Array.isArray(leadersData) ? leadersData : leadersData ? [leadersData] : []);
 
 
   const stats = [
-    {
-      label: "Drafted Articles",
-      value: "18",
-      change: "+3 this week",
-      icon: PenSquare,
-      iconBg: "bg-emerald-100",
-      iconColor: "text-emerald-600",
-    },
     {
       label: "Published News",
       value: newsItems.length,
@@ -73,11 +68,11 @@ export default function SubAdminDashboardPage() {
       iconColor: "text-blue-600",
     },
     {
-      label: "Pending Reviews",
-      value: "4",
-      change: "Awaiting approval",
-      icon: CheckCircle,
-      iconBg: "bg-amber-100",
+      label: "Active Leaders",
+      value: leadersItems.length,
+      change: "All regions",
+      icon: UserCircle,
+      iconBg: "bg-[#FFF7ED]",
       iconColor: "text-amber-600",
     },
   ];
@@ -92,7 +87,7 @@ export default function SubAdminDashboardPage() {
           userRole="Content Manager"
           userInitials="SA"
         />
-        <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
+        <main className="flex-1 overflow-y-auto  p-6 px-7 bg-gray-50">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-2xl font-semibold text-[#101828]">Dashboard Overview</h1>
@@ -100,7 +95,7 @@ export default function SubAdminDashboardPage() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5  mb-8 px-6">
             {stats.map((stat) => (
               <div
                 key={stat.label}
@@ -121,7 +116,7 @@ export default function SubAdminDashboardPage() {
           {/* Bottom Two Columns */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-6">
             {/* Recent Activity */}
-            <div className="bg-white rounded-lg border border-gray-100 shadow-xs p-5">
+            {/* <div className="bg-white rounded-lg border border-gray-100 shadow-xs p-5">
               <div className="flex items-center gap-2 mb-5">
                 <Calendar className="h-4 w-4 text-gray-400" />
                 <h2 className="text-base font-semibold text-gray-800">Recent Activity</h2>
@@ -139,7 +134,7 @@ export default function SubAdminDashboardPage() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             {/* Upcoming Events */}
             <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-5">

@@ -28,13 +28,13 @@ import SubAdminSidebar from "@/components/dashboard/SubAdminSidebar";
 import { useGetAllNewsQuery, useDeleteNewsMutation } from "@/redux/api/adminApi";
 import { toast } from "sonner";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogClose,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
 
 export default function NewsPublicationsPage() {
@@ -92,7 +92,7 @@ export default function NewsPublicationsPage() {
                 </p>
               </div>
               <Link href="/sub-admin/news/add">
-                <Button className="bg-[#155DFC] hover:bg-[#1458ec] text-white font-medium gap-2 h-10 px-6 rounded-lg transition-all shadow-sm">
+                <Button className="bg-[#155DFC] text-white font-medium gap-2 h-10 px-6 rounded-lg transition-all shadow-sm">
                   <Plus className="h-4 w-4" />
                   Create News Article
                 </Button>
@@ -107,13 +107,13 @@ export default function NewsPublicationsPage() {
                   <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <h2 className="text-base font-semibold text-gray-800 px-2">Published Articles</h2>
                     <div className="relative w-full max-w-xs">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      {/* <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                       <Input
                         placeholder="Search articles..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="pl-10 bg-gray-50 border-gray-200 focus:bg-white h-10 rounded-lg text-sm"
-                      />
+                      /> */}
                     </div>
                   </div>
 
@@ -133,8 +133,8 @@ export default function NewsPublicationsPage() {
                         {isLoading ? (
                           <TableRow>
                             <TableCell colSpan={5} className="h-48 text-center text-gray-500">
-                                <Loader2 className="h-8 w-8 animate-spin mx-auto text-[#155DFC] mb-2" />
-                                <p className="text-sm">Loading articles...</p>
+                              <Loader2 className="h-8 w-8 animate-spin mx-auto text-[#155DFC] mb-2" />
+                              <p className="text-sm">Loading articles...</p>
                             </TableCell>
                           </TableRow>
                         ) : filteredItems.length > 0 ? (
@@ -182,7 +182,7 @@ export default function NewsPublicationsPage() {
                         ) : (
                           <TableRow>
                             <TableCell colSpan={5} className="h-48 text-center text-gray-500 italic">
-                                No news articles found.
+                              No news articles found.
                             </TableCell>
                           </TableRow>
                         )}
