@@ -73,7 +73,7 @@ export default function AdminManagementPage() {
   const handleEdit = (admin: any) => {
     setEditingAdmin(admin);
     setFirstName(admin.full_name);
-    // setLastName(admin.last_name);
+    setLastName(admin.last_name);
     setEmail(admin.email);
     setRole(admin.role || "admin");
     setPassword(""); // Don't pre-fill password for security
@@ -101,7 +101,7 @@ export default function AdminManagementPage() {
   };
 
   const handleSave = async () => {
-    if (!firstName || !email) {
+    if (!firstName || !lastName || !email) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -184,7 +184,7 @@ export default function AdminManagementPage() {
                         className="h-11 border-gray-200 bg-gray-50/50"
                       />
                     </div>
-                    {/* <div className="space-y-2 text-left">
+                    <div className="space-y-2 text-left">
                       <Label htmlFor="lastName" className="text-sm font-medium text-gray-700">Last Name</Label>
                       <Input
                         id="lastName"
@@ -193,7 +193,7 @@ export default function AdminManagementPage() {
                         placeholder="Enter last name"
                         className="h-11 border-gray-200 bg-gray-50/50"
                       />
-                    </div> */}
+                    </div>
                     <div className="space-y-2 text-left">
                       <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address</Label>
                       <Input
