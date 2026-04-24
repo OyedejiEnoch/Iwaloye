@@ -6,7 +6,7 @@ export default function SubAdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ProtectedRoute allowedRoles={["sub-admin", "super-admin"]}>
+    <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
       {children}
     </ProtectedRoute>
   );

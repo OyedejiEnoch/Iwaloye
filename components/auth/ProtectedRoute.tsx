@@ -10,7 +10,7 @@ import { logout } from "@/redux/features/authSlice";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: ("super-admin" | "sub-admin")[];
+  allowedRoles?: ("super-admin" | "admin")[];
 }
 
 export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
@@ -30,7 +30,7 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
     if (allowedRoles && !allowedRoles.includes(role as any)) {
       if (role === "super-admin") {
         router.push("/admin");
-      } else if (role === "sub-admin") {
+      } else if (role === "admin") {
         router.push("/sub-admin");
       } else {
         router.push("/login");
