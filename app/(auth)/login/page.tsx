@@ -35,7 +35,7 @@ export default function LoginPage() {
       //   role: "super-admin" | "sub-admin",
       //   admin: { ... }
       // }
-      
+
       dispatch(setAuth({
         token: result.token,
         user: result.admin,
@@ -46,7 +46,7 @@ export default function LoginPage() {
 
       if (result.role === 'super-admin') {
         router.push("/admin")
-      } else if (result.role === 'sub-admin') {
+      } else if (result.role === 'admin') {
         router.push("/sub-admin")
       } else {
         // Fallback for any other roles if they exist

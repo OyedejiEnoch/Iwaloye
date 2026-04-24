@@ -23,7 +23,7 @@ import {
   AlertCircle,
   Eye
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdminSidebar from "@/components/dashboard/AdminSidebar";
 import { useGetAllMovementsQuery, useDeleteMovementMutation, useGetAllVolunteersQuery } from "@/redux/api/adminApi";
 import { toast } from "sonner";
@@ -39,8 +39,23 @@ import {
 
 export default function MovementManagementPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  // const { data: movementsData, isLoading } = useGetAllMovementsQuery();
-  const { data: volunteersData, isLoading, error: volunteersError } = useGetAllVolunteersQuery();
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [page, setPage] = useState(1);
+
+  // Debounce search term
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+      setPage(1); // Reset to page 1 on new search
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  const { data: volunteersData, isLoading, error: volunteersError } = useGetAllVolunteersQuery({ 
+    page, 
+    search: debouncedSearch 
+  });
+  
   const [deleteMovement, { isLoading: isDeleting }] = useDeleteMovementMutation();
 
   const [previewItem, setPreviewItem] = useState<any>(null);
@@ -55,7 +70,6 @@ export default function MovementManagementPage() {
   const confirmDelete = async () => {
     if (!selectedMovement) return;
     try {
-      // Ensure numeric ID for backend compatibility
       const idToSubmit = !isNaN(Number(selectedMovement.id)) ? Number(selectedMovement.id) : selectedMovement.id;
       await deleteMovement(idToSubmit as any).unwrap();
       toast.success("Movement deleted successfully");
@@ -67,11 +81,16 @@ export default function MovementManagementPage() {
     }
   };
 
-  const movements = volunteersData?.data || [];
+  const volunteers = volunteersData?.data || [];
+  const meta = volunteersData?.meta || volunteersData;
+  const totalVolunteers = meta?.total || volunteers.length;
+  const lastPage = meta?.last_page || 1;
 
-  const filteredMovements = movements.filter((mov: any) =>
-    (mov.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (mov.description || "").toLowerCase().includes(searchTerm.toLowerCase())
+  // Hybrid search: Use server-side query + client-side filter as fallback
+  const filteredVolunteers = volunteers.filter((vol: any) =>
+    (vol.full_name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (vol.email || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (vol.phone || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -113,7 +132,7 @@ export default function MovementManagementPage() {
                       </div>
                       <div className="text-left">
                         <p className="text-sm font-medium text-gray-500">Total Volunteers</p>
-                        <h3 className="text-2xl font-bold text-gray-900">{movements.length}</h3>
+                        <h3 className="text-2xl font-bold text-gray-900">{totalVolunteers}</h3>
                       </div>
                     </div>
                   </CardContent>
@@ -157,8 +176,8 @@ export default function MovementManagementPage() {
                               <Loader2 className="h-8 w-8 animate-spin mx-auto text-[#155DFC]" />
                             </TableCell>
                           </TableRow>
-                        ) : filteredMovements.length > 0 ? (
-                          filteredMovements.map((volunteer: any) => (
+                        ) : filteredVolunteers.length > 0 ? (
+                          filteredVolunteers.map((volunteer: any) => (
                             <TableRow key={volunteer.id || volunteer._id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
                               <TableCell className="py-4 px-6">
                                 <div className="text-left">
@@ -219,6 +238,35 @@ export default function MovementManagementPage() {
                       </TableBody>
                     </Table>
                   </div>
+
+                  {/* Pagination Controls */}
+                  {lastPage > 1 && (
+                    <div className="p-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/30">
+                      <p className="text-sm text-gray-500">
+                        Page <span className="font-medium text-gray-900">{page}</span> of <span className="font-medium text-gray-900">{lastPage}</span>
+                      </p>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setPage(p => Math.max(1, p - 1))}
+                          disabled={page === 1 || isLoading}
+                          className="h-8 rounded-lg"
+                        >
+                          Previous
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setPage(p => Math.min(lastPage, p + 1))}
+                          disabled={page === lastPage || isLoading}
+                          className="h-8 rounded-lg"
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 

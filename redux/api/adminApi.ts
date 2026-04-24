@@ -236,8 +236,13 @@ export const adminApi = createApi({
         }),
 
         // Volunteers
-        getAllVolunteers: builder.query<any, void>({
-            query: () => '/admin/volunteers',
+        getAllVolunteers: builder.query<any, { page?: number; search?: string } | void>({
+            query: (params) => {
+                const page = typeof params === 'object' ? params?.page || 1 : 1;
+                const search = typeof params === 'object' ? params?.search || "" : "";
+                return `/admin/volunteers?page=${page}&search=${search}`;
+            },
+            providesTags: ['Admins'], // Using Admins tag for now or we should ideally have a Volunteers tag
         }),
         searchVolunteers: builder.mutation<any, any>({
             query: (data) => ({

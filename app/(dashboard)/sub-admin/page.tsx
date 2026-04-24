@@ -80,6 +80,8 @@ export default function SubAdminDashboardPage() {
   const calendersItems = calendersData?.data || (Array.isArray(calendersData) ? calendersData : calendersData ? [calendersData] : []);
   // const leadersItems = leadersData?.data || (Array.isArray(leadersData) ? leadersData : leadersData ? [leadersData] : []);
   const volunteersItems = volunteersData?.data || (Array.isArray(volunteersData) ? volunteersData : volunteersData ? [volunteersData] : []);
+  const volunteersMeta = volunteersData?.meta || volunteersData;
+  const totalVolunteers = volunteersMeta?.total || volunteersItems.length;
 
   const stats = [
     {
@@ -91,7 +93,7 @@ export default function SubAdminDashboardPage() {
     },
     {
       label: "Total Volunteers",
-      value: volunteersItems.length,
+      value: totalVolunteers,
       icon: Users,
       iconBg: "bg-[#EFF6FF]",
       iconColor: "text-indigo-600",

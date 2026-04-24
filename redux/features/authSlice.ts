@@ -3,14 +3,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 interface AuthState {
   token: string | null
   user: any | null
-  role: 'super-admin' | 'sub-admin' | null
+  role: 'super-admin' | 'admin' | null
   isAuthenticated: boolean
 }
 
 const initialState: AuthState = {
   token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
   user: typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user') || 'null') : null,
-  role: typeof window !== 'undefined' ? (localStorage.getItem('role') as 'super-admin' | 'sub-admin') || null : null,
+  role: typeof window !== 'undefined' ? (localStorage.getItem('role') as 'super-admin' | 'admin') || null : null,
   isAuthenticated: typeof window !== 'undefined' ? !!localStorage.getItem('token') : false,
 }
 
@@ -18,7 +18,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAuth: (state, action: PayloadAction<{ token: string; user: any; role: 'super-admin' | 'sub-admin' }>) => {
+    setAuth: (state, action: PayloadAction<{ token: string; user: any; role: 'super-admin' | 'admin' }>) => {
       state.token = action.payload.token
       state.user = action.payload.user
       state.role = action.payload.role

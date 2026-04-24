@@ -5,7 +5,7 @@ export interface LoginResponse {
   message: string;
   token_type: string;
   token: string;
-  role: 'super-admin' | 'sub-admin';
+  role: 'super-admin' | 'admin';
   dashboard: string;
   admin: {
     id: number;
