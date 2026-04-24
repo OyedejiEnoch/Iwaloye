@@ -21,11 +21,14 @@ import {
   TrendingUp,
   Loader2,
   AlertCircle,
-  Eye
+  Eye,
+  Download
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import AdminSidebar from "@/components/dashboard/AdminSidebar";
 import { useGetAllMovementsQuery, useDeleteMovementMutation, useGetAllVolunteersQuery } from "@/redux/api/adminApi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -41,6 +44,8 @@ export default function MovementManagementPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [isExporting, setIsExporting] = useState(false);
+  const { token } = useSelector((state: RootState) => state.auth);
 
   // Debounce search term
   useEffect(() => {
@@ -78,6 +83,80 @@ export default function MovementManagementPage() {
     } finally {
       setDeleteDialogOpen(false);
       setSelectedMovement(null);
+    }
+  };
+
+  const handleExport = async () => {
+    if (!token) {
+      toast.error("Authentication token missing. Please log in again.");
+      return;
+    }
+
+    setIsExporting(true);
+    try {
+      let allVolunteers: any[] = [];
+      let currentPage = 1;
+      let totalPages = 1;
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
+
+      // Fetch all pages
+      do {
+        const response = await fetch(`/api/admin/volunteers?page=${currentPage}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json',
+          },
+        });
+
+        if (!response.ok) throw new Error(`Export failed on page ${currentPage}`);
+
+        const result = await response.json();
+        const data = result.data || [];
+        const meta = result.meta || result;
+        
+        allVolunteers = [...allVolunteers, ...data];
+        totalPages = meta.last_page || 1;
+        currentPage++;
+      } while (currentPage <= totalPages);
+
+      if (allVolunteers.length === 0) {
+        toast.error("No data found to export");
+        return;
+      }
+
+      // Generate CSV
+      const headers = ["Full Name", "Email", "Phone", "State", "LGA", "Ward", "Disability"];
+      const csvRows = [
+        headers.join(","), // Header row
+        ...allVolunteers.map(vol => [
+          `"${(vol.full_name || "").replace(/"/g, '""')}"`,
+          `"${(vol.email || "").replace(/"/g, '""')}"`,
+          `"${(vol.phone || "").replace(/"/g, '""')}"`,
+          `"${(vol.state || "").replace(/"/g, '""')}"`,
+          `"${(vol.lga || "").replace(/"/g, '""')}"`,
+          `"${(vol.ward || "").replace(/"/g, '""')}"`,
+          vol.disability ? "Yes" : "No"
+        ].join(","))
+      ];
+
+      const csvString = csvRows.join("\n");
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `volunteers_export_${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      toast.success(`${allVolunteers.length} volunteers exported successfully`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to export volunteers data");
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -145,15 +224,31 @@ export default function MovementManagementPage() {
                   {/* Search bar */}
                   <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <h2 className="text-base font-semibold text-gray-800 px-2">Campaign Volunteers</h2>
-                    <div className="relative w-full max-w-xs">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="Search volunteers..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                      />
+                    <div className="flex items-center gap-3 w-full sm:w-auto">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleExport}
+                        disabled={isExporting}
+                        className="h-10 gap-2 border-gray-200 text-gray-700 hover:bg-gray-50 rounded-lg px-4"
+                      >
+                        {isExporting ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Download className="h-4 w-4" />
+                        )}
+                        <span className="hidden sm:inline">Download Data</span>
+                      </Button>
+                      <div className="relative w-full max-w-xs">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="Search volunteers..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                        />
+                      </div>
                     </div>
                   </div>
 

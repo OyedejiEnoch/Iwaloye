@@ -16,7 +16,7 @@ export default function AddGalleryPage() {
     const router = useRouter();
     const [createAlbum, { isLoading }] = useCreateAlbumMutation();
     const fileInputRef = useRef<HTMLInputElement>(null);
-    
+
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState("");
     const [media, setMedia] = useState<File[]>([]);
@@ -24,10 +24,10 @@ export default function AddGalleryPage() {
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
-        
+
         // Filter files by size (2MB) as requested by backend
         const validFiles = files.filter(file => file.size <= 2048 * 1024);
-        
+
         if (validFiles.length < files.length) {
             toast.error("Some files exceed the 2MB size limit.");
         }
@@ -64,7 +64,7 @@ export default function AddGalleryPage() {
         const formData = new FormData();
         formData.append("title", title);
         if (subtitle) formData.append("subtitle", subtitle);
-        
+
         media.forEach((file) => {
             formData.append("media[]", file);
         });
@@ -100,39 +100,39 @@ export default function AddGalleryPage() {
                         <div className="bg-white border border-[#e2e8f0] max-w-full">
                             <div className="p-6">
                                 <h2 className="text-[14px] font-bold text-[#111827] mb-8">Upload Pictures</h2>
-                                
+
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
                                     <div className="flex flex-col gap-2">
                                         <label className="text-[12px] font-bold text-[#111827]">Album Title</label>
-                                        <Input 
-                                            placeholder="Enter album title" 
+                                        <Input
+                                            placeholder="Enter album title"
                                             value={title}
                                             onChange={(e) => setTitle(e.target.value)}
-                                            className="h-10 bg-[#f8fafc]/50 border-gray-200 text-[13px] rounded bg-gray-50/30" 
+                                            className="h-10 bg-[#f8fafc]/50 border-gray-200 text-[13px] rounded bg-gray-50/30"
                                         />
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <label className="text-[12px] font-bold text-[#111827]">Subtitle</label>
-                                        <Input 
-                                            placeholder="Enter album subtitle (optional)" 
+                                        <Input
+                                            placeholder="Enter album subtitle"
                                             value={subtitle}
                                             onChange={(e) => setSubtitle(e.target.value)}
-                                            className="h-10 bg-[#f8fafc]/50 border-gray-200 text-[13px] rounded bg-gray-50/30" 
+                                            className="h-10 bg-[#f8fafc]/50 border-gray-200 text-[13px] rounded bg-gray-50/30"
                                         />
                                     </div>
                                 </div>
 
                                 <div className="flex flex-col gap-2 mb-2">
                                     <label className="text-[12px] font-bold text-[#111827]">Upload Images</label>
-                                    <input 
-                                        type="file" 
-                                        multiple 
+                                    <input
+                                        type="file"
+                                        multiple
                                         accept="image/png, image/jpeg, image/webp"
-                                        className="hidden" 
+                                        className="hidden"
                                         ref={fileInputRef}
                                         onChange={handleFileChange}
                                     />
-                                    <div 
+                                    <div
                                         onClick={() => fileInputRef.current?.click()}
                                         className="border-2 border-dashed border-[#cbd5e1] rounded-lg py-12 flex flex-col items-center justify-center cursor-pointer hover:bg-indigo-50/30 hover:border-[#5c21f3]/30 transition-all group"
                                     >
@@ -149,12 +149,12 @@ export default function AddGalleryPage() {
                                     <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                                         {previews.map((preview, index) => (
                                             <div key={index} className="relative aspect-square rounded-lg border border-gray-100 overflow-hidden group shadow-sm bg-gray-50">
-                                                <img 
-                                                    src={preview} 
-                                                    alt={`Preview ${index}`} 
+                                                <img
+                                                    src={preview}
+                                                    alt={`Preview ${index}`}
                                                     className="w-full h-full object-cover"
                                                 />
-                                                <button 
+                                                <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         removeFile(index);
@@ -168,7 +168,7 @@ export default function AddGalleryPage() {
                                     </div>
                                 )}
                             </div>
-                            
+
                             {/* Bottom Actions */}
                             <div className="border-t border-[#e2e8f0] p-6 flex justify-end gap-3 mt-4">
                                 <Link href="/admin/gallery">
@@ -176,7 +176,7 @@ export default function AddGalleryPage() {
                                         Cancel
                                     </Button>
                                 </Link>
-                                <Button 
+                                <Button
                                     onClick={handleSubmit}
                                     disabled={isLoading}
                                     className="h-[36px] px-5 text-[12px] font-bold bg-[#5c21f3] hover:bg-[#4b1bc4] rounded text-white shadow-none"

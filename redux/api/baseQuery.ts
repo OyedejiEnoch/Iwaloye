@@ -20,8 +20,8 @@ export const baseQueryWithLogout: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   let result = await rawBaseQuery(args, api, extraOptions)
 
-  if (result.error && (result.error.status === 401 || result.error.status === 403)) {
-    // If we get a 401 or 403, it means the token is invalid, expired or unauthorized
+  if (result.error && result.error.status === 401) {
+    // If we get a 401, it means the token is invalid or expired
     api.dispatch(logout())
     
     // Optional: Could redirect here, but dispatching logout will trigger 

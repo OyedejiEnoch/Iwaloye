@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Plus,
-  Trash2,
   Image as ImageIcon,
   Loader2,
   AlertCircle
@@ -26,15 +25,6 @@ import { useGetAllAlbumsQuery, useDeleteAlbumMutation } from "@/redux/api/adminA
 import Link from "next/link";
 import SubAdminSidebar from "@/components/dashboard/SubAdminSidebar";
 
-// Mock data based on provided image
-const initialGalleryItems = [
-  { id: 1, title: "Campaign Rally in Lagos", date: "Oct 12, 2023", category: "Rallies", image: "https://images.unsplash.com/photo-1540910419892-f39a62a15242?auto=format&fit=crop&q=80&w=800" },
-  { id: 2, title: "Youth Engagement Forum", date: "Oct 15, 2023", category: "Meetings", image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=800" },
-  { id: 3, title: "Townhall Meeting - Abuja", date: "Oct 18, 2023", category: "Meetings", image: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=800" },
-  { id: 4, title: "Community Outreach", date: "Oct 20, 2023", category: "Outreach", image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800" },
-  { id: 5, title: "Supporters Parade", date: "Oct 22, 2023", category: "Rallies", image: "https://images.unsplash.com/photo-1461988320302-91bde64fc8e4?auto=format&fit=crop&q=80&w=800" },
-  { id: 6, title: "Strategic Planning", date: "Oct 25, 2023", category: "Internal", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" },
-];
 
 export default function GalleryManagementPage() {
   const { data: albumsResponse, isLoading: isLoadingAlbums } = useGetAllAlbumsQuery();
@@ -104,7 +94,7 @@ export default function GalleryManagementPage() {
                       <CardContent className="p-5 flex items-center justify-between">
                         <div className="flex flex-col gap-1">
                           <h3 className="text-lg font-bold text-gray-900">{album.title}</h3>
-                          <p className="text-sm text-gray-500">{album.description || "The moments between the milestones."}</p>
+                          <p className="text-sm text-gray-500">{album.subtitle || "The moments between the milestones."}</p>
                         </div>
                         <div className="flex items-center gap-3">
                           <Button

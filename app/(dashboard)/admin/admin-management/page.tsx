@@ -22,7 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Shield, Plus, Edit2, Trash2, ShieldCheck, Hexagon, Loader2, AlertCircle } from "lucide-react";
+import { Shield, Plus, Edit2, Trash2, ShieldCheck, Hexagon, Loader2, AlertCircle, Eye, EyeOff } from "lucide-react";
 import {
   useGetAllAdminsQuery,
   useCreateAdminMutation,
@@ -52,6 +52,7 @@ export default function AdminManagementPage() {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("admin");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const { data: adminsData, isLoading: isLoadingAdmins } = useGetAllAdminsQuery();
   const [createAdmin, { isLoading: isCreating }] = useCreateAdminMutation();
@@ -68,6 +69,7 @@ export default function AdminManagementPage() {
     setPassword("");
     setEditingAdmin(null);
     setIsAddingAdmin(false);
+    setShowPassword(false);
   };
 
   const handleEdit = (admin: any) => {
@@ -222,14 +224,23 @@ export default function AdminManagementPage() {
                       <Label htmlFor="tempPassword" className="text-sm font-medium text-gray-700">
                         {editingAdmin ? "New Password (Optional)" : "Password"}
                       </Label>
-                      <Input
-                        id="tempPassword"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder={editingAdmin ? "Leave blank to keep current" : "Set password"}
-                        className="h-11 border-gray-200 bg-gray-50/50"
-                      />
+                      <div className="relative">
+                        <Input
+                          id="tempPassword"
+                          type={showPassword ? "text" : "password"}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder={editingAdmin ? "Leave blank to keep current" : "Set password"}
+                          className="h-11 border-gray-200 bg-gray-50/50 pr-10"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                        >
+                          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                      </div>
                     </div>
                   </div>
 

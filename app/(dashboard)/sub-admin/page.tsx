@@ -53,6 +53,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "@/redux/features/authSlice";
+import { toast } from "sonner";
 
 export default function SubAdminDashboardPage() {
   const router = useRouter();
@@ -63,37 +64,47 @@ export default function SubAdminDashboardPage() {
   const { data: volunteersData, error: volunteersError } = useGetAllVolunteersQuery();
 
   useEffect(() => {
-    const checkErrors = (...errors: any[]) => {
-      for (const error of errors) {
-        if (error && (error.status === 401 || error.status === 403)) {
-          dispatch(logout());
-          router.push("/login");
-          return;
+    const checkErrors = (errorObjs: { name: string, error: any }[]) => {
+      for (const { name, error } of errorObjs) {
+        if (error) {
+          if (error.status === 401) {
+            toast.error("Session expired. Logging out...");
+            dispatch(logout());
+            router.push("/login");
+            return;
+          }
+          if (error.status === 403) {
+            console.warn(`Sub-admin restricted from ${name} API:`, error);
+            // Don't logout on 403, just let the UI handle the missing data
+          }
         }
       }
     };
 
-    checkErrors(newsError, volunteersError, calendersError);
+    checkErrors([
+      { name: "News", error: newsError },
+      { name: "Volunteers", error: volunteersError },
+      { name: "Calendars", error: calendersError }
+    ]);
   }, [newsError, volunteersError, calendersError, dispatch, router]);
 
   const newsItems = newsData?.data || (Array.isArray(newsData) ? newsData : newsData ? [newsData] : []);
   const calendersItems = calendersData?.data || (Array.isArray(calendersData) ? calendersData : calendersData ? [calendersData] : []);
-  // const leadersItems = leadersData?.data || (Array.isArray(leadersData) ? leadersData : leadersData ? [leadersData] : []);
   const volunteersItems = volunteersData?.data || (Array.isArray(volunteersData) ? volunteersData : volunteersData ? [volunteersData] : []);
   const volunteersMeta = volunteersData?.meta || volunteersData;
-  const totalVolunteers = volunteersMeta?.total || volunteersItems.length;
+  const totalVolunteers = volunteersMeta?.total !== undefined ? volunteersMeta.total : volunteersItems.length;
 
   const stats = [
     {
       label: "Published News",
-      value: newsItems.length,
+      value: (newsError && 'status' in newsError && newsError.status === 403) ? "0" : newsItems.length,
       icon: Newspaper,
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600",
     },
     {
       label: "Total Volunteers",
-      value: totalVolunteers,
+      value: (volunteersError && 'status' in volunteersError && volunteersError.status === 403) ? "0" : totalVolunteers,
       icon: Users,
       iconBg: "bg-[#EFF6FF]",
       iconColor: "text-indigo-600",

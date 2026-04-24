@@ -60,6 +60,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "@/redux/features/authSlice";
+import { toast } from "sonner";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -70,28 +71,39 @@ export default function AdminDashboardPage() {
   const { data: calendersData, error: calendersError } = useGetAllCalendersQuery()
 
   useEffect(() => {
-    const checkErrors = (...errors: any[]) => {
-      for (const error of errors) {
-        if (error && (error.status === 401 || error.status === 403)) {
-          dispatch(logout());
-          router.push("/login");
-          return;
+    const checkErrors = (errorObjs: { name: string, error: any }[]) => {
+      for (const { name, error } of errorObjs) {
+        if (error) {
+          if (error.status === 401) {
+            toast.error("Session expired. Logging out...");
+            dispatch(logout());
+            router.push("/login");
+            return;
+          }
+          if (error.status === 403) {
+            console.warn(`Admin restricted from ${name} API:`, error);
+          }
         }
       }
     };
 
-    checkErrors(newsError, volunteersError, calendersError);
+    checkErrors([
+      { name: "News", error: newsError },
+      { name: "Volunteers", error: volunteersError },
+      { name: "Calendars", error: calendersError }
+    ]);
   }, [newsError, volunteersError, calendersError, dispatch, router]);
 
   const newsItems = newsData?.data || (Array.isArray(newsData) ? newsData : newsData ? [newsData] : []);
-  // const leadersItems = leadersData?.data || (Array.isArray(leadersData) ? leadersData : leadersData ? [leadersData] : []);
   const volunteersItems = volunteersData?.data || (Array.isArray(volunteersData) ? volunteersData : volunteersData ? [volunteersData] : []);
+  const volunteersMeta = volunteersData?.meta || volunteersData;
+  const totalVolunteers = volunteersMeta?.total !== undefined ? volunteersMeta.total : volunteersItems.length;
   const calendersItems = calendersData?.data || (Array.isArray(calendersData) ? calendersData : calendersData ? [calendersData] : []);
 
   const stats = [
     {
       label: "Total Volunteers",
-      value: volunteersItems.length,
+      value: (volunteersError && 'status' in volunteersError && volunteersError.status === 403) ? "0" : totalVolunteers,
       change: "+12.5%",
       icon: Users,
       iconBg: "bg-[#EFF6FF]",
@@ -99,20 +111,12 @@ export default function AdminDashboardPage() {
     },
     {
       label: "Published News",
-      value: newsItems.length,
+      value: (newsError && 'status' in newsError && newsError.status === 403) ? "0" : newsItems.length,
       change: "+5 this month",
       icon: Newspaper,
       iconBg: "bg-[#FAF5FF]",
       iconColor: "text-purple-600",
     },
-    // {
-    //   label: "Active Leaders",
-    //   value: leadersItems.length,
-    //   change: "All regions",
-    //   icon: UserCircle,
-    //   iconBg: "bg-[#FFF7ED]",
-    //   iconColor: "text-amber-600",
-    // },
   ];
 
   return (
