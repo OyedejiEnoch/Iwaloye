@@ -210,7 +210,7 @@ export default function EditGalleryPage() {
 
                             {/* Bottom actions */}
                             <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
-                                <Link href="/admin/gallery">
+                                <Link href="/sub-admin/gallery">
                                     <button className="px-5 py-2 text-[13px] font-medium text-gray-700 border border-gray-200 rounded hover:bg-gray-50 transition-colors">
                                         Cancel
                                     </button>

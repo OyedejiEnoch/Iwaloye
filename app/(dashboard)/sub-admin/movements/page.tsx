@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -21,11 +20,14 @@ import {
   TrendingUp,
   Loader2,
   AlertCircle,
-  Eye
+  Eye,
+  Download
 } from "lucide-react";
-import { useState } from "react";
-import AdminSidebar from "@/components/dashboard/AdminSidebar";
+import { useState, useEffect } from "react";
+// import AdminSidebar from "@/components/dashboard/AdminSidebar";
 import { useGetAllMovementsQuery, useDeleteMovementMutation, useGetAllVolunteersQuery } from "@/redux/api/adminApi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -40,8 +42,27 @@ import SubAdminSidebar from "@/components/dashboard/SubAdminSidebar";
 
 export default function MovementManagementPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  // const { data: movementsData, isLoading } = useGetAllMovementsQuery();
-  const { data: volunteersData, isLoading, error: volunteersError } = useGetAllVolunteersQuery();
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [isExporting, setIsExporting] = useState(false);
+  const { token } = useSelector((state: RootState) => state.auth);
+
+  // Debounce search term
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+      setPage(1); // Reset to page 1 on new search
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  const { data: volunteersData, isLoading, error: volunteersError } = useGetAllVolunteersQuery({
+    page,
+    search: debouncedSearch
+  });
+
+  console.log(volunteersData)
+
   const [deleteMovement, { isLoading: isDeleting }] = useDeleteMovementMutation();
 
   const [previewItem, setPreviewItem] = useState<any>(null);
@@ -56,7 +77,6 @@ export default function MovementManagementPage() {
   const confirmDelete = async () => {
     if (!selectedMovement) return;
     try {
-      // Ensure numeric ID for backend compatibility
       const idToSubmit = !isNaN(Number(selectedMovement.id)) ? Number(selectedMovement.id) : selectedMovement.id;
       await deleteMovement(idToSubmit as any).unwrap();
       toast.success("Movement deleted successfully");
@@ -68,11 +88,93 @@ export default function MovementManagementPage() {
     }
   };
 
-  const movements = volunteersData?.data || [];
+  const handleExport = async () => {
+    if (!token) {
+      toast.error("Authentication token missing. Please log in again.");
+      return;
+    }
 
-  const filteredMovements = movements.filter((mov: any) =>
-    (mov.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (mov.description || "").toLowerCase().includes(searchTerm.toLowerCase())
+    setIsExporting(true);
+    try {
+      let allVolunteers: any[] = [];
+      let currentPage = 1;
+      let totalPages = 1;
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
+
+      // Fetch all pages
+      do {
+        const response = await fetch(`/api/admin/volunteers?page=${currentPage}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json',
+          },
+        });
+
+        if (!response.ok) throw new Error(`Export failed on page ${currentPage}`);
+
+        const result = await response.json();
+        const data = result.data || [];
+        const meta = result.meta || result;
+
+        allVolunteers = [...allVolunteers, ...data];
+        totalPages = meta.last_page || 1;
+        currentPage++;
+      } while (currentPage <= totalPages);
+
+      if (allVolunteers.length === 0) {
+        toast.error("No data found to export");
+        return;
+      }
+
+      // Generate CSV
+      const headers = ["Full Name", "Email", "Phone", "State", "Gender", "LGA", "Ward", "Polling Unit", "Date of Birth", "Disability"];
+      const csvRows = [
+        headers.join(","), // Header row
+        ...allVolunteers.map(vol => [
+          `"${(vol.full_name || "").replace(/"/g, '""')}"`,
+          `"${(vol.email || "").replace(/"/g, '""')}"`,
+          `"${(vol.phone || "").replace(/"/g, '""')}"`,
+          `"${(vol.state || "").replace(/"/g, '""')}"`,
+          `"${(vol.gender || "").replace(/"/g, '""')}"`,
+          `"${(vol.lga || "").replace(/"/g, '""')}"`,
+          `"${(vol.ward || "").replace(/"/g, '""')}"`,
+          `"${(vol.polling_unit || "").replace(/"/g, '""')}"`,
+          `"${(vol.dob || "").replace(/"/g, '""')}"`,
+          vol.disability ? "Yes" : "No"
+        ].join(","))
+      ];
+
+      const csvString = csvRows.join("\n");
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `volunteers_export_${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      toast.success(`${allVolunteers.length} volunteers exported successfully`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to export volunteers data");
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const volunteers = volunteersData?.data || [];
+  const meta = volunteersData?.meta || volunteersData;
+  const totalVolunteers = meta?.total || volunteers.length;
+  const lastPage = meta?.last_page || 1;
+
+  // Hybrid search: Use server-side query + client-side filter as fallback
+  const filteredVolunteers = volunteers.filter((vol: any) =>
+    (vol.full_name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (vol.email || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (vol.phone || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -114,7 +216,7 @@ export default function MovementManagementPage() {
                       </div>
                       <div className="text-left">
                         <p className="text-sm font-medium text-gray-500">Total Volunteers</p>
-                        <h3 className="text-2xl font-bold text-gray-900">{movements.length}</h3>
+                        <h3 className="text-2xl font-bold text-gray-900">{totalVolunteers}</h3>
                       </div>
                     </div>
                   </CardContent>
@@ -127,15 +229,31 @@ export default function MovementManagementPage() {
                   {/* Search bar */}
                   <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <h2 className="text-base font-semibold text-gray-800 px-2">Campaign Volunteers</h2>
-                    <div className="relative w-full max-w-xs">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="Search volunteers..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
-                      />
+                    <div className="flex items-center gap-3 w-full sm:w-auto">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleExport}
+                        disabled={isExporting}
+                        className="h-10 gap-2 border-gray-200 text-gray-700 hover:bg-gray-50 rounded-lg px-4"
+                      >
+                        {isExporting ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Download className="h-4 w-4" />
+                        )}
+                        <span className="hidden sm:inline">Download Data</span>
+                      </Button>
+                      <div className="relative w-full max-w-xs">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="Search volunteers..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -147,6 +265,7 @@ export default function MovementManagementPage() {
                           <TableHead className="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-gray-500 w-[30%]">Full Name</TableHead>
                           <TableHead className="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 w-[25%]">Contact Details</TableHead>
                           <TableHead className="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 w-[25%]">Location</TableHead>
+                          <TableHead className="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 w-[25%]">Polling Unit</TableHead>
                           <TableHead className="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 text-center">Disability</TableHead>
                           <TableHead className="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-gray-500 text-right">Actions</TableHead>
                         </TableRow>
@@ -158,8 +277,8 @@ export default function MovementManagementPage() {
                               <Loader2 className="h-8 w-8 animate-spin mx-auto text-[#155DFC]" />
                             </TableCell>
                           </TableRow>
-                        ) : filteredMovements.length > 0 ? (
-                          filteredMovements.map((volunteer: any) => (
+                        ) : filteredVolunteers.length > 0 ? (
+                          filteredVolunteers.map((volunteer: any) => (
                             <TableRow key={volunteer.id || volunteer._id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
                               <TableCell className="py-4 px-6">
                                 <div className="text-left">
@@ -175,6 +294,9 @@ export default function MovementManagementPage() {
                               <TableCell className="py-4 px-4 text-sm text-gray-600 capitalize">
                                 {volunteer.state}, {volunteer.lga}
                                 <span className="block text-xs text-gray-500 mt-1">Ward {volunteer.ward}</span>
+                              </TableCell>
+                              <TableCell className="py-4 px-4 text-sm text-gray-600 capitalize">
+                                <span className="block text-xs text-gray-500 mt-1">Polling Unit  {volunteer.polling_unit}</span>
                               </TableCell>
                               <TableCell className="py-4 px-4 text-sm text-gray-500 text-center">
                                 {volunteer.disability ? (
@@ -220,6 +342,35 @@ export default function MovementManagementPage() {
                       </TableBody>
                     </Table>
                   </div>
+
+                  {/* Pagination Controls */}
+                  {lastPage > 1 && (
+                    <div className="p-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/30">
+                      <p className="text-sm text-gray-500">
+                        Page <span className="font-medium text-gray-900">{page}</span> of <span className="font-medium text-gray-900">{lastPage}</span>
+                      </p>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setPage(p => Math.max(1, p - 1))}
+                          disabled={page === 1 || isLoading}
+                          className="h-8 rounded-lg"
+                        >
+                          Previous
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setPage(p => Math.min(lastPage, p + 1))}
+                          disabled={page === lastPage || isLoading}
+                          className="h-8 rounded-lg"
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 

@@ -114,7 +114,7 @@ export default function AddGalleryPage() {
                                     <div className="flex flex-col gap-2">
                                         <label className="text-[12px] font-bold text-[#111827]">Subtitle</label>
                                         <Input
-                                            placeholder="Enter album subtitle (optional)"
+                                            placeholder="Enter album subtitle"
                                             value={subtitle}
                                             onChange={(e) => setSubtitle(e.target.value)}
                                             className="h-10 bg-[#f8fafc]/50 border-gray-200 text-[13px] rounded bg-gray-50/30"
@@ -171,7 +171,7 @@ export default function AddGalleryPage() {
 
                             {/* Bottom Actions */}
                             <div className="border-t border-[#e2e8f0] p-6 flex justify-end gap-3 mt-4">
-                                <Link href="/admin/gallery">
+                                <Link href="/sub-admin/gallery">
                                     <Button variant="outline" className="h-[36px] px-5 text-[12px] font-bold border-[#e2e8f0] rounded text-[#374151] bg-white hover:bg-gray-50">
                                         Cancel
                                     </Button>

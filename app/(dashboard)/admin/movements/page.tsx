@@ -56,11 +56,13 @@ export default function MovementManagementPage() {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  const { data: volunteersData, isLoading, error: volunteersError } = useGetAllVolunteersQuery({ 
-    page, 
-    search: debouncedSearch 
+  const { data: volunteersData, isLoading, error: volunteersError } = useGetAllVolunteersQuery({
+    page,
+    search: debouncedSearch
   });
-  
+
+  console.log(volunteersData)
+
   const [deleteMovement, { isLoading: isDeleting }] = useDeleteMovementMutation();
 
   const [previewItem, setPreviewItem] = useState<any>(null);
@@ -114,7 +116,7 @@ export default function MovementManagementPage() {
         const result = await response.json();
         const data = result.data || [];
         const meta = result.meta || result;
-        
+
         allVolunteers = [...allVolunteers, ...data];
         totalPages = meta.last_page || 1;
         currentPage++;
@@ -126,7 +128,7 @@ export default function MovementManagementPage() {
       }
 
       // Generate CSV
-      const headers = ["Full Name", "Email", "Phone", "State", "LGA", "Ward", "Disability"];
+      const headers = ["Full Name", "Email", "Phone", "State", "Gender", "LGA", "Ward", "Polling Unit", "Date of Birth", "Disability"];
       const csvRows = [
         headers.join(","), // Header row
         ...allVolunteers.map(vol => [
@@ -134,8 +136,11 @@ export default function MovementManagementPage() {
           `"${(vol.email || "").replace(/"/g, '""')}"`,
           `"${(vol.phone || "").replace(/"/g, '""')}"`,
           `"${(vol.state || "").replace(/"/g, '""')}"`,
+          `"${(vol.gender || "").replace(/"/g, '""')}"`,
           `"${(vol.lga || "").replace(/"/g, '""')}"`,
           `"${(vol.ward || "").replace(/"/g, '""')}"`,
+          `"${(vol.polling_unit || "").replace(/"/g, '""')}"`,
+          `"${(vol.dob || "").replace(/"/g, '""')}"`,
           vol.disability ? "Yes" : "No"
         ].join(","))
       ];
@@ -150,7 +155,7 @@ export default function MovementManagementPage() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-      
+
       toast.success(`${allVolunteers.length} volunteers exported successfully`);
     } catch (error) {
       console.error(error);
@@ -260,6 +265,7 @@ export default function MovementManagementPage() {
                           <TableHead className="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-gray-500 w-[30%]">Full Name</TableHead>
                           <TableHead className="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 w-[25%]">Contact Details</TableHead>
                           <TableHead className="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 w-[25%]">Location</TableHead>
+                          <TableHead className="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 w-[25%]">Polling Unit</TableHead>
                           <TableHead className="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 text-center">Disability</TableHead>
                           <TableHead className="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-gray-500 text-right">Actions</TableHead>
                         </TableRow>
@@ -288,6 +294,9 @@ export default function MovementManagementPage() {
                               <TableCell className="py-4 px-4 text-sm text-gray-600 capitalize">
                                 {volunteer.state}, {volunteer.lga}
                                 <span className="block text-xs text-gray-500 mt-1">Ward {volunteer.ward}</span>
+                              </TableCell>
+                              <TableCell className="py-4 px-4 text-sm text-gray-600 capitalize">
+                                <span className="block text-xs text-gray-500 mt-1">Polling Unit  {volunteer.polling_unit}</span>
                               </TableCell>
                               <TableCell className="py-4 px-4 text-sm text-gray-500 text-center">
                                 {volunteer.disability ? (
