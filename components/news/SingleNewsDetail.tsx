@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { UserPen } from 'lucide-react';
+import ShareButtons from './ShareButtons';
 
 interface SingleNewsDetailProps {
     title: string;
@@ -42,9 +43,11 @@ const SingleNewsDetail = ({ title, image, author, date, year, content }: SingleN
                 </div>
             </div>
 
-            <div className="space-y-6 text-gray-700 pb-20 leading-relaxed text-[15px] whitespace-pre-wrap">
+            <div className="space-y-6 text-gray-700 leading-relaxed text-[15px] whitespace-pre-wrap">
                 {content}
             </div>
+
+            <ShareButtons title={title} />
 
             {/* <div className="mt-12 pt-8 border-t border-gray-100">
                 <p className="text-sm font-bold text-gray-900 border-b-2 border-black inline-block pb-1">Source</p>

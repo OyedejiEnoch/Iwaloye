@@ -171,7 +171,7 @@ export default function Mission() {
               <Image src={"/icons/Note.png"} alt='icon' width={30} height={30} />
 
             </button> */}
-            <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-0 bg-black text-white py-2 px-6 w-[280px] h-[80px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
+            <NewButton text='Download Manifesto' icon='/icons/Note.png' link='/manifesto.pdf' download className='mt-0 bg-black text-white py-2 px-6 w-[280px] h-[80px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
           </div>
         </div>
       </div>

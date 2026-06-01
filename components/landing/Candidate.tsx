@@ -78,7 +78,7 @@ const Candidate = ({ heading, subHeading, text, className, about = false }: { he
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-3 mt-8'>
                     <div ref={imageRef}>
-                        <Image src={"/assets/iwaloye1.png"} alt='image' width={500} height={500} className="object-cover" />
+                        <Image src={"/assets/iwaloyeNew.jpeg"} alt='image' width={500} height={500} className="object-cover" />
                     </div>
 
                     <div ref={contentRef} className='flex flex-col space-y-5'>

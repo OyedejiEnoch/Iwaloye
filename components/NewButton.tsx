@@ -11,6 +11,7 @@ const NewButton = React.forwardRef<HTMLButtonElement, any>(({
     link,
     target,
     rel,
+    download,
     className,
     hoverBgClass = "bg-[#F47321]",
     hoverTextClass = "group-hover:text-white",
@@ -37,6 +38,22 @@ const NewButton = React.forwardRef<HTMLButtonElement, any>(({
             )}
         </span>
     );
+
+    if (download) {
+        return (
+            <Button
+                ref={ref}
+                asChild
+                className={`w-full relative overflow-hidden group mt-6 px-8 py-5 border border-black hover:border-none text-black bg-transparent font-semibold rounded-none ${className || 'md:w-fit'}`}
+                {...props}
+            >
+                <a href={link} download target={target} rel={rel}>
+                    {backgroundLayer}
+                    {innerContent}
+                </a>
+            </Button>
+        )
+    }
 
     if (link) {
         return (

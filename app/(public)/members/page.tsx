@@ -3,10 +3,10 @@ import Image from 'next/image'
 const members = [
     { name: "Dr Najeem Folasayo Salaam", role: "Governorship Candidate", image: "portrait.png" },
     { name: "Yemisi Temitope Agiri", role: "Deputy Governorship Candidate", image: "portrait2.jpeg" },
-    { name: "Hon Prince Segun Olanibi", role: "Campaign Director General", image: "imageHolder.png" },
-    { name: "Hon Abdulhakeem Olaoye", role: "Campaign Director, Osun Central", image: "imageHolder.png" },
-    { name: "Hon Gbenga Ogunkanmi", role: "Campaign Director, Osun West", image: "imageHolder.png" },
-    { name: "Hon Prince Sikiru Ayedun", role: " Campaign Director, Osun East", image: "imageHolder.png" },
+    { name: "Hon Prince Segun Olanibi", role: "Campaign Director General", image: "teamPic4.jpeg" },
+    { name: "Hon Abdulhakeem Olaoye", role: "Campaign Director, Osun Central", image: "teamPic1.jpeg" },
+    { name: "Hon Gbenga Ogunkanmi", role: "Campaign Director, Osun West", image: "teamPic2.jpeg" },
+    { name: "Hon Prince Sikiru Ayedun", role: " Campaign Director, Osun East", image: "teamPic3.jpeg" },
 
 ]
 

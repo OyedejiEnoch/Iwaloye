@@ -7,8 +7,8 @@ import NewButton from "../NewButton";
 const members = [
     { name: "Dr Najeem Folasayo Salaam", role: "Governorship Candidate", image: "portrait.png" },
     { name: "Yemisi Temitope Agiri", role: "Deputy Governorship Candidate", image: "portrait2.jpeg" },
-    { name: "Hon Prince Segun Olanibi", role: "Campaign Director General", image: "imageHolder.png" },
-    { name: "Hon Abdulhakeem Olaoye", role: "Campaign Director, Osun Central", image: "imageHolder.png" },
+    { name: "Hon Prince Segun Olanibi", role: "Campaign Director General", image: "teamPic4.jpeg" },
+    { name: "Hon Abdulhakeem Olaoye", role: "Campaign Director, Osun Central", image: "teamPic1.jpeg" },
 
 ]
 

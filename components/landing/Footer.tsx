@@ -99,11 +99,7 @@ const Footer = () => {
 
             </div>
             <p className="text-[13px] text-gray-500 leading-relaxed max-w-sm">
-              We Intense and Intentional Leadership, an activity that
-              identifies challenges, gets the people to see the realities in
-              these challenges, collectively evolve adaptive or technical
-              solutions to these problems with a view to a ensuring
-              Excellent living conditions for all Nigerian.
+              Building a better future through progressive policies and inclusive governance.
             </p>
           </div>
 

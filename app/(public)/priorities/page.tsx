@@ -240,7 +240,10 @@ const Priorities = () => {
               Vision Statement
             </h2>
           </div>
-          <p className="text-gray-500 text-sm mb-6 -mt-3 ml-4 text-center">A Stronger Osun, Built for the People</p>
+          <p className="text-gray-500 text-sm mb-6 -mt-3 ml-4 text-center">To create a thriving, secure, and
+economically vibrant Osun
+State driven by transparency,
+inclusiveness, and innovation</p>
 
           <div className="max-w-6xl ml-4">
             <p className="text-black/70 font-inter text-center leading-relaxed text-sm md:text-base">
@@ -272,7 +275,7 @@ const Priorities = () => {
                 <PriorityCard key={idx} text={item} />
               ))}
               <div className="mt-4 flex justify-center">
-                <NewButton text='Download Manifesto' icon='/icons/Note.png' className='w-full bg-black text-white py-4 h-[60px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
+                <NewButton text='Download Manifesto' icon='/icons/Note.png' link='/manifesto.pdf' download className='w-full bg-black text-white py-4 h-[60px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
               </div>
             </div>
 
@@ -314,7 +317,7 @@ const Priorities = () => {
                 <PriorityCard text={ManifestoItems[3]} />
               </div>
               <div className="absolute -bottom-17 flex right-0 w-[315px] justify-end">
-                <NewButton text='Download Manifesto' icon='/icons/Note.png' className='mt-10 bg-black text-white py-4 px-6 min-w-[190px] min-h-[60px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
+                <NewButton text='Download Manifesto' icon='/icons/Note.png' link='/manifesto.pdf' download className='mt-10 bg-black text-white py-4 px-6 min-w-[190px] min-h-[60px]' hoverBgClass='bg-white border border-black text-black' hoverTextClass='group-hover:text-black' />
               </div>
 
             </div>
