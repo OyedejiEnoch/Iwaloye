@@ -228,7 +228,7 @@ const Priorities = () => {
         {/* Header */}
         <div ref={headerRef} className="text-center mb-24">
           <h1 className="text-3xl md:text-5xl lg:text-[80px] font-sans uppercase text-gray-900 mb-4">My Vision for osun state</h1>
-          <p className="text-black/70 text-[20px] font-gentium">“A comprehensive plan for building a stronger, more prosperous Osun State.”</p>
+          <p className="text-black/70 text-[20px] font-gentium">“A comprehensive plan for building a stronger and more prosperous Osun State.”</p>
         </div>
 
         {/* Vision Statement */}
@@ -264,8 +264,19 @@ inclusiveness, and innovation</p>
 
             <div className="ml-4 w-full md:max-w-2xl mb-12 mx-auto">
               <p className="text-black/70 text-sm leading-relaxed ">
-                This manifesto presents a clear and practical roadmap for rebuilding Osun State's economy, strengthening public institutions, and improving the quality of life for all citizens.
-                It is guided by the values of fairness, inclusion, accountability, and sustainable development.
+                This manifesto is more than a promise; it is a contract
+                with the people. A contract rooted in integrity, driven
+                by compassion, and guided by a clear vision for
+                prosperity.
+                Osun has witnessed moments of bold leadership and
+                reform, particularly under the administration of
+                Ogbeni Rauf Aregbesola, whose strides in
+                infrastructure, youth empowerment, and education
+                demonstrated that purposeful governance can
+                transform lives.
+                Today, we stand at another defining moment. It is
+                time to build on past gains, correct present
+                challenges, and secure a better future for all.
               </p>
             </div>
 
