@@ -94,7 +94,7 @@ export default function EditGalleryPage() {
         <>
             <SubAdminSidebar />
             <SidebarInset className="flex flex-col flex-1 min-w-0">
-                <DashboardNavbar userName="Admin User" userRole="Super Admin" userInitials="AD" />
+                <DashboardNavbar userName="Sub Admin User" userRole="Sub Admin" userInitials="AD" />
 
                 {isFetching ? (
                     <main className="flex-1 flex items-center justify-center bg-white">

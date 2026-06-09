@@ -102,7 +102,7 @@ export default function GalleryManagementPage() {
                             size="sm"
                             className="h-9 px-4 text-gray-700 border-gray-200 hover:bg-gray-50 font-medium"
                           >
-                            <Link href={`/admin/gallery/edit/${album.slug ?? album.id}`}>
+                            <Link href={`/sub-admin/gallery/edit/${album.slug ?? album.id}`}>
                               Edit
                             </Link>
                           </Button>
