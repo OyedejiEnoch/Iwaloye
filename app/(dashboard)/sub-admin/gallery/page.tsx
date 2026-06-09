@@ -75,7 +75,7 @@ export default function GalleryManagementPage() {
                   Manage Gallery
                 </p>
               </div>
-              <Link href="/admin/gallery/add" className="flex items-center bg-[#155DFC] text-white font-semibold gap-2 h-11 px-6 rounded-md transition-all shadow-sm">
+              <Link href="/sub-admin/gallery/add" className="flex items-center bg-[#155DFC] text-white font-semibold gap-2 h-11 px-6 rounded-md transition-all shadow-sm">
                 <Plus className="h-5 w-5" />
                 Add Album
               </Link>

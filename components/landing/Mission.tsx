@@ -15,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const features = [
   {
-    title: 'Economy, Infrastructure & Investment',
+    title: 'Infrastructure & Investment',
     description: 'We must build a resilient economy through modern development. My priority is to launch an infrastructure drive that supports local businesses while attracting foreign investment to create sustainable jobs.',
     image: '/assets/newImg.jpeg',
   },

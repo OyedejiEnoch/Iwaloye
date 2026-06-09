@@ -37,7 +37,7 @@ const ManifestoItems = [
 const PriorityAreas = [
   {
     icon: LineChart,
-    title: "Economy, Infrastructure & Investment",
+    title: "Infrastructure & Power",
     desc: "We must build a resilient economy through modern development. My priority is to launch an infrastructure drive that supports local businesses while attracting foreign investment to create sustainable jobs.",
     focus: [
       "Focus on reliable power, modern transport, and digital connectivity.",
@@ -47,7 +47,7 @@ const PriorityAreas = [
   },
   {
     icon: LineChart,
-    title: "Healthcare Access & Quality",
+    title: "Health",
     desc: "A healthy state is a productive state. My priority is to bring affordable healthcare closer to the people, especially in rural and underserved areas, through standardized and well-equipped community centers.",
     focus: [
       "'Community Health First' initiative with well-equipped centers in every ward.",
@@ -57,7 +57,7 @@ const PriorityAreas = [
   },
   {
     icon: LineChart,
-    title: "Security",
+    title: "Security & Territorial Protection",
     desc: "Safety and trust are the pillars of every community. My priority is to create a locally driven security system that combines modern technology with strong community collaboration to protect lives and property.",
     focus: [
       "Community Safety Partnership focused on intelligence sharing and rapid response",
@@ -67,7 +67,7 @@ const PriorityAreas = [
   },
   {
     icon: Heart,
-    title: "Food Security & Agricultural Development",
+    title: "Agriculture",
     desc: "Osun must be able to feed itself and lead in exports. My priority is to support our smallholder farmers and transform the agricultural sector into a modern, high-yield value chain that ensures affordable food for all while enriching our rural communities.",
     focus: [
       "'Grow Osun, Feed the State' initiative for food security.",
@@ -97,7 +97,7 @@ const PriorityAreas = [
   },
   {
     icon: Monitor,
-    title: "Welfare & Social Services",
+    title: "Social Welfare",
     desc: "Ensuring dignity and inclusion for every citizen is a moral imperative. My priority is to introduce an integrated social support system that provides a basic standard of living for our most vulnerable families.",
     focus: [
       "'Care for All' initiative providing targeted cash assistance and affordable housing.",
