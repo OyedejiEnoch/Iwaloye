@@ -15,17 +15,17 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const features = [
   {
-    title: 'Infrastructure & Investment',
+    title: 'Infrastructure & Power',
     description: 'We must build a resilient economy through modern development. My priority is to launch an infrastructure drive that supports local businesses while attracting foreign investment to create sustainable jobs.',
     image: '/assets/newImg.jpeg',
   },
   {
-    title: 'Healthcare Access & Quality',
+    title: 'Health',
     description: 'A healthy state is a productive state. My priority is to bring affordable healthcare closer to the people, especially in rural and underserved areas, through standardized and well-equipped community centers.',
     image: '/assets/newImg1.jpeg',
   },
   {
-    title: 'Security',
+    title: 'Security & Territorial Protection',
     description: 'Safety and trust are the pillars of every community. My priority is to create a locally driven security system that combines modern technology with strong community collaboration to protect lives and property.',
     image: '/assets/newImg2.jpeg',
   },
