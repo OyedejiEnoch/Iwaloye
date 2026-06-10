@@ -18,7 +18,6 @@ import NewButton from './NewButton';
 type Step = "form" | "details" | "success";
 
 const TIMER_SECONDS = 10 * 60; // 10 minutes
-const BRAND = "#F47321";
 
 interface DonateProps {
     trigger?: React.ReactNode;
@@ -203,8 +202,6 @@ const Donate = ({ trigger }: DonateProps) => {
         ? `₦${Number(details.amount).toLocaleString()}`
         : ""
 
-    const timerLow = secondsLeft <= 60
-
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
@@ -218,7 +215,7 @@ const Donate = ({ trigger }: DonateProps) => {
                 )}
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-xl px-7 py-6 rounded-none">
+            <DialogContent className="sm:max-w-xl px-7 py-6 rounded-none max-h-[90dvh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle className='font-semibold text-xl'>
                         {step === "form" && "Make a Donation"}
@@ -297,13 +294,7 @@ const Donate = ({ trigger }: DonateProps) => {
                 {step === "details" && account && (
                     <div className="space-y-5 mt-4">
                         {/* Countdown */}
-                        <div
-                            className={`flex items-center justify-between border px-4 py-3 ${
-                                timerLow
-                                    ? "border-red-200 bg-red-50 text-red-600"
-                                    : "border-gray-200 bg-gray-50 text-gray-600"
-                            }`}
-                        >
+                        <div className="flex items-center justify-between border border-red-200 bg-red-50 text-red-600 px-4 py-3">
                             <span className="flex items-center gap-2 text-sm font-medium">
                                 <Clock className="h-4 w-4" />
                                 Account expires in
@@ -322,7 +313,7 @@ const Donate = ({ trigger }: DonateProps) => {
                         )}
 
                         {/* Account card */}
-                        <div className="border-l-4 border-[#F47321] border-y border-r border-gray-200 bg-white">
+                        <div className="border border-gray-200 border-l-4 border-l-[#F47321] bg-white">
                             <div className="flex items-center gap-2 px-4 pt-4 text-gray-700">
                                 <Landmark className="h-4 w-4" />
                                 <span className="text-sm font-semibold">Bank Transfer Details</span>
