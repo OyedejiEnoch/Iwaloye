@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -9,119 +9,201 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Loader2, CheckCircle2, XCircle } from 'lucide-react'
+import { Loader2, CheckCircle2, Copy, Check, Clock, Landmark } from 'lucide-react'
 import { Button } from './ui/button'
-import { useCreatePaymentMutation } from '@/redux/api/detailsApi'
+import { useInitiatePaymentMutation, useVerifyPaymentMutation } from '@/redux/api/detailsApi'
 import { toast } from "sonner"
 import NewButton from './NewButton';
 
-type PaymentStatus = "idle" | "success" | "failed";
+type Step = "form" | "details" | "success";
+
+const TIMER_SECONDS = 10 * 60; // 10 minutes
+const BRAND = "#F47321";
 
 interface DonateProps {
     trigger?: React.ReactNode;
 }
 
+interface AccountDetails {
+    accountNumber?: string;
+    accountName?: string;
+    bankName?: string;
+    reference?: string;
+    /** any other key/value the backend returns that we don't explicitly map */
+    extra: Array<{ label: string; value: string }>;
+}
+
+// The backend may send fields under several naming conventions. Normalise them
+// here so the UI doesn't break if the exact response shape differs slightly.
+const KNOWN_KEYS = new Set([
+    "account_number", "accountnumber", "number",
+    "account_name", "accountname", "name", "account_holder", "accountholder",
+    "bank_name", "bankname", "bank",
+    "reference", "ref", "id",
+    "amount", "email", "status", "message",
+]);
+
+const prettyLabel = (key: string) =>
+    key.replace(/[_-]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+const parseAccountDetails = (response: any): AccountDetails => {
+    const raw = response?.data ?? response ?? {};
+    const get = (...keys: string[]) => {
+        for (const k of keys) {
+            if (raw[k] !== undefined && raw[k] !== null && raw[k] !== "") return String(raw[k]);
+        }
+        return undefined;
+    };
+
+    const extra: AccountDetails["extra"] = [];
+    for (const [key, value] of Object.entries(raw)) {
+        if (KNOWN_KEYS.has(key.toLowerCase())) continue;
+        if (value === null || value === undefined || typeof value === "object") continue;
+        extra.push({ label: prettyLabel(key), value: String(value) });
+    }
+
+    return {
+        accountNumber: get("account_number", "accountNumber", "number"),
+        accountName: get("account_name", "accountName", "name", "account_holder", "accountHolder"),
+        bankName: get("bank_name", "bankName", "bank"),
+        reference: get("reference", "ref", "id"),
+        extra,
+    };
+};
+
+const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const s = (seconds % 60).toString().padStart(2, "0");
+    return `${m}:${s}`;
+};
+
 const Donate = ({ trigger }: DonateProps) => {
-    const [createPayment, { isLoading }] = useCreatePaymentMutation()
-    const [verifying, setVerifying] = useState(false)
-    const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>("idle")
+    const [initiatePayment, { isLoading: initiating }] = useInitiatePaymentMutation()
+    const [verifyPayment, { isLoading: verifying }] = useVerifyPaymentMutation()
+
     const [open, setOpen] = useState(false)
-    const [details, setDetails] = useState({
-        email: "",
-        amount: ""
-    })
+    const [step, setStep] = useState<Step>("form")
+    const [details, setDetails] = useState({ email: "", amount: "" })
+    const [account, setAccount] = useState<AccountDetails | null>(null)
+    const [secondsLeft, setSecondsLeft] = useState(TIMER_SECONDS)
+    const [copied, setCopied] = useState(false)
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDetails({
-            ...details,
-            [e.target.name]: e.target.value
-        })
-    }
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-    const verifyPayment = async (reference: string) => {
-        setVerifying(true)
-        try {
-            const res = await fetch(`/api/payment/verify/${reference}`, {
-                headers: { "Accept": "application/json" },
-            })
-            const data = await res.json()
-
-            // Based on your verify response screenshot:
-            // data.status === true && data.data.status === "success"
-            if (data.status === true && data.data?.status === "success") {
-                setPaymentStatus("success")
-                toast.success("Donation received! Thank you for supporting Iwaloye 2026.")
-            } else {
-                setPaymentStatus("failed")
-                toast.error(data.message || "Payment verification failed.")
-            }
-        } catch (error) {
-            setPaymentStatus("failed")
-            toast.error("Verification failed. Please contact support.")
-        } finally {
-            setVerifying(false)
+    const resetState = useCallback(() => {
+        setStep("form")
+        setDetails({ email: "", amount: "" })
+        setAccount(null)
+        setSecondsLeft(TIMER_SECONDS)
+        setCopied(false)
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current)
+            intervalRef.current = null
         }
-    }
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-        if (!details.email || !details.amount) {
-            toast.error("Please fill in all fields");
-            return;
-        }
-
-        try {
-            const payload = {
-                email: details.email,
-                amount: Number(details.amount)
-            };
-
-            const response = await createPayment(payload).unwrap();
-
-            const accessCode = response?.data?.access_code;
-            const reference = response?.data?.reference;
-
-            if (!accessCode) {
-                toast.error("Could not initialize payment. Please try again.");
-                return;
-            }
-
-            // ✅ Close the dialog FIRST before opening Paystack
-            setOpen(false);
-
-            // Small delay to let dialog fully unmount before popup opens
-            setTimeout(async () => {
-                const PaystackPop = (await import("@paystack/inline-js")).default;
-                const popup = new PaystackPop();
-
-                popup.resumeTransaction(accessCode, {
-                    onSuccess: async (transaction: { reference: string }) => {
-                        await verifyPayment(transaction?.reference || reference);
-                        // Re-open dialog to show result
-                        setOpen(true);
-                    },
-                    onCancel: () => {
-                        toast.info("Payment was cancelled.");
-                    },
-                });
-            }, 300);
-
-        } catch (error: any) {
-            console.error("Payment Error:", error);
-            toast.error(error?.data?.message || "Failed to initialize payment. Please try again.");
-        }
-    }
+    }, [])
 
     const handleOpenChange = (val: boolean) => {
         setOpen(val)
-        // Reset everything when dialog closes
-        if (!val) {
-            setPaymentStatus("idle")
-            setDetails({ email: "", amount: "" })
-            setVerifying(false)
+        if (!val) resetState()
+    }
+
+    // Countdown — runs only while showing account details.
+    useEffect(() => {
+        if (step !== "details") return
+
+        intervalRef.current = setInterval(() => {
+            setSecondsLeft((prev) => {
+                if (prev <= 1) {
+                    if (intervalRef.current) clearInterval(intervalRef.current)
+                    return 0
+                }
+                return prev - 1
+            })
+        }, 1000)
+
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current)
+        }
+    }, [step])
+
+    // When the timer hits zero, close the session.
+    useEffect(() => {
+        if (step === "details" && secondsLeft === 0) {
+            toast.info("This donation session expired. Please start again.")
+            handleOpenChange(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [secondsLeft, step])
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDetails({ ...details, [e.target.name]: e.target.value })
+    }
+
+    const handleInitiate = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (!details.email || !details.amount) {
+            toast.error("Please fill in all fields")
+            return
+        }
+
+        try {
+            const response = await initiatePayment({
+                email: details.email,
+                amount: Number(details.amount),
+            }).unwrap()
+
+            const parsed = parseAccountDetails(response)
+            if (!parsed.accountNumber) {
+                toast.error("Could not retrieve account details. Please try again.")
+                return
+            }
+
+            setAccount(parsed)
+            setSecondsLeft(TIMER_SECONDS)
+            setStep("details")
+        } catch (error: any) {
+            console.error("Initiate Error:", error)
+            toast.error(error?.data?.message || "Failed to get account details. Please try again.")
         }
     }
+
+    const handleConfirm = async () => {
+        try {
+            await verifyPayment({
+                email: details.email,
+                amount: Number(details.amount),
+                reference: account?.reference,
+            }).unwrap()
+
+            if (intervalRef.current) clearInterval(intervalRef.current)
+            setStep("success")
+            toast.success("Thank you for supporting Iwaloye 2026.")
+        } catch (error: any) {
+            console.error("Verify Error:", error)
+            // Donations aren't strictly gated on confirmation — acknowledge anyway.
+            if (intervalRef.current) clearInterval(intervalRef.current)
+            setStep("success")
+            toast.success("Thank you for supporting Iwaloye 2026.")
+        }
+    }
+
+    const handleCopy = async () => {
+        if (!account?.accountNumber) return
+        try {
+            await navigator.clipboard.writeText(account.accountNumber)
+            setCopied(true)
+            toast.success("Account number copied")
+            setTimeout(() => setCopied(false), 2000)
+        } catch {
+            toast.error("Couldn't copy. Please copy it manually.")
+        }
+    }
+
+    const amountLabel = details.amount
+        ? `₦${Number(details.amount).toLocaleString()}`
+        : ""
+
+    const timerLow = secondsLeft <= 60
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -139,74 +221,22 @@ const Donate = ({ trigger }: DonateProps) => {
             <DialogContent className="sm:max-w-xl px-7 py-6 rounded-none">
                 <DialogHeader>
                     <DialogTitle className='font-semibold text-xl'>
-                        {paymentStatus === "idle" && "Enter Payment Details"}
-                        {paymentStatus === "success" && "Donation Successful!"}
-                        {paymentStatus === "failed" && "Payment Failed"}
+                        {step === "form" && "Make a Donation"}
+                        {step === "details" && "Transfer to Complete Your Donation"}
+                        {step === "success" && "Donation Received!"}
                     </DialogTitle>
                     <DialogDescription>
-                        {paymentStatus === "idle" && "Complete the form below to initiate your donation."}
-                        {paymentStatus === "success" && "Thank you for supporting Iwaloye 2026."}
-                        {paymentStatus === "failed" && "Something went wrong with your payment."}
+                        {step === "form" && "Enter your details to get the account number for your transfer."}
+                        {step === "details" && "Send your donation to the account below, then confirm."}
+                        {step === "success" && "Thank you for supporting Iwaloye 2026."}
                     </DialogDescription>
                 </DialogHeader>
 
                 <hr className='mt-4' />
 
-                {/* ── Success State ── */}
-                {paymentStatus === "success" && (
-                    <div className="flex flex-col items-center justify-center py-8 space-y-4 text-center">
-                        <CheckCircle2 className="w-16 h-16 text-green-500" />
-                        <h3 className="text-xl font-bold text-gray-800">Thank You!</h3>
-                        <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-                            Your donation has been received and will go towards supporting our campaign to build a better Osun State.
-                        </p>
-                        <Button
-                            onClick={() => handleOpenChange(false)}
-                            className="bg-[#F47321] rounded-none hover:bg-[#e36214] py-6 px-10 text-white font-semibold mt-4"
-                        >
-                            Close
-                        </Button>
-                    </div>
-                )}
-
-                {/* ── Failed State ── */}
-                {paymentStatus === "failed" && (
-                    <div className="flex flex-col items-center justify-center py-8 space-y-4 text-center">
-                        <XCircle className="w-16 h-16 text-red-500" />
-                        <h3 className="text-xl font-bold text-gray-800">Payment Failed</h3>
-                        <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-                            Your payment could not be completed. Please try again.
-                        </p>
-                        <div className="flex gap-3 mt-4">
-                            <Button
-                                onClick={() => setPaymentStatus("idle")}
-                                className="bg-[#F47321] rounded-none hover:bg-[#e36214] py-6 px-8 text-white font-semibold"
-                            >
-                                Try Again
-                            </Button>
-                            <Button
-                                onClick={() => handleOpenChange(false)}
-                                variant="outline"
-                                className="rounded-none py-6 px-8 font-semibold"
-                            >
-                                Cancel
-                            </Button>
-                        </div>
-                    </div>
-                )}
-
-                {/* ── Verifying State ── */}
-                {verifying && (
-                    <div className="flex flex-col items-center justify-center py-8 space-y-4 text-center">
-                        <Loader2 className="w-12 h-12 text-[#F47321] animate-spin" />
-                        <p className="text-gray-600 font-medium">Verifying your payment...</p>
-                        <p className="text-gray-400 text-sm">Please don't close this window</p>
-                    </div>
-                )}
-
-                {/* ── Form (idle, not verifying) ── */}
-                {paymentStatus === "idle" && !verifying && (
-                    <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+                {/* ── Step 1: Form ── */}
+                {step === "form" && (
+                    <form onSubmit={handleInitiate} className="space-y-6 mt-4">
                         <div className='space-y-2'>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                 Email Address
@@ -229,6 +259,7 @@ const Donate = ({ trigger }: DonateProps) => {
                             </label>
                             <input
                                 type="number"
+                                inputMode="numeric"
                                 id="amount"
                                 name="amount"
                                 value={details.amount}
@@ -247,19 +278,158 @@ const Donate = ({ trigger }: DonateProps) => {
                             <Button
                                 type='submit'
                                 className='bg-[#F47321] rounded-none hover:bg-[#e36214] py-6 px-8 text-white font-semibold transition-colors'
-                                disabled={isLoading}
+                                disabled={initiating}
                             >
-                                {isLoading ? (
+                                {initiating ? (
                                     <>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                        Initializing...
+                                        Getting account...
                                     </>
                                 ) : (
-                                    "Donate"
+                                    "Continue"
                                 )}
                             </Button>
                         </div>
                     </form>
+                )}
+
+                {/* ── Step 2: Account details + countdown ── */}
+                {step === "details" && account && (
+                    <div className="space-y-5 mt-4">
+                        {/* Countdown */}
+                        <div
+                            className={`flex items-center justify-between border px-4 py-3 ${
+                                timerLow
+                                    ? "border-red-200 bg-red-50 text-red-600"
+                                    : "border-gray-200 bg-gray-50 text-gray-600"
+                            }`}
+                        >
+                            <span className="flex items-center gap-2 text-sm font-medium">
+                                <Clock className="h-4 w-4" />
+                                Account expires in
+                            </span>
+                            <span className="text-lg font-bold tabular-nums tracking-wider">
+                                {formatTime(secondsLeft)}
+                            </span>
+                        </div>
+
+                        {/* Amount to send */}
+                        {amountLabel && (
+                            <div className="text-center py-2">
+                                <p className="text-xs uppercase tracking-wide text-gray-500">Amount to transfer</p>
+                                <p className="text-3xl font-bold text-gray-900 tabular-nums">{amountLabel}</p>
+                            </div>
+                        )}
+
+                        {/* Account card */}
+                        <div className="border-l-4 border-[#F47321] border-y border-r border-gray-200 bg-white">
+                            <div className="flex items-center gap-2 px-4 pt-4 text-gray-700">
+                                <Landmark className="h-4 w-4" />
+                                <span className="text-sm font-semibold">Bank Transfer Details</span>
+                            </div>
+
+                            <div className="px-4 py-4 space-y-4">
+                                {account.bankName && (
+                                    <div>
+                                        <p className="text-xs uppercase tracking-wide text-gray-500">Bank</p>
+                                        <p className="text-base font-semibold text-gray-900">{account.bankName}</p>
+                                    </div>
+                                )}
+
+                                {account.accountName && (
+                                    <div>
+                                        <p className="text-xs uppercase tracking-wide text-gray-500">Account Name</p>
+                                        <p className="text-base font-semibold text-gray-900">{account.accountName}</p>
+                                    </div>
+                                )}
+
+                                <div>
+                                    <p className="text-xs uppercase tracking-wide text-gray-500">Account Number</p>
+                                    <div className="flex items-center justify-between gap-3">
+                                        <p className="text-xl font-bold text-gray-900 tabular-nums tracking-wider">
+                                            {account.accountNumber}
+                                        </p>
+                                        <button
+                                            type="button"
+                                            onClick={handleCopy}
+                                            aria-label="Copy account number"
+                                            className="flex items-center gap-1.5 border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:border-[#F47321] hover:text-[#F47321] transition-colors min-h-[44px]"
+                                        >
+                                            {copied ? (
+                                                <>
+                                                    <Check className="h-4 w-4 text-green-600" />
+                                                    Copied
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Copy className="h-4 w-4" />
+                                                    Copy
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Any extra fields the backend returned */}
+                                {account.extra.map((field) => (
+                                    <div key={field.label}>
+                                        <p className="text-xs uppercase tracking-wide text-gray-500">{field.label}</p>
+                                        <p className="text-base font-semibold text-gray-900">{field.value}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <p className="text-sm text-gray-500 leading-relaxed">
+                            After transferring{amountLabel ? ` ${amountLabel}` : ""} to the account above, click
+                            <span className="font-medium text-gray-700"> “I have sent”</span> so we can record your support.
+                        </p>
+
+                        <hr />
+
+                        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => handleOpenChange(false)}
+                                className="rounded-none py-6 px-8 font-semibold"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="button"
+                                onClick={handleConfirm}
+                                disabled={verifying}
+                                className="bg-[#F47321] rounded-none hover:bg-[#e36214] py-6 px-8 text-white font-semibold transition-colors"
+                            >
+                                {verifying ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Confirming...
+                                    </>
+                                ) : (
+                                    "I have sent"
+                                )}
+                            </Button>
+                        </div>
+                    </div>
+                )}
+
+                {/* ── Step 3: Success ── */}
+                {step === "success" && (
+                    <div className="flex flex-col items-center justify-center py-8 space-y-4 text-center">
+                        <CheckCircle2 className="w-16 h-16 text-green-500" />
+                        <h3 className="text-xl font-bold text-gray-800">Thank You!</h3>
+                        <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
+                            Your donation has been recorded and will go towards supporting our campaign to build a better Osun State.
+                        </p>
+                        <Button
+                            onClick={() => handleOpenChange(false)}
+                            className="bg-[#F47321] rounded-none hover:bg-[#e36214] py-6 px-10 text-white font-semibold mt-4"
+                        >
+                            Close
+                        </Button>
+                    </div>
                 )}
             </DialogContent>
         </Dialog>

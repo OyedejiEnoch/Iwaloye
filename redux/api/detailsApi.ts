@@ -24,10 +24,18 @@ export const detailsApi = createApi({
         getAllCalenders: builder.query({
             query: () => '/campaign-calendar',
         }),
-        // POST api/payment
-        createPayment: builder.mutation({
+        // POST api/payments/initiate -> returns account details to transfer to
+        initiatePayment: builder.mutation({
             query: (data) => ({
-                url: '/payment',
+                url: '/payments/initiate',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        // POST api/payments/verify -> donor confirms "I have sent"
+        verifyPayment: builder.mutation({
+            query: (data) => ({
+                url: '/payments/verify',
                 method: 'POST',
                 body: data,
             }),
@@ -57,7 +65,8 @@ export const {
     useGetSingleVisionQuery, 
     useGetAllLeadersQuery,
     useGetAllCalendersQuery,
-    useCreatePaymentMutation,
+    useInitiatePaymentMutation,
+    useVerifyPaymentMutation,
     useSubmitContactMutation,
     useGetAllAlbumsQuery,
     useGetSingleAlbumQuery,
