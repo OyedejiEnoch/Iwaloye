@@ -1,15 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { Loader2, CheckCircle2, Copy, Check, Clock, Landmark } from 'lucide-react'
+import { createPortal } from 'react-dom'
+import { Loader2, CheckCircle2, Copy, Check, Clock, Landmark, X } from 'lucide-react'
 import { Button } from './ui/button'
 import { useInitiatePaymentMutation, useVerifyPaymentMutation } from '@/redux/api/detailsApi'
 import { toast } from "sonner"
@@ -80,6 +73,7 @@ const Donate = ({ trigger }: DonateProps) => {
     const [initiatePayment, { isLoading: initiating }] = useInitiatePaymentMutation()
     const [verifyPayment, { isLoading: verifying }] = useVerifyPaymentMutation()
 
+    const [mounted, setMounted] = useState(false)
     const [open, setOpen] = useState(false)
     const [step, setStep] = useState<Step>("form")
     const [details, setDetails] = useState({ email: "", amount: "" })
@@ -88,6 +82,8 @@ const Donate = ({ trigger }: DonateProps) => {
     const [copied, setCopied] = useState(false)
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+    useEffect(() => setMounted(true), [])
 
     const resetState = useCallback(() => {
         setStep("form")
@@ -101,10 +97,28 @@ const Donate = ({ trigger }: DonateProps) => {
         }
     }, [])
 
-    const handleOpenChange = (val: boolean) => {
+    const handleOpenChange = useCallback((val: boolean) => {
         setOpen(val)
         if (!val) resetState()
-    }
+    }, [resetState])
+
+    // Lock background scroll while the modal is open.
+    useEffect(() => {
+        if (!open) return
+        const prev = document.body.style.overflow
+        document.body.style.overflow = "hidden"
+        return () => { document.body.style.overflow = prev }
+    }, [open])
+
+    // Close on Escape.
+    useEffect(() => {
+        if (!open) return
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") handleOpenChange(false)
+        }
+        window.addEventListener("keydown", onKey)
+        return () => window.removeEventListener("keydown", onKey)
+    }, [open, handleOpenChange])
 
     // Countdown — runs only while showing account details.
     useEffect(() => {
@@ -173,13 +187,10 @@ const Donate = ({ trigger }: DonateProps) => {
                 amount: Number(details.amount),
                 reference: account?.reference,
             }).unwrap()
-
-            if (intervalRef.current) clearInterval(intervalRef.current)
-            setStep("success")
-            toast.success("Thank you for supporting Iwaloye 2026.")
         } catch (error: any) {
             console.error("Verify Error:", error)
             // Donations aren't strictly gated on confirmation — acknowledge anyway.
+        } finally {
             if (intervalRef.current) clearInterval(intervalRef.current)
             setStep("success")
             toast.success("Thank you for supporting Iwaloye 2026.")
@@ -202,9 +213,14 @@ const Donate = ({ trigger }: DonateProps) => {
         ? `₦${Number(details.amount).toLocaleString()}`
         : ""
 
+    const title =
+        step === "form" ? "Make a Donation"
+            : step === "details" ? "Transfer to Complete Your Donation"
+                : "Donation Received!"
+
     return (
-        <Dialog open={open} onOpenChange={handleOpenChange}>
-            <DialogTrigger asChild>
+        <>
+            <span className="contents" onClick={() => setOpen(true)}>
                 {trigger || (
                     <NewButton
                         text='Donate Now'
@@ -213,219 +229,241 @@ const Donate = ({ trigger }: DonateProps) => {
                         iconClassName="group-hover:brightness-0 group-hover:invert"
                     />
                 )}
-            </DialogTrigger>
+            </span>
 
-            <DialogContent className="sm:max-w-xl rounded-none p-0 gap-0 flex flex-col max-h-[90dvh] overflow-hidden">
-                <div className="overflow-y-auto overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch] px-7 py-6">
-                <DialogHeader>
-                    <DialogTitle className='font-semibold text-lg'>
-                        {step === "form" && "Make a Donation"}
-                        {step === "details" && "Transfer to Complete Your Donation"}
-                        {step === "success" && "Donation Received!"}
-                    </DialogTitle>
-                    <DialogDescription>
-                        {step === "form" && "Enter your details to get the account number for your transfer."}
-                        {step === "details" && "Send your donation to the account below, then confirm."}
-                        {step === "success" && "Thank you for supporting Iwaloye 2026."}
-                    </DialogDescription>
-                </DialogHeader>
+            {mounted && open && createPortal(
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={title}
+                >
+                    {/* Overlay */}
+                    <div
+                        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                        onClick={() => handleOpenChange(false)}
+                    />
 
-                <hr className='mt-4' />
+                    {/* Panel */}
+                    <div className="relative z-10 w-full sm:max-w-xl bg-white shadow-xl flex flex-col max-h-[90dvh] overflow-hidden">
+                        <button
+                            type="button"
+                            onClick={() => handleOpenChange(false)}
+                            aria-label="Close"
+                            className="absolute top-3 right-3 z-20 p-1 text-gray-500 hover:text-gray-900 transition-colors"
+                        >
+                            <X className="h-5 w-5" />
+                        </button>
 
-                {/* ── Step 1: Form ── */}
-                {step === "form" && (
-                    <form onSubmit={handleInitiate} className="space-y-6 mt-4">
-                        <div className='space-y-2'>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email Address
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={details.email}
-                                onChange={handleChange}
-                                placeholder="gbailey@example.net"
-                                className="mt-1 p-2 w-full border border-gray-300 focus:ring-1 focus:ring-[#F47321] focus:border-transparent outline-none py-4 px-4"
-                                required
-                            />
-                        </div>
+                        {/* Scrollable content (native scroll — works on touch) */}
+                        <div className="overflow-y-auto overscroll-contain px-6 py-5">
+                            {/* Header */}
+                            <h2 className="font-semibold text-lg text-gray-900 pr-8">{title}</h2>
+                            {step === "form" && (
+                                <p className="text-sm text-gray-500 mt-1">
+                                    Enter your details to get the account number for your transfer.
+                                </p>
+                            )}
 
-                        <div className='space-y-2'>
-                            <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                                Amount (₦)
-                            </label>
-                            <input
-                                type="number"
-                                inputMode="numeric"
-                                id="amount"
-                                name="amount"
-                                value={details.amount}
-                                onChange={handleChange}
-                                placeholder="Enter amount in Naira"
-                                min="1"
-                                max="4999999"
-                                className="mt-1 p-2 w-full border border-gray-300 focus:ring-1 focus:ring-[#F47321] focus:border-transparent outline-none py-4 px-4"
-                                required
-                            />
-                        </div>
+                            <hr className="mt-3" />
 
-                        <hr className='mt-6' />
-
-                        <div className='flex justify-end'>
-                            <Button
-                                type='submit'
-                                className='bg-[#F47321] rounded-none hover:bg-[#e36214] py-6 px-8 text-white font-semibold transition-colors'
-                                disabled={initiating}
-                            >
-                                {initiating ? (
-                                    <>
-                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                        Getting account...
-                                    </>
-                                ) : (
-                                    "Continue"
-                                )}
-                            </Button>
-                        </div>
-                    </form>
-                )}
-
-                {/* ── Step 2: Account details + countdown ── */}
-                {step === "details" && account && (
-                    <div className="space-y-5 mt-4">
-                        {/* Countdown */}
-                        <div className="flex items-center justify-between border border-red-200 bg-red-50 text-red-600 px-4 py-3">
-                            <span className="flex items-center gap-2 text-sm font-medium">
-                                <Clock className="h-4 w-4" />
-                                Account expires in
-                            </span>
-                            <span className="text-base font-bold tabular-nums tracking-wider">
-                                {formatTime(secondsLeft)}
-                            </span>
-                        </div>
-
-                        {/* Amount to send */}
-                        {amountLabel && (
-                            <div className="text-center py-2">
-                                <p className="text-xs uppercase tracking-wide text-gray-500">Amount to transfer</p>
-                                <p className="text-2xl font-bold text-gray-900 tabular-nums">{amountLabel}</p>
-                            </div>
-                        )}
-
-                        {/* Account card */}
-                        <div className="border border-gray-200 border-l-4 border-l-[#F47321] bg-white">
-                            <div className="flex items-center gap-2 px-4 pt-4 text-gray-700">
-                                <Landmark className="h-4 w-4" />
-                                <span className="text-sm font-semibold">Bank Transfer Details</span>
-                            </div>
-
-                            <div className="px-4 py-4 space-y-4">
-                                {account.bankName && (
-                                    <div>
-                                        <p className="text-xs uppercase tracking-wide text-gray-500">Bank</p>
-                                        <p className="text-sm font-semibold text-gray-900">{account.bankName}</p>
+                            {/* ── Step 1: Form ── */}
+                            {step === "form" && (
+                                <form onSubmit={handleInitiate} className="space-y-5 mt-4">
+                                    <div className='space-y-2'>
+                                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                                            Email Address
+                                        </label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            value={details.email}
+                                            onChange={handleChange}
+                                            placeholder="gbailey@example.net"
+                                            className="mt-1 w-full border border-gray-300 focus:ring-1 focus:ring-[#F47321] focus:border-transparent outline-none py-3 px-4"
+                                            required
+                                        />
                                     </div>
-                                )}
 
-                                {account.accountName && (
-                                    <div>
-                                        <p className="text-xs uppercase tracking-wide text-gray-500">Account Name</p>
-                                        <p className="text-sm font-semibold text-gray-900">{account.accountName}</p>
+                                    <div className='space-y-2'>
+                                        <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
+                                            Amount (₦)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            inputMode="numeric"
+                                            id="amount"
+                                            name="amount"
+                                            value={details.amount}
+                                            onChange={handleChange}
+                                            placeholder="Enter amount in Naira"
+                                            min="1"
+                                            max="4999999"
+                                            className="mt-1 w-full border border-gray-300 focus:ring-1 focus:ring-[#F47321] focus:border-transparent outline-none py-3 px-4"
+                                            required
+                                        />
                                     </div>
-                                )}
 
-                                <div>
-                                    <p className="text-xs uppercase tracking-wide text-gray-500">Account Number</p>
-                                    <div className="flex items-center justify-between gap-3">
-                                        <p className="text-lg font-bold text-gray-900 tabular-nums tracking-wider">
-                                            {account.accountNumber}
-                                        </p>
-                                        <button
-                                            type="button"
-                                            onClick={handleCopy}
-                                            aria-label="Copy account number"
-                                            className="flex items-center gap-1.5 border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:border-[#F47321] hover:text-[#F47321] transition-colors min-h-[44px]"
+                                    <hr className='mt-5' />
+
+                                    <div className='flex justify-end'>
+                                        <Button
+                                            type='submit'
+                                            className='bg-[#F47321] rounded-none hover:bg-[#e36214] py-5 px-8 text-white font-semibold transition-colors'
+                                            disabled={initiating}
                                         >
-                                            {copied ? (
+                                            {initiating ? (
                                                 <>
-                                                    <Check className="h-4 w-4 text-green-600" />
-                                                    Copied
+                                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                                    Getting account...
                                                 </>
                                             ) : (
-                                                <>
-                                                    <Copy className="h-4 w-4" />
-                                                    Copy
-                                                </>
+                                                "Continue"
                                             )}
-                                        </button>
+                                        </Button>
+                                    </div>
+                                </form>
+                            )}
+
+                            {/* ── Step 2: Account details + countdown ── */}
+                            {step === "details" && account && (
+                                <div className="space-y-4 mt-4">
+                                    {/* Countdown */}
+                                    <div className="flex items-center justify-between border border-red-200 bg-red-50 text-red-600 px-4 py-2.5">
+                                        <span className="flex items-center gap-2 text-sm font-medium">
+                                            <Clock className="h-4 w-4" />
+                                            Account expires in
+                                        </span>
+                                        <span className="text-sm font-bold tabular-nums tracking-wider">
+                                            {formatTime(secondsLeft)}
+                                        </span>
+                                    </div>
+
+                                    {/* Amount to send */}
+                                    {amountLabel && (
+                                        <div className="text-center py-1">
+                                            <p className="text-xs uppercase tracking-wide text-gray-500">Amount to transfer</p>
+                                            <p className="text-xl font-bold text-gray-900 tabular-nums">{amountLabel}</p>
+                                        </div>
+                                    )}
+
+                                    {/* Account card */}
+                                    <div className="border border-gray-200 border-l-4 border-l-[#F47321] bg-white">
+                                        <div className="flex items-center gap-2 px-4 pt-3 text-gray-700">
+                                            <Landmark className="h-4 w-4" />
+                                            <span className="text-sm font-semibold">Bank Transfer Details</span>
+                                        </div>
+
+                                        <div className="px-4 py-3 space-y-3">
+                                            {account.bankName && (
+                                                <div>
+                                                    <p className="text-xs uppercase tracking-wide text-gray-500">Bank</p>
+                                                    <p className="text-sm font-semibold text-gray-900">{account.bankName}</p>
+                                                </div>
+                                            )}
+
+                                            {account.accountName && (
+                                                <div>
+                                                    <p className="text-xs uppercase tracking-wide text-gray-500">Account Name</p>
+                                                    <p className="text-sm font-semibold text-gray-900">{account.accountName}</p>
+                                                </div>
+                                            )}
+
+                                            <div>
+                                                <p className="text-xs uppercase tracking-wide text-gray-500">Account Number</p>
+                                                <div className="flex items-center justify-between gap-3">
+                                                    <p className="text-base font-bold text-gray-900 tabular-nums tracking-wider">
+                                                        {account.accountNumber}
+                                                    </p>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleCopy}
+                                                        aria-label="Copy account number"
+                                                        className="flex items-center gap-1.5 border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:border-[#F47321] hover:text-[#F47321] transition-colors min-h-[44px]"
+                                                    >
+                                                        {copied ? (
+                                                            <>
+                                                                <Check className="h-4 w-4 text-green-600" />
+                                                                Copied
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <Copy className="h-4 w-4" />
+                                                                Copy
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            {/* Any extra fields the backend returned */}
+                                            {account.extra.map((field) => (
+                                                <div key={field.label}>
+                                                    <p className="text-xs uppercase tracking-wide text-gray-500">{field.label}</p>
+                                                    <p className="text-sm font-semibold text-gray-900">{field.value}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <p className="text-xs text-gray-500 leading-relaxed">
+                                        After transferring{amountLabel ? ` ${amountLabel}` : ""} to the account above, click
+                                        <span className="font-medium text-gray-700"> “I have sent”</span> so we can record your support.
+                                    </p>
+
+                                    <hr />
+
+                                    <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            onClick={() => handleOpenChange(false)}
+                                            className="rounded-none py-5 px-8 font-semibold"
+                                        >
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            onClick={handleConfirm}
+                                            disabled={verifying}
+                                            className="bg-[#F47321] rounded-none hover:bg-[#e36214] py-5 px-8 text-white font-semibold transition-colors"
+                                        >
+                                            {verifying ? (
+                                                <>
+                                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                                    Confirming...
+                                                </>
+                                            ) : (
+                                                "I have sent"
+                                            )}
+                                        </Button>
                                     </div>
                                 </div>
+                            )}
 
-                                {/* Any extra fields the backend returned */}
-                                {account.extra.map((field) => (
-                                    <div key={field.label}>
-                                        <p className="text-xs uppercase tracking-wide text-gray-500">{field.label}</p>
-                                        <p className="text-sm font-semibold text-gray-900">{field.value}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        <p className="text-sm text-gray-500 leading-relaxed">
-                            After transferring{amountLabel ? ` ${amountLabel}` : ""} to the account above, click
-                            <span className="font-medium text-gray-700"> “I have sent”</span> so we can record your support.
-                        </p>
-
-                        <hr />
-
-                        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => handleOpenChange(false)}
-                                className="rounded-none py-6 px-8 font-semibold"
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                type="button"
-                                onClick={handleConfirm}
-                                disabled={verifying}
-                                className="bg-[#F47321] rounded-none hover:bg-[#e36214] py-6 px-8 text-white font-semibold transition-colors"
-                            >
-                                {verifying ? (
-                                    <>
-                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                        Confirming...
-                                    </>
-                                ) : (
-                                    "I have sent"
-                                )}
-                            </Button>
+                            {/* ── Step 3: Success ── */}
+                            {step === "success" && (
+                                <div className="flex flex-col items-center justify-center py-6 space-y-3 text-center">
+                                    <CheckCircle2 className="w-14 h-14 text-green-500" />
+                                    <h3 className="text-lg font-bold text-gray-800">Thank You!</h3>
+                                    <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
+                                        Your donation has been recorded and will go towards supporting our campaign to build a better Osun State.
+                                    </p>
+                                    <Button
+                                        onClick={() => handleOpenChange(false)}
+                                        className="bg-[#F47321] rounded-none hover:bg-[#e36214] py-5 px-10 text-white font-semibold mt-2"
+                                    >
+                                        Close
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     </div>
-                )}
-
-                {/* ── Step 3: Success ── */}
-                {step === "success" && (
-                    <div className="flex flex-col items-center justify-center py-8 space-y-4 text-center">
-                        <CheckCircle2 className="w-16 h-16 text-green-500" />
-                        <h3 className="text-xl font-bold text-gray-800">Thank You!</h3>
-                        <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-                            Your donation has been recorded and will go towards supporting our campaign to build a better Osun State.
-                        </p>
-                        <Button
-                            onClick={() => handleOpenChange(false)}
-                            className="bg-[#F47321] rounded-none hover:bg-[#e36214] py-6 px-10 text-white font-semibold mt-4"
-                        >
-                            Close
-                        </Button>
-                    </div>
-                )}
-                </div>
-            </DialogContent>
-        </Dialog>
+                </div>,
+                document.body
+            )}
+        </>
     )
 }
 
