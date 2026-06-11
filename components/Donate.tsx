@@ -215,7 +215,8 @@ const Donate = ({ trigger }: DonateProps) => {
                 )}
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-xl px-7 py-6 rounded-none max-h-[90dvh] overflow-y-auto overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch]">
+            <DialogContent className="sm:max-w-xl rounded-none p-0 gap-0 flex flex-col max-h-[90dvh] overflow-hidden">
+                <div className="overflow-y-auto overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch] px-7 py-6">
                 <DialogHeader>
                     <DialogTitle className='font-semibold text-lg'>
                         {step === "form" && "Make a Donation"}
@@ -422,6 +423,7 @@ const Donate = ({ trigger }: DonateProps) => {
                         </Button>
                     </div>
                 )}
+                </div>
             </DialogContent>
         </Dialog>
     )
