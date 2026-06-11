@@ -215,9 +215,9 @@ const Donate = ({ trigger }: DonateProps) => {
                 )}
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-xl px-7 py-6 rounded-none max-h-[90dvh] overflow-y-auto">
+            <DialogContent className="sm:max-w-xl px-7 py-6 rounded-none max-h-[90dvh] overflow-y-auto overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch]">
                 <DialogHeader>
-                    <DialogTitle className='font-semibold text-xl'>
+                    <DialogTitle className='font-semibold text-lg'>
                         {step === "form" && "Make a Donation"}
                         {step === "details" && "Transfer to Complete Your Donation"}
                         {step === "success" && "Donation Received!"}
@@ -299,7 +299,7 @@ const Donate = ({ trigger }: DonateProps) => {
                                 <Clock className="h-4 w-4" />
                                 Account expires in
                             </span>
-                            <span className="text-lg font-bold tabular-nums tracking-wider">
+                            <span className="text-base font-bold tabular-nums tracking-wider">
                                 {formatTime(secondsLeft)}
                             </span>
                         </div>
@@ -308,7 +308,7 @@ const Donate = ({ trigger }: DonateProps) => {
                         {amountLabel && (
                             <div className="text-center py-2">
                                 <p className="text-xs uppercase tracking-wide text-gray-500">Amount to transfer</p>
-                                <p className="text-3xl font-bold text-gray-900 tabular-nums">{amountLabel}</p>
+                                <p className="text-2xl font-bold text-gray-900 tabular-nums">{amountLabel}</p>
                             </div>
                         )}
 
@@ -323,21 +323,21 @@ const Donate = ({ trigger }: DonateProps) => {
                                 {account.bankName && (
                                     <div>
                                         <p className="text-xs uppercase tracking-wide text-gray-500">Bank</p>
-                                        <p className="text-base font-semibold text-gray-900">{account.bankName}</p>
+                                        <p className="text-sm font-semibold text-gray-900">{account.bankName}</p>
                                     </div>
                                 )}
 
                                 {account.accountName && (
                                     <div>
                                         <p className="text-xs uppercase tracking-wide text-gray-500">Account Name</p>
-                                        <p className="text-base font-semibold text-gray-900">{account.accountName}</p>
+                                        <p className="text-sm font-semibold text-gray-900">{account.accountName}</p>
                                     </div>
                                 )}
 
                                 <div>
                                     <p className="text-xs uppercase tracking-wide text-gray-500">Account Number</p>
                                     <div className="flex items-center justify-between gap-3">
-                                        <p className="text-xl font-bold text-gray-900 tabular-nums tracking-wider">
+                                        <p className="text-lg font-bold text-gray-900 tabular-nums tracking-wider">
                                             {account.accountNumber}
                                         </p>
                                         <button
@@ -365,7 +365,7 @@ const Donate = ({ trigger }: DonateProps) => {
                                 {account.extra.map((field) => (
                                     <div key={field.label}>
                                         <p className="text-xs uppercase tracking-wide text-gray-500">{field.label}</p>
-                                        <p className="text-base font-semibold text-gray-900">{field.value}</p>
+                                        <p className="text-sm font-semibold text-gray-900">{field.value}</p>
                                     </div>
                                 ))}
                             </div>
